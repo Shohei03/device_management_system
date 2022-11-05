@@ -34,7 +34,17 @@ public enum AttributeConst {
     EMP_CODE("code"),
     EMP_PASS("password"),
     EMP_NAME("name"),
+    EMP_DEPARTMENT("department"),
     EMP_ADMIN_FLG("admin_flag"),
+
+    //部署
+    DEP_GENERAL("一般検査室"),
+    DEP_CT("CT検査室"),
+    DEP_MRI("MR検査室"),
+    DEP_MAMMA("乳房検査室"),
+    DEP_TV("TV検査室"),
+
+
 
     //管理者フラグ
     ROLE_ADMIN(2),

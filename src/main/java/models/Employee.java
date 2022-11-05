@@ -64,6 +64,12 @@ public class Employee {
     private String password;
 
     /**
+     * 部署（=検査項目と同じ定義）
+     */
+    @Column(name = JpaConst.EMP_COL_DEPARTMENT, nullable = false)
+    private String department;
+
+    /**
      * 管理者権限があるかどうか（一般：0、デバイスデータ登録権限：1、+社員データ修正権限：2）
      */
     @Column(name = JpaConst.EMP_COL_ADMIN_FLAG, nullable = false)

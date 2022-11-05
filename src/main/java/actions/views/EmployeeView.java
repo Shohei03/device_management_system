@@ -39,6 +39,11 @@ public class EmployeeView {
     private String password;
 
     /**
+     * 部署
+     */
+    private String department;
+
+    /**
      * 管理者権限があるかどうか（一般：0、デバイスデータ登録権限：1、+社員データ修正権限：2）
      */
     private Integer adminFlag;

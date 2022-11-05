@@ -151,6 +151,7 @@ public class EmployeeService extends ServiceBase {
         }
         savedEmp.setName(ev.getName()); //変更後の氏名を設定する
         savedEmp.setAdminFlag(ev.getAdminFlag()); //変更後の管理者フラグを設定する
+        savedEmp.setDepartment(ev.getDepartment());  //変更後の部署を設定する
 
         //更新日時に現在時刻を設定する
         LocalDateTime today = LocalDateTime.now();
