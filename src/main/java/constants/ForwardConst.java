@@ -10,11 +10,10 @@ public enum ForwardConst {
 
     //action
     ACT("action"),
-    ACT_TOP("Top"),
     ACT_EMP("Employee"),
-    ACT_REP("Report"),
     ACT_AUTH("Auth"),
     ACT_SEARCH("Searcher"),
+    ACT_REGI("Register"),
 
     //command
     CMD("command"),
