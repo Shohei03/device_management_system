@@ -13,7 +13,7 @@ public enum ForwardConst {
     ACT_EMP("Employee"),
     ACT_AUTH("Auth"),
     ACT_SEARCH("Searcher"),
-    ACT_REGI("Register"),
+    ACT_REGI_TOP("RegisterTop"),
 
     //command
     CMD("command"),
@@ -36,7 +36,8 @@ public enum ForwardConst {
     FW_EMP_SHOW("employees/show"),
     FW_EMP_NEW("employees/new"),
     FW_EMP_EDIT("employees/edit"),
-    FW_SEARCH_INDEX("searches/index");
+    FW_SEARCH_INDEX("searches/index"),
+    FW_REGI_TOP_INDEX("regi_topPage/index");
 
     /**
      * 文字列

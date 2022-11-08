@@ -34,9 +34,35 @@ public interface JpaConst {
     int EMP_DEL_FALSE = 0; //削除フラグOFF(現役)
 
 
+    //添付文書テーブル
+    String TABLE_PACK = "package_inserts";  //テーブル名
+    //従業員テーブルカラム
+    String PACK_COL_ID = "id";  //id
+    String PACK_COL_APP_NUM = "approval_number";  //承認番号
+    String PACK_COL_JMDN = "JMDN_id"; //添付文書のJMDN_id番号
+    String PACK_COL_DEV_NAME = "device_name";  //デバイスの販売名
+    String PACK_COL_MR_STR = "MR_magnetic_field_strength";  //MRI静磁場強度の制限値
+    String PACK_COL_MR_GRADI = "MR_gradient_magnetic_field";  //MR傾斜磁場強度の制限値
+    String PACK_COL_MR_SAR = "MR_SAR";  //MR SAR制限値
+    String PACK_COL_Manma = "acceptability_of_Manma_exam";  //マンモグラフィ検査の可否
+    String PACK_COL_X_RAY = "acceptability_of_X_ray_exam";  //一般（X線）検査の可否
+    String PACK_COL_CT = "acceptability_of_CT_exam";  //CT検査の可否
+    String PACK_COL_TV = "acceptability_of_TV_exam";  //TV検査の可否
+    String PACK_COL_MRI = "acceptability_of_MR_exam";  //TV検査の可否
+    String PACK_COL_CREATED_AT = "created_at"; //登録日時"
+
+
+    //添付文書テーブル
+    String TABLE_JMDN = "JMDN";  //テーブル名
+    //JMDNテーブルカラム
+    String JMDN_COL_CODE = "JMDN_code"; //JMDNコード
+    String JMDN_COL_GENE_NAME = "general name";  //一般的名称
+
+
 
     //Entity名
     String ENTITY_EMP = "employee"; //従業員
+    String ENTITY_PACK = "package_insert";  //添付文書
 
     //JPQL内パラメータ
     String JPQL_PARM_CODE = "code"; //社員番号
@@ -56,5 +82,16 @@ public interface JpaConst {
     //指定した社員番号を保持する従業員の件数を取得する
     String Q_EMP_COUNT_REGISTERED_BY_CODE = ENTITY_EMP + ".countRegisteredByCode";
     String Q_EMP_COUNT_REGISTERED_BY_CODE_DEF = "SELECT COUNT(e) FROM Employee AS e WHERE e.code = :" + JPQL_PARM_CODE;
+
+    //全ての添付文書をidの降順で取得する
+    String Q_PACK_GET_ALL = ENTITY_PACK + ".getAll";
+    String Q_PACK_GET_ALL_DEF = "SELECT e FROM PackageInsert AS e ORDER BY e.id DESC";
+    //全ての添付文書の件数を取得する
+    String Q_PACK_COUNT = ENTITY_PACK + ".count";
+    String Q_PACK_COUNT_DEF = "SELECT COUNT(e) FROM PackageInsert AS e";
+
+
+
+
 
 }

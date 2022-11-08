@@ -6,7 +6,7 @@
 <c:set var="actEmp" value="${ForwardConst.ACT_EMP.getValue()}" />
 <c:set var="actAuth" value="${ForwardConst.ACT_AUTH.getValue()}" />
 <c:set var="actSearch" value="${ForwardConst.ACT_SEARCH.getValue()}" />
-<c:set var="actRegi" value="${ForwardConst.ACT_REGI.getValue()}" />
+<c:set var="actRegi" value="${ForwardConst.ACT_REGI_TOP.getValue()}" />
 
 <c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
 <c:set var="commOut" value="${ForwardConst.CMD_LOGOUT.getValue()}" />

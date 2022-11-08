@@ -135,3 +135,20 @@ select {
 h1 a {
     color: #eeeeee;
 }
+
+.regi_top_item {
+    padding: 0.5em 1em;
+    width: 150px;
+    margin: 2em 0;
+    font-weight: bold;
+    color: #6091d3;/*文字色*/
+    background: #FFF;
+    border: solid 3px #6091d3;/*線*/
+    border-radius: 10px;/*角の丸み*/
+}
+
+
+.regi_top_item a {
+    margin: 0;
+    padding: 0;
+}
