@@ -99,11 +99,18 @@ public class PackageInsertService extends ServiceBase {
      */
     public List<String> create(PackageInsertView pv) {
         List<String> errors = PackageInsertValidator.validate(this, pv, true);
+        PackageInsertService service = new PackageInsertService();
+
         //バリデーションエラーがなければデータを登録する
         if (errors.size() == 0) {
             LocalDate ldt = LocalDate.now();
             pv.setCreatedAt(ldt);
-            createInternal(pv);
+
+            if (!(service.countByJMDN_CODE(pv.getJMDN_code()) > 0)) {
+                createInternalJMDN(pv);
+            }
+
+            createInternal_Pack(pv);
         }
 
         //バリデーションで発生したエラーを返却（エラーがなければ0件の空リスト）
@@ -159,14 +166,22 @@ public class PackageInsertService extends ServiceBase {
         return em.find(PackageInsert.class, id);
     }
 
+    //////////////////////////////////
+    private void createInternalJMDN(PackageInsertView pv) {
+
+        em.getTransaction().begin();
+        em.persist(JMDNConverter.toModel(pv));
+        em.getTransaction().commit();
+
+    }
+
     /**
      * 添付文書データを1件登録する
      * @param pv 添付文書データ
      */
-    private void createInternal(PackageInsertView pv) {
+    private void createInternal_Pack(PackageInsertView pv) {
 
         em.getTransaction().begin();
-        em.persist(JMDNConverter.toModel(pv));
         em.persist(PackageInsertConverter.toModel(pv));
         em.getTransaction().commit();
 

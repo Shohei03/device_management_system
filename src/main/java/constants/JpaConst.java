@@ -57,7 +57,7 @@ public interface JpaConst {
     //JMDNテーブルカラム
     String JMDN_COL_ID ="id";  //id
     String JMDN_COL_CODE = "jmdn_code"; //JMDNコード
-    String JMDN_COL_GENE_NAME = "general name";  //一般的名称
+    String JMDN_COL_GENE_NAME = "general_name";  //一般的名称
 
 
 

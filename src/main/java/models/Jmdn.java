@@ -44,13 +44,13 @@ public class Jmdn {
     /**
      * JMDNコード
      */
-    @Column(name = JpaConst.JMDN_COL_CODE, nullable = false)
+    @Column(name = JpaConst.JMDN_COL_CODE, nullable = false, unique = true)
     private String JMDN_code;
 
     /**
      * 一般的名称
      */
-    @Column(name = JpaConst.JMDN_COL_GENE_NAME, nullable = false)
+    @Column(name = JpaConst.JMDN_COL_GENE_NAME, nullable = false, unique = true)
     private String general_name;
 
 }

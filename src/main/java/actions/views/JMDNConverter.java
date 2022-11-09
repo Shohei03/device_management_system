@@ -16,11 +16,9 @@ public class JMDNConverter {
      */
     public static Jmdn toModel(PackageInsertView pv) {
         PackageInsertService service = new PackageInsertService();
-        if (service.countByJMDN_CODE(pv.getJMDN_code()) > 0) {
-            return service.findJMDN(pv.getJMDN_code());
-        }
 
-        return new Jmdn(pv.getId(), pv.getJMDN_code(), pv.getGeneral_name());
+        return service.findJMDN(pv.getJMDN_code());
+
     }
 
 }

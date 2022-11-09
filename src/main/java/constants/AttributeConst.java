@@ -60,6 +60,10 @@ public enum AttributeConst {
     PACK_MRI("acceptability_of_MR_exam"),
     PACK_DATE("packageInsert_created_date"),
     PACK_COUNT("packageInsertsCount"),
+    PACK_EXM_SAFE("可能"),  //検査可能
+    PACK_EXM_CONDITIONAL_SAFE("条件付き可能"),  //検査条件付き可
+    PACK_EXM_UNSAFE("不可能"),  //検査不可
+
 
 
 
