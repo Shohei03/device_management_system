@@ -5,6 +5,7 @@ import java.util.List;
 
 import actions.views.PackageInsertView;
 import constants.MessageConst;
+import services.PackageInsertService;
 
 /**
  *
@@ -16,11 +17,13 @@ public class PackageInsertValidator {
      * @param pv 添付文書インスタンス
      * @return エラーのリスト
      */
-    public static List<String> validate(PackageInsertView pv) {
+    public static List<String> validate(PackageInsertService service, PackageInsertView pv,
+            Boolean approvalNumDuplicateCheckFlag) {
         List<String> errors = new ArrayList<String>();
 
         //承認番号のチェック
-        String approval_number_error = validateApproval_number(pv.getApproval_number());
+        String approval_number_error = validateApproval_number(service, pv.getApproval_number(),
+                approvalNumDuplicateCheckFlag);
         if (!approval_number_error.equals("")) {
             errors.add(approval_number_error);
         }
@@ -48,17 +51,45 @@ public class PackageInsertValidator {
     }
 
     /**
-     * 承認番号に入力値があるかをチェックし、入力値がなければエラーメッセージを返却
+     * 承認番号の入力チェックを行い、入力値がなければエラーメッセージを返却
+     * @param srevice PackageInsertServiceのインスタンス
      * @param approval_number 承認番号
+     * @param approvalNumDuplicateCheckFlag 承認番号の重複チェックを実施するかどうか（実施する：True、実施しない：false）
      * @return エラーメッセージ
      */
-    private static String validateApproval_number(String approval_number) {
+    private static String validateApproval_number(PackageInsertService service, String approval_number,
+            Boolean approvalNumDuplicateCheckFlag) {
+        //入力値がなければエラーメッセージを返却
         if (approval_number == null || approval_number.equals("")) {
             return MessageConst.E_NOAPPROVAL_NUM.getMessage();
         }
 
-        //入力値がある場合は空文字を返却
+        if (approvalNumDuplicateCheckFlag) {
+            //承認番号の重複チェックを実施
+
+            long approvalNumCount = isDuplicateApprovalNum(service, approval_number);
+
+            //同じデバイス（添付文書番号）が既に登録されている場合はエラーメッセージを返却
+            if (approvalNumCount > 0) {
+                return MessageConst.E_DEVICE_EXIST.getMessage();
+            }
+
+        }
+
+        //エラーがない場合は空文字を返却
         return "";
+    }
+
+    /**
+     * @param service PackageInsertServiceのインスタンス
+     * @param  approval_number 承認番号
+     * @return 添付文書テーブルに登録されている同一添付文書承認番号のデータの件数
+     */
+
+    private static long isDuplicateApprovalNum(PackageInsertService service, String approval_number) {
+
+        long approvalNumCount = service.countByAapproval_number(approval_number);
+        return approvalNumCount;
     }
 
     /**

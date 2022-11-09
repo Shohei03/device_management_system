@@ -1,12 +1,13 @@
 package models;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -25,7 +26,8 @@ import lombok.Setter;
 @Table(name = JpaConst.TABLE_PACK)
 @NamedQueries({
         @NamedQuery(name = JpaConst.Q_PACK_GET_ALL, query = JpaConst.Q_PACK_GET_ALL_DEF),
-        @NamedQuery(name = JpaConst.Q_PACK_COUNT, query = JpaConst.Q_PACK_COUNT_DEF)
+        @NamedQuery(name = JpaConst.Q_PACK_COUNT, query = JpaConst.Q_PACK_COUNT_DEF),
+        @NamedQuery(name = JpaConst.Q_PACK_COUNT_REGISTEREDBY_APPROVAL_NUM, query = JpaConst.Q_PACK_COUNT_REGISTEREDBY_APPROVAL_NUM_DEF)
 })
 
 @Getter
@@ -53,7 +55,7 @@ public class PackageInsert {
      * JMDNインスタンス
      */
     @ManyToOne
-    @Column(name = JpaConst.PACK_COL_JMDN, nullable = false)
+    @JoinColumn(name = JpaConst.PACK_COL_JMDN, nullable = false)
     private JMDN jmdn;
 
     /**
@@ -99,21 +101,9 @@ public class PackageInsert {
     private Double MR_magnetic_field_strength;
 
     /**
-     * MR傾斜磁場強度制限
-     */
-    @Column(name = JpaConst.PACK_COL_MR_GRADI)
-    private Double MR_gradient_magnetic_field;
-
-    /**
-     * MR SAR制限値
-     */
-    @Column(name = JpaConst.PACK_COL_MR_SAR)
-    private Double MR_SAR;
-
-    /**
-     * 登録日時
+     * 登録日
      */
     @Column(name = JpaConst.PACK_COL_CREATED_AT, nullable = false)
-    private LocalDateTime createdAt;
+    private LocalDate createdAt;
 
 }

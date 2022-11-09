@@ -44,6 +44,23 @@ public enum AttributeConst {
     DEP_MAMMA("乳房検査室"),
     DEP_TV("TV検査室"),
 
+    //添付文書
+    PACKAGE_INSERT("packegeInsert"),
+    PACKEGE_INSERTS("packageInserts"),
+    PACK_ID("id"),
+    PACK_APP_NUM("approval_number"),
+    PACK_JMDN("JMDN_code"),
+    PACK_GENERAL_NAME("general_name"),
+    PACK_DEV_NAME("device_name"),
+    PACK_MR_STR("MR_magnetic_field_strength"),
+    PACK_Manma("acceptability_of_Manma_exam"),
+    PACK_X_RAY("acceptability_of_X_ray_exam"),
+    PACK_CT("acceptability_of_CT_exam"),
+    PACK_TV("acceptability_of_TV_exam"),
+    PACK_MRI("acceptability_of_MR_exam"),
+    PACK_DATE("packageInsert_created_date"),
+    PACK_COUNT("packageInsertsCount"),
+
 
 
     //管理者フラグ

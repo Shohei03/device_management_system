@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import constants.JpaConst;
@@ -19,6 +21,11 @@ import lombok.Setter;
 *
 */
 @Table(name = JpaConst.TABLE_JMDN)
+@NamedQueries({
+        @NamedQuery(name = JpaConst.Q_JMDN_COUNT_REGISTEREDBY_JMDN_CODE, query = JpaConst.Q_JMDN_COUNT_REGISTEREDBY_JMDN_CODE_DEF),
+        @NamedQuery(name = JpaConst.Q_JMDN_GET_MINE_REGISTEREDBY_JMDN_CODE, query = JpaConst.Q_JMDN_GET_MINE_REGISTEREDBY_JMDN_CODE_DEF)
+
+})
 @Getter //全てのクラスフィールドについてgetterを自動生成する(Lombok)
 @Setter //全てのクラスフィールドについてsetterを自動生成する(Lombok)
 @NoArgsConstructor //引数なしコンストラクタを自動生成する(Lombok)
@@ -29,11 +36,9 @@ public class JMDN {
      * id
      */
     @Id
-    @Column(name = JpaConst.PACK_COL_ID)
+    @Column(name = JpaConst.JMDN_COL_ID)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
-
 
     /**
      * JMDNコード

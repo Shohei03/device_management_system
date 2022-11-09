@@ -1,11 +1,12 @@
 package services;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 import actions.views.PackageInsertConverter;
 import actions.views.PackageInsertView;
 import constants.JpaConst;
+import models.JMDN;
 import models.PackageInsert;
 import models.validators.PackageInsertValidator;
 
@@ -19,7 +20,7 @@ public class PackageInsertService extends ServiceBase {
      * @param page ページ数
      * @return 一覧画面に表示するデータのリスト
      */
-    public List<PackageInsertView> getAllPage(int page) {
+    public List<PackageInsertView> getAllPerPage(int page) {
         List<PackageInsert> packageInserts = em.createNamedQuery(JpaConst.Q_PACK_GET_ALL, PackageInsert.class)
                 .setFirstResult(JpaConst.ROW_PER_PAGE * (page - 1))
                 .setMaxResults(JpaConst.ROW_PER_PAGE)
@@ -49,14 +50,57 @@ public class PackageInsertService extends ServiceBase {
     }
 
     /**
+     * 添付文書の承認番号を条件に該当するデータの件数を取得し、返却する
+     * @param approval_number 承認番号
+     * @return 該当するデータの件数
+     */
+
+    public long countByAapproval_number(String approval_number) {
+
+        //指定した添付文書承認番号の件数を取得する
+        long approvalNumCount = (long) em.createNamedQuery(JpaConst.Q_PACK_COUNT_REGISTEREDBY_APPROVAL_NUM, Long.class)
+                .setParameter(JpaConst.JPQL_PARM_APPROVAL_NUM, approval_number)
+                .getSingleResult();
+        return approvalNumCount;
+    }
+
+    /**
+     * 添付文書のJMDNコードに該当するデータの件数を取得し、返却する
+     * @param JMDN_code JMDNコード
+     * @return 該当するデータの件数
+     */
+    public long countByJMDN_CODE(String JMDN_code) {
+
+        //指定したJMDNの件数を取得する
+        long JMDN_CODECount = (long) em.createNamedQuery(JpaConst.Q_JMDN_COUNT_REGISTEREDBY_JMDN_CODE, Long.class)
+                .setParameter(JpaConst.JPQL_PARM_JMDN_CODE, JMDN_code)
+                .getSingleResult();
+        return JMDN_CODECount;
+    }
+
+    /**
+     * 指定されたJMDN_CODEのJMDNインスタンスを取得
+     *
+     */
+    public JMDN findJMDN(String JMDN_code) {
+        JMDN j = (JMDN) em.createNamedQuery(JpaConst.Q_JMDN_GET_MINE_REGISTEREDBY_JMDN_CODE, JMDN.class)
+                .setParameter(JpaConst.JPQL_PARM_JMDN_CODE, JMDN_code)
+                .getSingleResult();
+
+        return j;
+
+    }
+
+    /**
      * 画面から入力された添付文書情報の登録内容を元にデータを1件作成し、添付文書テーブルとJMDNテーブルに登録する
      * @param pv 添付文書情報の登録内容
      * @return バリデーションで発生したエラーのリスト
      */
     public List<String> create(PackageInsertView pv) {
-        List<String> errors = PackageInsertValidator.validate(pv);
+        List<String> errors = PackageInsertValidator.validate(this, pv, true);
+        //バリデーションエラーがなければデータを登録する
         if (errors.size() == 0) {
-            LocalDateTime ldt = LocalDateTime.now();
+            LocalDate ldt = LocalDate.now();
             pv.setCreatedAt(ldt);
             createInternal(pv);
         }
@@ -71,9 +115,32 @@ public class PackageInsertService extends ServiceBase {
      * @return バリデーションで発生したエラーのリスト
      */
     public List<String> update(PackageInsertView pv) {
+        PackageInsertView savedPack = findOne(pv.getId());
+
+        boolean validateApproval_number = false;
+
+        if (!savedPack.getApproval_number().equals(pv.getApproval_number())) {
+            //添付文書番号を更新する場合
+
+            //添付文書番号についてのバリデーションを行う
+            validateApproval_number = true;
+            //変更後の添付文書番号を設定する
+            savedPack.setApproval_number(pv.getApproval_number());
+
+        }
+
+        savedPack.setJMDN_code(pv.getJMDN_code()); //変更後のJMDNコードを設定する
+        savedPack.setGeneral_name(pv.getGeneral_name()); //変更後の一般的名称を設定する
+        savedPack.setDevice_name(pv.getDevice_name()); //変更後のデバイス名を設定する
+        savedPack.setAcceptability_of_MR_exam(pv.getAcceptability_of_MR_exam()); //変更後のMR検査の可否を設定する
+        savedPack.setMR_magnetic_field_strength(pv.getMR_magnetic_field_strength()); //変更後のMR静磁場強度制限を設定する
+
+        //登録日に現在の日付を設定する
+        LocalDate today = LocalDate.now();
+        savedPack.setCreatedAt(today);
 
         //バリデーションを行う
-        List<String> errors = PackageInsertValidator.validate(pv);
+        List<String> errors = PackageInsertValidator.validate(this, savedPack, validateApproval_number);
 
         if (errors.size() == 0) {
             updateInternal(pv);

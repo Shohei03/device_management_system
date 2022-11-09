@@ -14,6 +14,7 @@ public enum ForwardConst {
     ACT_AUTH("Auth"),
     ACT_SEARCH("Searcher"),
     ACT_REGI_TOP("RegisterTop"),
+    ACT_PACK("PackageInsert"),
 
     //command
     CMD("command"),
@@ -37,7 +38,10 @@ public enum ForwardConst {
     FW_EMP_NEW("employees/new"),
     FW_EMP_EDIT("employees/edit"),
     FW_SEARCH_INDEX("searches/index"),
-    FW_REGI_TOP_INDEX("regi_topPage/index");
+    FW_REGI_TOP_INDEX("regi_topPage/index"),
+    FW_PACK_INDEX("packageInserts/index"),
+    FW_PACK_NEW("packageInserts/new");
+
 
     /**
      * 文字列

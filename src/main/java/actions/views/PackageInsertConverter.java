@@ -30,8 +30,6 @@ public class PackageInsertConverter {
                 pv.getAcceptability_of_TV_exam(),
                 pv.getAcceptability_of_MR_exam(),
                 pv.getMR_magnetic_field_strength(),
-                pv.getMR_gradient_magnetic_field(),
-                pv.getMR_SAR(),
                 pv.getCreatedAt());
     }
 
@@ -56,8 +54,6 @@ public class PackageInsertConverter {
                 p.getAcceptability_of_TV_exam(),
                 p.getAcceptability_of_MR_exam(),
                 p.getMR_magnetic_field_strength(),
-                p.getMR_gradient_magnetic_field(),
-                p.getMR_SAR(),
                 p.getCreatedAt());
     }
 
@@ -92,8 +88,6 @@ public class PackageInsertConverter {
         p.setAcceptability_of_TV_exam(pv.getAcceptability_of_TV_exam());
         p.setAcceptability_of_MR_exam(pv.getAcceptability_of_MR_exam());
         p.setMR_magnetic_field_strength(pv.getMR_magnetic_field_strength());
-        p.setMR_gradient_magnetic_field(pv.getMR_gradient_magnetic_field());
-        p.setMR_SAR(pv.getMR_SAR());
         p.setCreatedAt(pv.getCreatedAt());
 
     }

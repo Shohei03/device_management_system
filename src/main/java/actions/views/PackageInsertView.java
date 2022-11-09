@@ -1,6 +1,6 @@
 package actions.views;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -74,18 +74,8 @@ public class PackageInsertView {
     private Double MR_magnetic_field_strength;
 
     /**
-     * MR傾斜磁場強度制限
-     */
-    private Double MR_gradient_magnetic_field;
-
-    /**
-     * MR SAR制限値
-     */
-    private Double MR_SAR;
-
-    /**
      * 登録日時
      */
-    private LocalDateTime createdAt;
+    private LocalDate createdAt;
 
 }

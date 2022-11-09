@@ -48,13 +48,14 @@ public interface JpaConst {
     String PACK_COL_X_RAY = "acceptability_of_X_ray_exam";  //一般（X線）検査の可否
     String PACK_COL_CT = "acceptability_of_CT_exam";  //CT検査の可否
     String PACK_COL_TV = "acceptability_of_TV_exam";  //TV検査の可否
-    String PACK_COL_MRI = "acceptability_of_MR_exam";  //TV検査の可否
+    String PACK_COL_MRI = "acceptability_of_MR_exam";  //MR検査の可否
     String PACK_COL_CREATED_AT = "created_at"; //登録日時"
 
 
     //添付文書テーブル
     String TABLE_JMDN = "JMDN";  //テーブル名
     //JMDNテーブルカラム
+    String JMDN_COL_ID ="id";  //id
     String JMDN_COL_CODE = "JMDN_code"; //JMDNコード
     String JMDN_COL_GENE_NAME = "general name";  //一般的名称
 
@@ -63,11 +64,14 @@ public interface JpaConst {
     //Entity名
     String ENTITY_EMP = "employee"; //従業員
     String ENTITY_PACK = "package_insert";  //添付文書
+    String ENTITY_JMDN = "JMDN";  //JMDN
 
     //JPQL内パラメータ
     String JPQL_PARM_CODE = "code"; //社員番号
     String JPQL_PARM_PASSWORD = "password"; //パスワード
     String JPQL_PARM_EMPLOYEE = "employee"; //従業員
+    String JPQL_PARM_APPROVAL_NUM = "approval_number"; //社員番号
+    String JPQL_PARM_JMDN_CODE = "JMDN_code"; //JMDNコード
 
     //NamedQueryの nameとquery
     //全ての従業員をidの降順に取得する
@@ -89,9 +93,16 @@ public interface JpaConst {
     //全ての添付文書の件数を取得する
     String Q_PACK_COUNT = ENTITY_PACK + ".count";
     String Q_PACK_COUNT_DEF = "SELECT COUNT(e) FROM PackageInsert AS e";
+    //指定した添付文書承認番号の件数を取得する
+    String Q_PACK_COUNT_REGISTEREDBY_APPROVAL_NUM = ENTITY_PACK + ".countRegisteredByApprovalNum";
+    String Q_PACK_COUNT_REGISTEREDBY_APPROVAL_NUM_DEF = "SELECT COUNT(e) FROM PackageInsert AS e WHERE e.approval_number = :" + JPQL_PARM_APPROVAL_NUM;
 
-
-
+    //指定したJMDNの件数を取得する
+    String Q_JMDN_COUNT_REGISTEREDBY_JMDN_CODE = ENTITY_JMDN + ".countRegisteredByJMDN_code";
+    String Q_JMDN_COUNT_REGISTEREDBY_JMDN_CODE_DEF = "SELECT COUNT(j) FROM JMDN AS j WHERE j.JMDN_code = :" + JPQL_PARM_JMDN_CODE;
+    //指定したJMDN_codeのJMDNレコードを取得する
+    String Q_JMDN_GET_MINE_REGISTEREDBY_JMDN_CODE = ENTITY_JMDN + ".getMineRegisteredByJMDN_code";
+    String Q_JMDN_GET_MINE_REGISTEREDBY_JMDN_CODE_DEF = "SELECT j FROM JMDN AS j WHERE j.JMDN_code = :" + JPQL_PARM_JMDN_CODE;
 
 
 }

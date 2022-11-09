@@ -152,3 +152,22 @@ h1 a {
     margin: 0;
     padding: 0;
 }
+
+table#package_insert_list th {
+    font-weight: bold;
+    padding: 10px 2%
+}
+
+table#package_insert_list .packgeInsert_general_name {
+    width: 20%;
+    padding: 10px 2%;
+}
+
+table#package_insert_list .packgeInsert_device_name {
+    width: 20%;
+}
+
+table#package_insert_list .packgeInsert_actione {
+    width: 13%;
+}
+
