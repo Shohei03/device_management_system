@@ -131,9 +131,26 @@ public class PackageInsertAction extends ActionBase {
                 //一覧画面にリダイレクト
                 redirect(ForwardConst.ACT_PACK, ForwardConst.CMD_INDEX);
             }
-
         }
-
     }
 
+    /**
+     * 詳細画面を表示
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void show() throws ServletException, IOException {
+        //idを条件に添付文書データを取得する
+        PackageInsertView pv = service.findOne(toNumber(getRequestParam(AttributeConst.PACK_ID)));
+
+        if (pv == null) {
+            //該当の添付文書データが存在しない場合はエラー画面を表示
+            forward(ForwardConst.FW_ERR_UNKNOWN);
+        } else {
+            putRequestScope(AttributeConst.PACKAGE_INSERT, pv); //取得した添付文書データ
+
+            //詳細画面を表示
+            forward(ForwardConst.FW_PACK_SHOW);
+        }
+    }
 }

@@ -45,7 +45,7 @@ public enum AttributeConst {
     DEP_TV("TV検査室"),
 
     //添付文書
-    PACKAGE_INSERT("packegeInsert"),
+    PACKAGE_INSERT("packageInsert"),
     PACKEGE_INSERTS("packageInserts"),
     PACK_ID("id"),
     PACK_APP_NUM("approval_number"),

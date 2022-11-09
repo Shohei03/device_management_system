@@ -44,7 +44,7 @@ public class PackageInsertView {
     private String device_name;
 
     /**
-     * マンモグラフィ検査の可否
+     * 乳腺X線検査の可否
      */
     private String acceptability_of_Manma_exam;
 
@@ -64,7 +64,7 @@ public class PackageInsertView {
     private String acceptability_of_TV_exam;
 
     /**
-     * MR検査の可否
+     * MRI検査の可否
      */
     private String acceptability_of_MR_exam;
 
