@@ -40,41 +40,41 @@
 
 <label for="AttributeConst.PACK_X_RAY.getValue()">X線検査</label><br />
 <select name="${AttributeConst.PACK_X_RAY.getValue()}" id="${AttributeConst.PACK_X_RAY.getValue()}">
-    <option value="${AttributeConst.PACK_EXM_SAFE.getValue()}"<c:if test="${PackageInsert.acceptability_of_X_ray_exam.getValue() == AttributeConst.PACK_EXM_SAFE.getValue()}"> selected</c:if>>可能</option>
-    <option value="${AttributeConst.PACK_EXM_CONDITIONAL_SAFE.getValue()}"<c:if test="${PackageInsert.acceptability_of_X_ray_exam.getValue() == AttributeConst.PACK_EXM_CONDITIONAL_SAFE.getValue()}">selected</c:if>>条件付き可能</option>
-    <option value="${AttributeConst.PACK_EXM_UNSAFE.getValue()}"<c:if test="${PackageInsert.acceptability_of_X_ray_exam.getValue() == AttributeConst.PACK_EXM_UNSAFE.getValue()}"> selected</c:if>>不可能</option>
+    <option value="${AttributeConst.PACK_EXM_SAFE.getValue()}"<c:if test="${packageInsert.acceptability_of_X_ray_exam == AttributeConst.PACK_EXM_SAFE.getValue()}"> selected</c:if>>可能</option>
+    <option value="${AttributeConst.PACK_EXM_CONDITIONAL_SAFE.getValue()}"<c:if test="${packageInsert.acceptability_of_X_ray_exam == AttributeConst.PACK_EXM_CONDITIONAL_SAFE.getValue()}">selected</c:if>>条件付き可能</option>
+    <option value="${AttributeConst.PACK_EXM_UNSAFE.getValue()}"<c:if test="${packageInsert.acceptability_of_X_ray_exam == AttributeConst.PACK_EXM_UNSAFE.getValue()}"> selected</c:if>>不可能</option>
 </select>
 <br /><br />
 
 <label for="AttributeConst.PACK_CT.getValue()">CT検査</label><br />
 <select name="${AttributeConst.PACK_CT.getValue()}" id="${AttributeConst.PACK_CT.getValue()}">
-    <option value="${AttributeConst.PACK_EXM_SAFE.getValue()}"<c:if test="${PackageInsert.acceptability_of_CT_exam.getValue() == AttributeConst.PACK_EXM_SAFE.getValue()}"> selected</c:if>>可能</option>
-    <option value="${AttributeConst.PACK_EXM_CONDITIONAL_SAFE.getValue()}"<c:if test="${PackageInsert.acceptability_of_CT_exam.getValue() == AttributeConst.PACK_EXM_CONDITIONAL_SAFE.getValue()}">selected</c:if>>条件付き可能</option>
-    <option value="${AttributeConst.PACK_EXM_UNSAFE.getValue()}"<c:if test="${PackageInsert.acceptability_of_CT_exam.getValue() == AttributeConst.PACK_EXM_UNSAFE.getValue()}"> selected</c:if>>不可能</option>
+    <option value="${AttributeConst.PACK_EXM_SAFE.getValue()}"<c:if test="${packageInsert.acceptability_of_CT_exam == AttributeConst.PACK_EXM_SAFE.getValue()}"> selected</c:if>>可能</option>
+    <option value="${AttributeConst.PACK_EXM_CONDITIONAL_SAFE.getValue()}"<c:if test="${packageInsert.acceptability_of_CT_exam == AttributeConst.PACK_EXM_CONDITIONAL_SAFE.getValue()}">selected</c:if>>条件付き可能</option>
+    <option value="${AttributeConst.PACK_EXM_UNSAFE.getValue()}"<c:if test="${packageInsert.acceptability_of_CT_exam == AttributeConst.PACK_EXM_UNSAFE.getValue()}"> selected</c:if>>不可能</option>
 </select>
 <br /><br />
 
 <label for="AttributeConst.PACK_TV.getValue()">TV検査</label><br />
 <select name="${AttributeConst.PACK_TV.getValue()}" id="${AttributeConst.PACK_TV.getValue()}">
-    <option value="${AttributeConst.PACK_EXM_SAFE.getValue()}"<c:if test="${PackageInsert.acceptability_of_TV_exam.getValue() == AttributeConst.PACK_EXM_SAFE.getValue()}"> selected</c:if>>可能</option>
-    <option value="${AttributeConst.PACK_EXM_CONDITIONAL_SAFE.getValue()}"<c:if test="${PackageInsert.acceptability_of_TV_exam.getValue() == AttributeConst.PACK_EXM_CONDITIONAL_SAFE.getValue()}">selected</c:if>>条件付き可能</option>
-    <option value="${AttributeConst.PACK_EXM_UNSAFE.getValue()}"<c:if test="${PackageInsert.acceptability_of_TV_exam.getValue() == AttributeConst.PACK_EXM_UNSAFE.getValue()}"> selected</c:if>>不可能</option>
+    <option value="${AttributeConst.PACK_EXM_SAFE.getValue()}"<c:if test="${packageInsert.acceptability_of_TV_exam == AttributeConst.PACK_EXM_SAFE.getValue()}"> selected</c:if>>可能</option>
+    <option value="${AttributeConst.PACK_EXM_CONDITIONAL_SAFE.getValue()}"<c:if test="${packageInsert.acceptability_of_TV_exam == AttributeConst.PACK_EXM_CONDITIONAL_SAFE.getValue()}">selected</c:if>>条件付き可能</option>
+    <option value="${AttributeConst.PACK_EXM_UNSAFE.getValue()}"<c:if test="${packageInsert.acceptability_of_TV_exam == AttributeConst.PACK_EXM_UNSAFE.getValue()}"> selected</c:if>>不可能</option>
 </select>
 <br /><br />
 
 <label for="AttributeConst.PACK_Manma.getValue()">乳腺X線検査</label><br />
 <select name="${AttributeConst.PACK_Manma.getValue()}" id="${AttributeConst.PACK_Manma.getValue()}">
-    <option value="${AttributeConst.PACK_EXM_SAFE.getValue()}"<c:if test="${PackageInsert.acceptability_of_Manma_exam.getValue() == AttributeConst.PACK_EXM_SAFE.getValue()}"> selected</c:if>>可能</option>
-    <option value="${AttributeConst.PACK_EXM_CONDITIONAL_SAFE.getValue()}"<c:if test="${PackageInsert.acceptability_of_Manma_exam.getValue() == AttributeConst.PACK_EXM_CONDITIONAL_SAFE.getValue()}">selected</c:if>>条件付き可能</option>
-    <option value="${AttributeConst.PACK_EXM_UNSAFE.getValue()}"<c:if test="${PackageInsert.acceptability_of_Manma_exam.getValue() == AttributeConst.PACK_EXM_UNSAFE.getValue()}"> selected</c:if>>不可能</option>
+    <option value="${AttributeConst.PACK_EXM_SAFE.getValue()}"<c:if test="${packageInsert.acceptability_of_Manma_exam == AttributeConst.PACK_EXM_SAFE.getValue()}"> selected</c:if>>可能</option>
+    <option value="${AttributeConst.PACK_EXM_CONDITIONAL_SAFE.getValue()}"<c:if test="${packageInsert.acceptability_of_Manma_exam == AttributeConst.PACK_EXM_CONDITIONAL_SAFE.getValue()}">selected</c:if>>条件付き可能</option>
+    <option value="${AttributeConst.PACK_EXM_UNSAFE.getValue()}"<c:if test="${packageInsert.acceptability_of_Manma_exam == AttributeConst.PACK_EXM_UNSAFE.getValue()}"> selected</c:if>>不可能</option>
 </select>
 <br /><br />
 
 <label for="AttributeConst.PACK_MRI.getValue()">MRI検査</label><br />
 <select name="${AttributeConst.PACK_MRI.getValue()}" id="${AttributeConst.PACK_MRI.getValue()}">
-    <option value="${AttributeConst.PACK_EXM_SAFE.getValue()}"<c:if test="${PackageInsert.acceptability_of_MR_exam.getValue() == AttributeConst.PACK_EXM_SAFE.getValue()}"> selected</c:if>>可能</option>
-    <option value="${AttributeConst.PACK_EXM_CONDITIONAL_SAFE.getValue()}"<c:if test="${PackageInsert.acceptability_of_MR_exam.getValue() == AttributeConst.PACK_EXM_CONDITIONAL_SAFE.getValue()}">selected</c:if>>条件付き可能</option>
-    <option value="${AttributeConst.PACK_EXM_UNSAFE.getValue()}"<c:if test="${PackageInsert.acceptability_of_MR_exam.getValue() == AttributeConst.PACK_EXM_UNSAFE.getValue()}"> selected</c:if>>不可能</option>
+    <option value="${AttributeConst.PACK_EXM_SAFE.getValue()}"<c:if test="${packageInsert.acceptability_of_MR_exam == AttributeConst.PACK_EXM_SAFE.getValue()}"> selected</c:if>>可能</option>
+    <option value="${AttributeConst.PACK_EXM_CONDITIONAL_SAFE.getValue()}"<c:if test="${packageInsert.acceptability_of_MR_exam == AttributeConst.PACK_EXM_CONDITIONAL_SAFE.getValue()}">selected</c:if>>条件付き可能</option>
+    <option value="${AttributeConst.PACK_EXM_UNSAFE.getValue()}"<c:if test="${packageInsert.acceptability_of_MR_exam == AttributeConst.PACK_EXM_UNSAFE.getValue()}"> selected</c:if>>不可能</option>
 </select>
 <br /><br />
 

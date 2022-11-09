@@ -153,4 +153,26 @@ public class PackageInsertAction extends ActionBase {
             forward(ForwardConst.FW_PACK_SHOW);
         }
     }
+
+    /**
+     * 編集画面を表示する
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void edit() throws ServletException, IOException {
+        //idを条件に添付文書データを取得する
+        PackageInsertView pv = service.findOne(toNumber(getRequestParam(AttributeConst.PACK_ID)));
+
+        if(pv == null) {
+            forward(ForwardConst.FW_ERR_UNKNOWN);
+        } else {
+            putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用
+            putRequestScope(AttributeConst.PACKAGE_INSERT, pv);  //取得した添付文書データ
+
+            //編集画面を表示
+            forward(ForwardConst.FW_PACK_EDIT);
+        }
+
+    }
+
 }

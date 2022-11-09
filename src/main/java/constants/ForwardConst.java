@@ -41,7 +41,8 @@ public enum ForwardConst {
     FW_REGI_TOP_INDEX("regi_topPage/index"),
     FW_PACK_INDEX("packageInserts/index"),
     FW_PACK_NEW("packageInserts/new"),
-    FW_PACK_SHOW("packageInserts/show");
+    FW_PACK_SHOW("packageInserts/show"),
+    FW_PACK_EDIT("packageInserts/edit");
 
 
     /**
