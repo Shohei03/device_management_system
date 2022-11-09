@@ -34,13 +34,29 @@
 <input type="text" name="${AttributeConst.PACK_DEV_NAME.getValue()}" id="${AttributeConst.PACK_DEV_NAME.getValue()}" value="${packageInsert.device_name}" />
 <br /><br />
 
-<label for="AttributeConst.PACK_MRI.getValue()">MRI適合性情報</label><br />
+<div>検査の可否</div>
+<label for="AttributeConst.PACK_X_RAY.getValue()">X線検査</label><br />
+<input type="text" name="${AttributeConst.PACK_X_RAY.getValue()}" id="${AttributeConst.PACK_X_RAY.getValue()}" value="${packageInsert.acceptability_of_X_ray_exam}" />
+<br /><br />
+
+<label for="AttributeConst.PACK_CT.getValue()">CT検査</label><br />
+<input type="text" name="${AttributeConst.PACK_CT.getValue()}" id="${AttributeConst.PACK_CT.getValue()}" value="${packageInsert.acceptability_of_CT_exam}" />
+<br /><br />
+
+<label for="AttributeConst.PACK_TV.getValue()">TV検査</label><br />
+<input type="text" name="${AttributeConst.PACK_TV.getValue()}" id="${AttributeConst.PACK_TV.getValue()}" value="${packageInsert.acceptability_of_TV_exam}" />
+<br /><br />
+
+<label for="AttributeConst.PACK_Manma.getValue()">乳腺X線検査</label><br />
+<input type="text" name="${AttributeConst.PACK_Manma.getValue()}" id="${AttributeConst.PACK_Manma.getValue()}" value="${packageInsert.acceptability_of_Manma_exam}" />
+<br /><br />
+
+
+<label for="AttributeConst.PACK_MRI.getValue()">MRI検査</label><br />
 <input type="text" name="${AttributeConst.PACK_MRI.getValue()}" id="${AttributeConst.PACK_MRI.getValue()}" value="${packageInsert.acceptability_of_MR_exam}" />
 <br /><br />
 
-<label for="AttributeConst.PACK_MR_STR.getValue()">MRI 装置制限</label><br />
-<input type="text" name="${AttributeConst.PACK_MR_STR.getValue()}" id="${AttributeConst.PACK_MR_STR.getValue()}" value="${packageInsert.MR_magnetic_field_strength}" />
-<br /><br />
+
 
 <input type="hidden" name="${AttributeConst.PACK_ID.getValue()}" value="${packageInsert.id}" />
 <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}" />

@@ -56,7 +56,8 @@ public class PackageInsert {
      */
     @ManyToOne
     @JoinColumn(name = JpaConst.PACK_COL_JMDN, nullable = false)
-    private JMDN jmdn;
+    private Jmdn jmdn;
+
 
     /**
      * デバイスの販売名
@@ -65,7 +66,7 @@ public class PackageInsert {
     private String device_name;
 
     /**
-     * マンモグラフィ検査の可否
+     * 乳腺X線検査の可否
      */
     @Column(name = JpaConst.PACK_COL_Manma)
     private String acceptability_of_Manma_exam;
@@ -93,12 +94,6 @@ public class PackageInsert {
      */
     @Column(name = JpaConst.PACK_COL_MRI)
     private String acceptability_of_MR_exam;
-
-    /**
-     * MR静磁場強度制限
-     */
-    @Column(name = JpaConst.PACK_COL_MR_STR)
-    private Double MR_magnetic_field_strength;
 
     /**
      * 登録日

@@ -3,10 +3,11 @@ package services;
 import java.time.LocalDate;
 import java.util.List;
 
+import actions.views.JMDNConverter;
 import actions.views.PackageInsertConverter;
 import actions.views.PackageInsertView;
 import constants.JpaConst;
-import models.JMDN;
+import models.Jmdn;
 import models.PackageInsert;
 import models.validators.PackageInsertValidator;
 
@@ -82,8 +83,8 @@ public class PackageInsertService extends ServiceBase {
      * 指定されたJMDN_CODEのJMDNインスタンスを取得
      *
      */
-    public JMDN findJMDN(String JMDN_code) {
-        JMDN j = (JMDN) em.createNamedQuery(JpaConst.Q_JMDN_GET_MINE_REGISTEREDBY_JMDN_CODE, JMDN.class)
+    public Jmdn findJMDN(String JMDN_code) {
+        Jmdn j = (Jmdn) em.createNamedQuery(JpaConst.Q_JMDN_GET_MINE_REGISTEREDBY_JMDN_CODE, Jmdn.class)
                 .setParameter(JpaConst.JPQL_PARM_JMDN_CODE, JMDN_code)
                 .getSingleResult();
 
@@ -133,7 +134,6 @@ public class PackageInsertService extends ServiceBase {
         savedPack.setGeneral_name(pv.getGeneral_name()); //変更後の一般的名称を設定する
         savedPack.setDevice_name(pv.getDevice_name()); //変更後のデバイス名を設定する
         savedPack.setAcceptability_of_MR_exam(pv.getAcceptability_of_MR_exam()); //変更後のMR検査の可否を設定する
-        savedPack.setMR_magnetic_field_strength(pv.getMR_magnetic_field_strength()); //変更後のMR静磁場強度制限を設定する
 
         //登録日に現在の日付を設定する
         LocalDate today = LocalDate.now();
@@ -166,6 +166,7 @@ public class PackageInsertService extends ServiceBase {
     private void createInternal(PackageInsertView pv) {
 
         em.getTransaction().begin();
+        em.persist(JMDNConverter.toModel(pv));
         em.persist(PackageInsertConverter.toModel(pv));
         em.getTransaction().commit();
 

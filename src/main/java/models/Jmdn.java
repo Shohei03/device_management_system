@@ -14,24 +14,25 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 /**
 *
 * 従業員データのDTOモデル
 *
 */
+
 @Table(name = JpaConst.TABLE_JMDN)
+
 @NamedQueries({
         @NamedQuery(name = JpaConst.Q_JMDN_COUNT_REGISTEREDBY_JMDN_CODE, query = JpaConst.Q_JMDN_COUNT_REGISTEREDBY_JMDN_CODE_DEF),
         @NamedQuery(name = JpaConst.Q_JMDN_GET_MINE_REGISTEREDBY_JMDN_CODE, query = JpaConst.Q_JMDN_GET_MINE_REGISTEREDBY_JMDN_CODE_DEF)
-
 })
-@Getter //全てのクラスフィールドについてgetterを自動生成する(Lombok)
-@Setter //全てのクラスフィールドについてsetterを自動生成する(Lombok)
-@NoArgsConstructor //引数なしコンストラクタを自動生成する(Lombok)
-@AllArgsConstructor //全てのクラスフィールドを引数にもつ引数ありコンストラクタを自動生成する(Lombok)
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-public class JMDN {
+public class Jmdn {
     /**
      * id
      */
@@ -43,13 +44,13 @@ public class JMDN {
     /**
      * JMDNコード
      */
-    @Column(name = JpaConst.JMDN_COL_CODE, nullable = false, unique = true)
+    @Column(name = JpaConst.JMDN_COL_CODE, nullable = false)
     private String JMDN_code;
 
     /**
      * 一般的名称
      */
-    @Column(name = JpaConst.JMDN_COL_GENE_NAME, nullable = false, unique = true)
+    @Column(name = JpaConst.JMDN_COL_GENE_NAME, nullable = false)
     private String general_name;
 
 }

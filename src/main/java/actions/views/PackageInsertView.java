@@ -69,11 +69,6 @@ public class PackageInsertView {
     private String acceptability_of_MR_exam;
 
     /**
-     * MR静磁場強度制限
-     */
-    private Double MR_magnetic_field_strength;
-
-    /**
      * 登録日時
      */
     private LocalDate createdAt;

@@ -53,10 +53,10 @@ public interface JpaConst {
 
 
     //添付文書テーブル
-    String TABLE_JMDN = "JMDN";  //テーブル名
+    String TABLE_JMDN = "jmdns";  //テーブル名
     //JMDNテーブルカラム
     String JMDN_COL_ID ="id";  //id
-    String JMDN_COL_CODE = "JMDN_code"; //JMDNコード
+    String JMDN_COL_CODE = "jmdn_code"; //JMDNコード
     String JMDN_COL_GENE_NAME = "general name";  //一般的名称
 
 
@@ -64,7 +64,7 @@ public interface JpaConst {
     //Entity名
     String ENTITY_EMP = "employee"; //従業員
     String ENTITY_PACK = "package_insert";  //添付文書
-    String ENTITY_JMDN = "JMDN";  //JMDN
+    String ENTITY_JMDN = "jmdn";  //JMDN
 
     //JPQL内パラメータ
     String JPQL_PARM_CODE = "code"; //社員番号
@@ -99,10 +99,10 @@ public interface JpaConst {
 
     //指定したJMDNの件数を取得する
     String Q_JMDN_COUNT_REGISTEREDBY_JMDN_CODE = ENTITY_JMDN + ".countRegisteredByJMDN_code";
-    String Q_JMDN_COUNT_REGISTEREDBY_JMDN_CODE_DEF = "SELECT COUNT(j) FROM JMDN AS j WHERE j.JMDN_code = :" + JPQL_PARM_JMDN_CODE;
+    String Q_JMDN_COUNT_REGISTEREDBY_JMDN_CODE_DEF = "SELECT COUNT(j) FROM Jmdn AS j WHERE j.JMDN_code = :" + JPQL_PARM_JMDN_CODE;
     //指定したJMDN_codeのJMDNレコードを取得する
     String Q_JMDN_GET_MINE_REGISTEREDBY_JMDN_CODE = ENTITY_JMDN + ".getMineRegisteredByJMDN_code";
-    String Q_JMDN_GET_MINE_REGISTEREDBY_JMDN_CODE_DEF = "SELECT j FROM JMDN AS j WHERE j.JMDN_code = :" + JPQL_PARM_JMDN_CODE;
+    String Q_JMDN_GET_MINE_REGISTEREDBY_JMDN_CODE_DEF = "SELECT j FROM Jmdn AS j WHERE j.JMDN_code = :" + JPQL_PARM_JMDN_CODE;
 
 
 }
