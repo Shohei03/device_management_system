@@ -12,7 +12,7 @@
     </div>
 </c:if>
 
-<fmt:parseDate value="${packegeInsert.createdAt}" pattern="yyyy-MM-dd" var="createdAtDay" type="date" />
+<fmt:parseDate value="${packageInsert.createdAt}" pattern="yyyy-MM-dd" var="createdAtDay" type="date" />
 <label for="${AttributeConst.PACK_DATE.getValue()}">日付</label><br />
 <input type="date" name="${AttributeConst.PACK_DATE.getValue()}" id="${AttributeConst.PACK_DATE.getValue()}" value="<fmt:formatDate value='${createdAtDay}' pattern='yyyy-MM-dd' />" />
 <br /><br />

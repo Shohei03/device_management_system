@@ -4,6 +4,8 @@
 <%@ page import="constants.ForwardConst" %>
 
 <c:set var="actPack" value="${ForwardConst.ACT_PACK.getValue()}" />
+<c:set var="actSearch" value="${ForwardConst.ACT_SEARCH.getValue()}" />
+<c:set var="actRegi_top" value="${ForwardConst.ACT_REGI_TOP.getValue()}" />
 <c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
 <c:set var="commShow" value="${ForwardConst.CMD_SHOW.getValue()}" />
 <c:set var="commNew" value="${ForwardConst.CMD_NEW.getValue()}" />
@@ -48,5 +50,9 @@
             </c:forEach>
         </div>
         <p><a href="<c:url value='?action=${actPack}&command=${commNew}' />">添付文書の登録</a></p>
+        <p><a href="<c:url value='?action=${actSearch}&command=${commIdx}' />">検索画面に移動</a></p>
+        <p><a href="<c:url value='?action=${actRegi_top}&command=${commIdx}' />">登録トップ画面に移動</a></p>
+
+
     </c:param>
 </c:import>

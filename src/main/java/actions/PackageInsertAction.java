@@ -163,16 +163,63 @@ public class PackageInsertAction extends ActionBase {
         //idを条件に添付文書データを取得する
         PackageInsertView pv = service.findOne(toNumber(getRequestParam(AttributeConst.PACK_ID)));
 
-        if(pv == null) {
+        if (pv == null) {
             forward(ForwardConst.FW_ERR_UNKNOWN);
         } else {
             putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用
-            putRequestScope(AttributeConst.PACKAGE_INSERT, pv);  //取得した添付文書データ
+            putRequestScope(AttributeConst.PACKAGE_INSERT, pv); //取得した添付文書データ
 
             //編集画面を表示
             forward(ForwardConst.FW_PACK_EDIT);
         }
+    }
 
+    /**
+     * 更新を行う
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void update() throws ServletException, IOException {
+        //CSRF対策 tokenチェック
+        if (checkToken()) {
+            //idを条件に添付文書データを取得する
+            PackageInsertView pv = service.findOne(toNumber(getRequestParam(AttributeConst.PACK_ID)));
+
+            //入力された添付文書内容を設定する
+            pv.setCreatedAt(toLocalDate(getRequestParam(AttributeConst.PACK_DATE)));
+            pv.setApproval_number(getRequestParam(AttributeConst.PACK_APP_NUM));
+            pv.setJMDN_code(getRequestParam(AttributeConst.PACK_JMDN));
+            pv.setGeneral_name(getRequestParam(AttributeConst.PACK_GENERAL_NAME));
+            pv.setDevice_name(getRequestParam(AttributeConst.PACK_DEV_NAME));
+            pv.setAcceptability_of_Manma_exam(getRequestParam(AttributeConst.PACK_Manma));
+            pv.setAcceptability_of_X_ray_exam(getRequestParam(AttributeConst.PACK_X_RAY));
+            pv.setAcceptability_of_CT_exam(getRequestParam(AttributeConst.PACK_CT));
+            pv.setAcceptability_of_TV_exam(getRequestParam(AttributeConst.PACK_TV));
+            pv.setAcceptability_of_MR_exam(getRequestParam(AttributeConst.PACK_MRI));
+
+            //添付文書データを更新する
+            List<String> errors = service.update(pv);
+
+            if (errors.size() > 0) {
+                //更新中にエラーが発生した場合
+
+                putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
+                putRequestScope(AttributeConst.PACKAGE_INSERT, pv); //入力された添付文書情報
+                putRequestScope(AttributeConst.ERR, errors); //エラーのリスト
+
+                //編集画面を再表示
+                forward(ForwardConst.FW_PACK_EDIT);
+            } else {
+                //更新中にエラーがなかった場合
+
+                //セッションに更新完了のフラッシュメッセージを設定
+                putSessionScope(AttributeConst.FLUSH, MessageConst.I_UPDATED.getMessage());
+
+                //一覧画面にリダイレクト
+                redirect(ForwardConst.ACT_PACK, ForwardConst.CMD_INDEX);
+            }
+
+        }
     }
 
 }
