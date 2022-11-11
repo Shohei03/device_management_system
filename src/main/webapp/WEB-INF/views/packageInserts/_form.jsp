@@ -12,6 +12,9 @@
     </div>
 </c:if>
 
+
+<br /><br />
+
 <fmt:parseDate value="${packageInsert.createdAt}" pattern="yyyy-MM-dd" var="createdAtDay" type="date" />
 <label for="${AttributeConst.PACK_DATE.getValue()}">日付</label><br />
 <input type="date" name="${AttributeConst.PACK_DATE.getValue()}" id="${AttributeConst.PACK_DATE.getValue()}" value="<fmt:formatDate value='${createdAtDay}' pattern='yyyy-MM-dd' />" />
@@ -82,7 +85,4 @@
 <input type="hidden" name="${AttributeConst.PACK_ID.getValue()}" value="${packageInsert.id}" />
 <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}" />
 <button type="submit">登録</button>
-
-
-
 

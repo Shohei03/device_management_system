@@ -25,7 +25,8 @@ public enum MessageConst {
     E_NOJMDN_CODE("添付文書のJMDNコードを入力してください。"),
     E_NOGENERAL_NAME("添付文書の一般的名称を入力してください。"),
     E_NODEVICE_NAME("添付文書のデバイス名（販売名）を入力してください。"),
-    E_DEVICE_EXIST("入力されたデバイスは登録済みです。");
+    E_DEVICE_EXIST("入力されたデバイスは登録済みです。"),
+    E_NODATA("データが選択されていません。");
 
 
     /**

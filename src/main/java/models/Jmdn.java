@@ -50,7 +50,7 @@ public class Jmdn {
     /**
      * 一般的名称
      */
-    @Column(name = JpaConst.JMDN_COL_GENE_NAME, nullable = false, unique = true)
+    @Column(name = JpaConst.JMDN_COL_GENE_NAME, nullable = false)
     private String general_name;
 
 }

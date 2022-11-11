@@ -22,7 +22,7 @@ public class PackageInsertConverter {
         return new PackageInsert(
                 pv.getId(),
                 pv.getApproval_number(),
-                JMDNConverter.toModel(pv),
+                JMDNConverter.toModel_FROM_PACK(pv),
                 pv.getDevice_name(),
                 pv.getAcceptability_of_Manma_exam(),
                 pv.getAcceptability_of_X_ray_exam(),
@@ -78,7 +78,7 @@ public class PackageInsertConverter {
     public static void copyViewToModel(PackageInsert p, PackageInsertView pv) {
         p.setId(pv.getId());
         p.setApproval_number(pv.getApproval_number());
-        p.setJmdn(JMDNConverter.toModel(pv));
+        p.setJmdn(JMDNConverter.toModel_FROM_PACK(pv));
         p.setDevice_name(pv.getDevice_name());
         p.setAcceptability_of_Manma_exam(pv.getAcceptability_of_Manma_exam());
         p.setAcceptability_of_X_ray_exam(pv.getAcceptability_of_X_ray_exam());

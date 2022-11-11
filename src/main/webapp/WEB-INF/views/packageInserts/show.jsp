@@ -14,7 +14,7 @@
         <table>
             <tbody>
                 <tr>
-                    <th>添付文書番号</th>
+                    <th>医療機器承認番号</th>
                     <td><c:out value="${packageInsert.approval_number}" /></td>
                 </tr>
                 <tr>

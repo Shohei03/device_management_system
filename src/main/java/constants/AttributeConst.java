@@ -46,10 +46,11 @@ public enum AttributeConst {
 
     //添付文書
     PACKAGE_INSERT("packageInsert"),
+    PACKAGE_INSERT_LIST("packageInsertList"),
     PACKEGE_INSERTS("packageInserts"),
     PACK_ID("id"),
-    PACK_APP_NUM("approval_number"),
-    PACK_JMDN("JMDN_code"),
+    PACK_APP_NUM("approval_number"),  //医療機器承認番号
+    PACK_JMDN("JMDN_code"),  //JMDNコード
     PACK_GENERAL_NAME("general_name"),
     PACK_DEV_NAME("device_name"),
     PACK_MR_STR("MR_magnetic_field_strength"),
@@ -63,6 +64,10 @@ public enum AttributeConst {
     PACK_EXM_SAFE("可能"),  //検査可能
     PACK_EXM_CONDITIONAL_SAFE("条件付き可能"),  //検査条件付き可
     PACK_EXM_UNSAFE("不可能"),  //検査不可
+    PACK_CSV("csv"),
+    PACK_INDEX("index_num"),
+    PACK_ERR("pack_err"),  //エラーが生じたデバイス名
+
 
 
 

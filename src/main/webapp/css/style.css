@@ -171,3 +171,19 @@ table#package_insert_list .packgeInsert_actione {
     width: 13%;
 }
 
+table#csv_list {
+    word-wrap: break-word;
+    table-layout: fixed;
+    font-size: 12px;
+}
+
+.csvPack_approval_number{
+    width:170px;
+}
+
+.csvPack_JMDN_code{
+    width:120px;
+}
+
+
+

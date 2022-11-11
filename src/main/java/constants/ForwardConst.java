@@ -29,6 +29,10 @@ public enum ForwardConst {
     CMD_EDIT("edit"),
     CMD_UPDATE("update"),
     CMD_DESTROY("destroy"),
+    CMD_CSV_IMPORT("csvImport"),
+    CMD_CSV_ALL_IMPORT("csvAllImport"),
+    CMD_CSV_MODIFY("csvModify"),
+    CMD_CSV_ALL_CREATE("csvAllCreate"),
 
     //jsp
     FW_ERR_UNKNOWN("error/unknown"),
@@ -42,7 +46,8 @@ public enum ForwardConst {
     FW_PACK_INDEX("packageInserts/index"),
     FW_PACK_NEW("packageInserts/new"),
     FW_PACK_SHOW("packageInserts/show"),
-    FW_PACK_EDIT("packageInserts/edit");
+    FW_PACK_EDIT("packageInserts/edit"),
+    FW_PACK_CSV_CHECK("packageInserts/csv_check");
 
 
     /**

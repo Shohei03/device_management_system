@@ -10,6 +10,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 import constants.AttributeConst;
 import constants.ForwardConst;
@@ -198,6 +199,16 @@ public abstract class ActionBase {
     }
 
     /**
+     * リクエストパラメータから引数で指定したパラメータ名の値を返却する
+     * @param key パラメータ名
+     * @return パラメータの値
+     */
+    protected Part getRequestPart(AttributeConst key) throws ServletException, IOException {
+        return request.getPart(key.getValue());
+    }
+
+
+    /**
      * セッションスコープから指定されたパラメータの値を取得し、返却する
      * @param key パラメータ名
      * @return パラメータの値
@@ -233,6 +244,7 @@ public abstract class ActionBase {
     protected <R> R getContextScope(PropertyConst key) {
         return (R) context.getAttribute(key.getValue());
     }
+
 
 
 }

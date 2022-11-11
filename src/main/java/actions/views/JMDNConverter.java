@@ -15,6 +15,15 @@ public class JMDNConverter {
      * @return JMDNのインスタンス
      */
     public static Jmdn toModel(PackageInsertView pv) {
+
+        Jmdn j = new Jmdn(null, pv.getJMDN_code(), pv.getGeneral_name());
+
+        return j;
+
+    }
+
+    public static Jmdn toModel_FROM_PACK(PackageInsertView pv) {
+
         PackageInsertService service = new PackageInsertService();
 
         return service.findJMDN(pv.getJMDN_code());

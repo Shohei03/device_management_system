@@ -9,6 +9,7 @@
 <c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
 <c:set var="commShow" value="${ForwardConst.CMD_SHOW.getValue()}" />
 <c:set var="commNew" value="${ForwardConst.CMD_NEW.getValue()}" />
+<c:set var="commCSVAllImp" value="${ForwardConst.CMD_CSV_ALL_IMPORT.getValue()}" />
 
 <c:import url="/WEB-INF/views/layout/app.jsp">
     <c:param name="content">
@@ -17,7 +18,18 @@
                 <c:out value="${flush}"></c:out>
             </div>
         </c:if>
+
         <h2>添付文書一覧</h2>
+
+        <form enctype="multipart/form-data" method="POST" action="<c:url value='?action=${actPack}&command=${commCSVAllImp}' />" >
+            <p>複数データCSV読込
+                <input name="csv" type="file" required/>→→
+                <input type="submit" value="読込" /><br />
+            </p>
+        </form>
+
+
+
         <table id="package_insert_list">
             <tbody>
                 <tr>
@@ -37,7 +49,7 @@
         </table>
 
         <div id="pagination">
-            （全 ${packageInserts_count} 件）<br />
+            （全 ${packageInsertsCount} 件）<br />
             <c:forEach var="i" begin="1" end="${((packageInserts_count - 1) / maxRow) + 1}" step="1">
                 <c:choose>
                     <c:when test="${i == page}">
@@ -49,10 +61,10 @@
                 </c:choose>
             </c:forEach>
         </div>
+
         <p><a href="<c:url value='?action=${actPack}&command=${commNew}' />">添付文書の登録</a></p>
         <p><a href="<c:url value='?action=${actSearch}&command=${commIdx}' />">検索画面に移動</a></p>
         <p><a href="<c:url value='?action=${actRegi_top}&command=${commIdx}' />">登録トップ画面に移動</a></p>
-
 
     </c:param>
 </c:import>

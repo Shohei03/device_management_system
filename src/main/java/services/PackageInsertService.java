@@ -71,11 +71,11 @@ public class PackageInsertService extends ServiceBase {
      * @return 該当するデータの件数
      */
     public long countByJMDN_CODE(String JMDN_code) {
-
         //指定したJMDNの件数を取得する
         long JMDN_CODECount = (long) em.createNamedQuery(JpaConst.Q_JMDN_COUNT_REGISTEREDBY_JMDN_CODE, Long.class)
                 .setParameter(JpaConst.JPQL_PARM_JMDN_CODE, JMDN_code)
                 .getSingleResult();
+
         return JMDN_CODECount;
     }
 
@@ -100,6 +100,8 @@ public class PackageInsertService extends ServiceBase {
     public List<String> create(PackageInsertView pv) {
         List<String> errors = PackageInsertValidator.validate(this, pv, true);
         PackageInsertService service = new PackageInsertService();
+
+        System.out.println(errors);
 
         //バリデーションエラーがなければデータを登録する
         if (errors.size() == 0) {
@@ -134,7 +136,6 @@ public class PackageInsertService extends ServiceBase {
             validateApproval_number = true;
             //変更後の添付文書番号を設定する
             savedPack.setApproval_number(pv.getApproval_number());
-
         }
 
         savedPack.setJMDN_code(pv.getJMDN_code()); //変更後のJMDNコードを設定する
@@ -150,6 +151,7 @@ public class PackageInsertService extends ServiceBase {
         List<String> errors = PackageInsertValidator.validate(this, savedPack, validateApproval_number);
 
         if (errors.size() == 0) {
+            updateInternal_JMDN(pv);
             updateInternal(pv);
         }
 
@@ -166,7 +168,10 @@ public class PackageInsertService extends ServiceBase {
         return em.find(PackageInsert.class, id);
     }
 
-    //////////////////////////////////
+    /**
+     * JMDNデータを1件登録する
+     * @param pv 添付文書データ
+     */
     private void createInternalJMDN(PackageInsertView pv) {
 
         em.getTransaction().begin();
@@ -188,6 +193,21 @@ public class PackageInsertService extends ServiceBase {
     }
 
     /**
+     * JMDNデータを1件更新する
+     * @param pv 添付文書データ
+     */
+    private void updateInternal_JMDN(PackageInsertView pv) {
+        //JMDNコードがJMDNデータベースにない場合のみ、登録処理
+
+        if ((countByJMDN_CODE(pv.getJMDN_code())) == 0) {
+            em.getTransaction().begin();
+            em.persist(JMDNConverter.toModel(pv));
+            em.getTransaction().commit();
+        }
+
+    }
+
+    /**
      * 添付文書データを更新する
      * @param pv 添付文書データ
      */
@@ -197,7 +217,6 @@ public class PackageInsertService extends ServiceBase {
         PackageInsert p = findOneInternal(pv.getId());
         PackageInsertConverter.copyViewToModel(p, pv);
         em.getTransaction().commit();
-
     }
 
 }

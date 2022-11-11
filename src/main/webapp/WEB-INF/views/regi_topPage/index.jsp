@@ -1,7 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page import="constants.ForwardConst" %>
 
+<c:set var="actPack" value="${ForwardConst.ACT_PACK.getValue()}" />
+<c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
 
 <c:import url="../layout/app.jsp">
     <c:param name="content">
@@ -16,7 +19,7 @@
             <a>患者のデバイス情報</a>
         </div>
         <div class="regi_top_item">
-            <a>添付文書情報</a>
+            <a href="<c:url value='?action=${actPack}&command=${commIdx}' />">添付文書情報</a>
         </div>
         <div class="regi_top_item">
             <a>検査情報</a>

@@ -1,10 +1,16 @@
 package actions;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.http.Part;
 
 import actions.views.PackageInsertView;
 import constants.AttributeConst;
@@ -17,6 +23,7 @@ import services.PackageInsertService;
  * 添付文書に関する処理を行うActionクラス
  *
  */
+@MultipartConfig
 public class PackageInsertAction extends ActionBase {
 
     private PackageInsertService service;
@@ -56,6 +63,13 @@ public class PackageInsertAction extends ActionBase {
         if (flush != null) {
             putRequestScope(AttributeConst.FLUSH, flush);
             removeSessionScope(AttributeConst.FLUSH);
+        }
+
+        //セッションにエラーメッセージが設定されている場合はリクエストスコープに移し替え、セッションからは削除する
+        String error = getSessionScope(AttributeConst.ERR);
+        if (error != null) {
+            putRequestScope(AttributeConst.ERR, error);
+            removeSessionScope(AttributeConst.ERR);
         }
 
         //一覧画面を表示
@@ -211,7 +225,6 @@ public class PackageInsertAction extends ActionBase {
                 forward(ForwardConst.FW_PACK_EDIT);
             } else {
                 //更新中にエラーがなかった場合
-
                 //セッションに更新完了のフラッシュメッセージを設定
                 putSessionScope(AttributeConst.FLUSH, MessageConst.I_UPDATED.getMessage());
 
@@ -222,4 +235,172 @@ public class PackageInsertAction extends ActionBase {
         }
     }
 
+    /**
+     * CSVデータ（1レコード）を取り込む
+     * @throws ServletException
+     * @throws IOException
+     */
+
+    public void csvImport() throws ServletException, IOException {
+        Part filePart = getRequestPart(AttributeConst.PACK_CSV);
+        PackageInsertView pv = null;
+        System.out.println(filePart);
+
+        // csv読み込み
+        try (InputStream is = filePart.getInputStream();
+                InputStreamReader isr = new InputStreamReader(is, "Shift-JIS");
+                BufferedReader br = new BufferedReader(isr);) {
+
+            String line;
+
+            line = br.readLine();
+            String[] data = line.split(",");
+
+            pv = new PackageInsertView(
+                    null,
+                    data[0].trim(),
+                    data[1].trim(),
+                    data[2].trim(),
+                    data[3].trim(),
+                    data[4].trim(),
+                    data[5].trim(),
+                    data[6].trim(),
+                    data[7].trim(),
+                    data[8].trim(),
+                    LocalDate.now());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //ファイルが読み込めなかった場合の処理
+        if (pv == null) {
+            putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用
+            putRequestScope(AttributeConst.ERR, "csvファイルを読み込めませんでした");
+            //新規作成画面にcsv取り込みデータを表示
+            forward(ForwardConst.FW_PACK_NEW);
+        }
+
+        putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用
+        putRequestScope(AttributeConst.PACKAGE_INSERT, pv); //取得した添付文書データ
+
+        //新規作成画面にcsv取り込みデータを表示
+        forward(ForwardConst.FW_PACK_NEW);
+    }
+
+    /**
+     * csvデータ（複数レコード）をまとめて取り込む
+     * @throws ServletException
+     * @throws IOException
+     */
+
+    public void csvAllImport() throws ServletException, IOException {
+
+        Part filePart = getRequestPart(AttributeConst.PACK_CSV);
+        PackageInsertView pv = null;
+        List<PackageInsertView> pv_list = new ArrayList<>();
+
+        // csv読み込み
+        try (InputStream is = filePart.getInputStream();
+                InputStreamReader isr = new InputStreamReader(is, "Shift-JIS");
+                BufferedReader br = new BufferedReader(isr);) {
+
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] data = line.split(",");
+
+                pv = new PackageInsertView(
+                        null,
+                        data[0].trim(),
+                        data[1].trim(),
+                        data[2].trim(),
+                        data[3].trim(),
+                        data[4].trim(),
+                        data[5].trim(),
+                        data[6].trim(),
+                        data[7].trim(),
+                        data[8].trim(),
+                        LocalDate.now());
+                pv_list.add(pv);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        putSessionScope(AttributeConst.PACKAGE_INSERT_LIST, pv_list);
+
+        //csv取り込みデータ確認画面を表示
+        forward(ForwardConst.FW_PACK_CSV_CHECK);
+    }
+
+    /**
+     * 取り込んだCSVデータの中で不要なレコードを消去
+     * @throws ServletException
+     * @throws IOException
+     */
+
+    public void csvModify() throws ServletException, IOException {
+        //セッションからcsvで取り込んだ添付文書データリストを取得
+        List<PackageInsertView> pv_list = getSessionScope(AttributeConst.PACKAGE_INSERT_LIST);
+
+        //csvの取り込みをやめたいレコードのindex番号を取得
+        int index_num = toNumber(getRequestParam(AttributeConst.PACK_INDEX));
+
+        System.out.println(index_num);
+
+        //セッションスコープからcsvで取り込んだ添付文書リストを削除
+        if (!(pv_list == null)) {
+            //index番号を指定して、csvの取り込みをやめたいレコードを削除
+            pv_list.remove(index_num);
+            removeSessionScope(AttributeConst.PACKAGE_INSERT_LIST);
+            putSessionScope(AttributeConst.PACKAGE_INSERT_LIST, pv_list);
+        }
+
+        //csv取り込みデータ確認画面を表示
+        forward(ForwardConst.FW_PACK_CSV_CHECK);
+
+    }
+
+    /**
+     * 取り込んだCSVデータを取り込み
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void csvAllCreate() throws ServletException, IOException {
+        //セッションからcsvで取り込んだ添付文書データリストを取得
+        List<PackageInsertView> pv_list = getSessionScope(AttributeConst.PACKAGE_INSERT_LIST);
+
+        if (pv_list == null) {
+            putSessionScope(AttributeConst.ERR, MessageConst.E_NODATA.getMessage());
+            //csv取り込みデータ確認画面に戻る
+            forward(ForwardConst.FW_PACK_CSV_CHECK);
+        }
+
+        for (PackageInsertView pv : pv_list) {
+
+            //添付文書情報を登録
+            List<String> errors = service.create(pv);
+
+            if (errors.size() > 0) {
+                //登録中にエラーがあった場合
+                putRequestScope(AttributeConst.PACK_ERR, pv.getDevice_name()); //エラーが生じた添付文章のデバイス名
+                putRequestScope(AttributeConst.ERR, errors); //エラーリスト
+
+                //csv取り込みデータ確認画面に戻る
+                forward(ForwardConst.FW_PACK_CSV_CHECK);
+
+            }
+
+        }
+        //登録中にエラーがなかった場合
+
+        //セッションから添付文書リストを削除
+        removeSessionScope(AttributeConst.PACKAGE_INSERT_LIST);
+
+        //セッションに登録完了のフラッシュメッセージを設定
+        putSessionScope(AttributeConst.FLUSH, MessageConst.I_REGISTERED.getMessage());
+
+        //一覧画面にリダイレクト
+        redirect(ForwardConst.ACT_PACK, ForwardConst.CMD_INDEX);
+    }
 }
