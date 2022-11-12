@@ -46,6 +46,7 @@ public class PackageInsertAction extends ActionBase {
      * @throws IOException
      */
     public void index() throws ServletException, IOException {
+
         //指定されたページ数の一覧画面に表示する添付文書データを取得
         int page = getPage();
         List<PackageInsertView> packageInserts = service.getAllPerPage(page);
@@ -71,7 +72,6 @@ public class PackageInsertAction extends ActionBase {
             putRequestScope(AttributeConst.ERR, error);
             removeSessionScope(AttributeConst.ERR);
         }
-
         //一覧画面を表示
         forward(ForwardConst.FW_PACK_INDEX);
     }
@@ -82,6 +82,7 @@ public class PackageInsertAction extends ActionBase {
      * @throws IOException
      */
     public void entryNew() throws ServletException, IOException {
+
         putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策トークン
 
         //添付文書情報の空インスタンスに、登録日時＝今日の日時を設定する
@@ -100,6 +101,7 @@ public class PackageInsertAction extends ActionBase {
      * @throws IOException
      */
     public void create() throws ServletException, IOException {
+
         //CSRF対策 tokenのチェック
         if (checkToken()) {
             //日付が入力されていなければ、今日の日付を設定
@@ -108,9 +110,11 @@ public class PackageInsertAction extends ActionBase {
                     || getRequestParam(AttributeConst.PACK_DATE).equals("")) {
                 day = LocalDate.now();
             } else {
+                //入力されている場合はその日付を取得
                 day = LocalDate.parse(getRequestParam(AttributeConst.PACK_DATE));
             }
-            //パラメータの値をもとに添付文書のインスタンスを作成する
+
+            //パラメータの値をもとに添付文書（View）のインスタンスを作成する
             PackageInsertView pv = new PackageInsertView(
                     null,
                     getRequestParam(AttributeConst.PACK_APP_NUM),
@@ -154,6 +158,7 @@ public class PackageInsertAction extends ActionBase {
      * @throws IOException
      */
     public void show() throws ServletException, IOException {
+
         //idを条件に添付文書データを取得する
         PackageInsertView pv = service.findOne(toNumber(getRequestParam(AttributeConst.PACK_ID)));
 
@@ -174,6 +179,7 @@ public class PackageInsertAction extends ActionBase {
      * @throws IOException
      */
     public void edit() throws ServletException, IOException {
+
         //idを条件に添付文書データを取得する
         PackageInsertView pv = service.findOne(toNumber(getRequestParam(AttributeConst.PACK_ID)));
 
@@ -194,6 +200,7 @@ public class PackageInsertAction extends ActionBase {
      * @throws IOException
      */
     public void update() throws ServletException, IOException {
+
         //CSRF対策 tokenチェック
         if (checkToken()) {
             //idを条件に添付文書データを取得する
@@ -223,6 +230,7 @@ public class PackageInsertAction extends ActionBase {
 
                 //編集画面を再表示
                 forward(ForwardConst.FW_PACK_EDIT);
+
             } else {
                 //更新中にエラーがなかった場合
                 //セッションに更新完了のフラッシュメッセージを設定
@@ -240,11 +248,10 @@ public class PackageInsertAction extends ActionBase {
      * @throws ServletException
      * @throws IOException
      */
-
     public void csvImport() throws ServletException, IOException {
+
         Part filePart = getRequestPart(AttributeConst.PACK_CSV);
         PackageInsertView pv = null;
-        System.out.println(filePart);
 
         // csv読み込み
         try (InputStream is = filePart.getInputStream();
@@ -273,10 +280,11 @@ public class PackageInsertAction extends ActionBase {
             e.printStackTrace();
         }
 
-        //ファイルが読み込めなかった場合の処理
+        //ファイルを読み込めなかった場合の処理
         if (pv == null) {
             putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用
             putRequestScope(AttributeConst.ERR, "csvファイルを読み込めませんでした");
+
             //新規作成画面にcsv取り込みデータを表示
             forward(ForwardConst.FW_PACK_NEW);
         }
@@ -334,21 +342,20 @@ public class PackageInsertAction extends ActionBase {
     }
 
     /**
-     * 取り込んだCSVデータの中で不要なレコードを消去
+     * 読み込んだCSVデータの中で不要なレコードを消去
      * @throws ServletException
      * @throws IOException
      */
 
     public void csvModify() throws ServletException, IOException {
+
         //セッションからcsvで取り込んだ添付文書データリストを取得
         List<PackageInsertView> pv_list = getSessionScope(AttributeConst.PACKAGE_INSERT_LIST);
 
         //csvの取り込みをやめたいレコードのindex番号を取得
         int index_num = toNumber(getRequestParam(AttributeConst.PACK_INDEX));
 
-        System.out.println(index_num);
-
-        //セッションスコープからcsvで取り込んだ添付文書リストを削除
+        //データがある場合、セッションからcsvで取り込んだ添付文書リストを削除し、残ったデータリストをセッションに登録。
         if (!(pv_list == null)) {
             //index番号を指定して、csvの取り込みをやめたいレコードを削除
             pv_list.remove(index_num);
@@ -362,20 +369,23 @@ public class PackageInsertAction extends ActionBase {
     }
 
     /**
-     * 取り込んだCSVデータを取り込み
+     * 取り込んだCSVデータをデータベースに登録
      * @throws ServletException
      * @throws IOException
      */
     public void csvAllCreate() throws ServletException, IOException {
+
         //セッションからcsvで取り込んだ添付文書データリストを取得
         List<PackageInsertView> pv_list = getSessionScope(AttributeConst.PACKAGE_INSERT_LIST);
 
+        //リストに添付文書データがない場合、CSV取り込みデータ確認画面に戻る。
         if (pv_list == null) {
             putSessionScope(AttributeConst.ERR, MessageConst.E_NODATA.getMessage());
             //csv取り込みデータ確認画面に戻る
             forward(ForwardConst.FW_PACK_CSV_CHECK);
         }
 
+        //リスト内の添付文書データの項目値をバリデーションし、エラーがあれば、データ確認画面に戻る
         for (PackageInsertView pv : pv_list) {
 
             //添付文書情報を登録
@@ -388,12 +398,10 @@ public class PackageInsertAction extends ActionBase {
 
                 //csv取り込みデータ確認画面に戻る
                 forward(ForwardConst.FW_PACK_CSV_CHECK);
-
             }
-
         }
-        //登録中にエラーがなかった場合
 
+        //登録中にエラーがなかった場合
         //セッションから添付文書リストを削除
         removeSessionScope(AttributeConst.PACKAGE_INSERT_LIST);
 

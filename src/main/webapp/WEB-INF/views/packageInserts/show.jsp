@@ -56,6 +56,7 @@
                 </tr>
             </tbody>
         </table>
+
         <p>
             <a href="<c:url value='?action=${actPack}&command=${commEdt}&id=${packageInsert.id}' />">この添付文書を編集する</a>
         </p>

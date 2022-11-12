@@ -5,6 +5,8 @@
 		<class>models.PackageInsert</class>
 		<class>models.Employee</class>
 		<class>models.Jmdn</class>
+		<class>models.Patient</class>
+		<class>models.PatientDevice</class>
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/device_management_system?useSSL=false&amp;allowPublicKeyRetrieval=true"/>

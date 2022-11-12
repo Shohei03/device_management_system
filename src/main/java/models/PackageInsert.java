@@ -27,7 +27,8 @@ import lombok.Setter;
 @NamedQueries({
         @NamedQuery(name = JpaConst.Q_PACK_GET_ALL, query = JpaConst.Q_PACK_GET_ALL_DEF),
         @NamedQuery(name = JpaConst.Q_PACK_COUNT, query = JpaConst.Q_PACK_COUNT_DEF),
-        @NamedQuery(name = JpaConst.Q_PACK_COUNT_REGISTEREDBY_APPROVAL_NUM, query = JpaConst.Q_PACK_COUNT_REGISTEREDBY_APPROVAL_NUM_DEF)
+        @NamedQuery(name = JpaConst.Q_PACK_COUNT_REGISTEREDBY_APPROVAL_NUM, query = JpaConst.Q_PACK_COUNT_REGISTEREDBY_APPROVAL_NUM_DEF),
+        @NamedQuery(name = JpaConst.Q_PACK_GET_MINE_REGISTEREDBY_APPROVAL_NUM, query = JpaConst.Q_PACK_GET_MINE_REGISTEREDBY_APPROVAL_NUM_DEF)
 })
 
 @Getter

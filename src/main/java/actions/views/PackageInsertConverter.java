@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import models.PackageInsert;
+import services.PackageInsertService;
 
 /**
  *
@@ -76,6 +77,7 @@ public class PackageInsertConverter {
      * @param pv Viewモデル(コピー元)
      */
     public static void copyViewToModel(PackageInsert p, PackageInsertView pv) {
+
         p.setId(pv.getId());
         p.setApproval_number(pv.getApproval_number());
         p.setJmdn(JMDNConverter.toModel_FROM_PACK(pv));
@@ -86,6 +88,16 @@ public class PackageInsertConverter {
         p.setAcceptability_of_TV_exam(pv.getAcceptability_of_TV_exam());
         p.setAcceptability_of_MR_exam(pv.getAcceptability_of_MR_exam());
         p.setCreatedAt(pv.getCreatedAt());
+
+    }
+
+    /**
+     * 添付文書テーブルにアクセスし、引数で与えた添付文書承認番号のレコード（インスタンス）を取得
+     */
+    public static PackageInsert toModel_from_AppNum(String app_num) {
+        PackageInsertService pi_service = new PackageInsertService();
+
+        return pi_service.findPackageInsertByAppNum(app_num);
 
     }
 

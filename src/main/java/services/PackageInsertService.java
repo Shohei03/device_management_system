@@ -22,6 +22,7 @@ public class PackageInsertService extends ServiceBase {
      * @return 一覧画面に表示するデータのリスト
      */
     public List<PackageInsertView> getAllPerPage(int page) {
+
         List<PackageInsert> packageInserts = em.createNamedQuery(JpaConst.Q_PACK_GET_ALL, PackageInsert.class)
                 .setFirstResult(JpaConst.ROW_PER_PAGE * (page - 1))
                 .setMaxResults(JpaConst.ROW_PER_PAGE)
@@ -36,6 +37,7 @@ public class PackageInsertService extends ServiceBase {
      * @return 添付文書データの件数
      */
     public long countAll() {
+
         long package_insert_count = (long) em.createNamedQuery(JpaConst.Q_PACK_COUNT, Long.class).getSingleResult();
 
         return package_insert_count;
@@ -47,6 +49,7 @@ public class PackageInsertService extends ServiceBase {
      * @return 取得データのインスタンス
      */
     public PackageInsertView findOne(int id) {
+
         return PackageInsertConverter.toView(findOneInternal(id));
     }
 
@@ -55,7 +58,6 @@ public class PackageInsertService extends ServiceBase {
      * @param approval_number 承認番号
      * @return 該当するデータの件数
      */
-
     public long countByAapproval_number(String approval_number) {
 
         //指定した添付文書承認番号の件数を取得する
@@ -66,11 +68,26 @@ public class PackageInsertService extends ServiceBase {
     }
 
     /**
-     * 添付文書のJMDNコードに該当するデータの件数を取得し、返却する
+     * 添付文書の承認番号を条件に該当するデータのインスタンスを取得
+     *
+     */
+    public PackageInsert findPackageInsertByAppNum(String approval_number) {
+        PackageInsert p = (PackageInsert) em
+                .createNamedQuery(JpaConst.Q_PACK_GET_MINE_REGISTEREDBY_APPROVAL_NUM, PackageInsert.class)
+                .setParameter(JpaConst.PAT_DEV_COL_APP_NUM, approval_number)
+                .getSingleResult();
+
+        return p;
+
+    }
+
+    /**
+     * Jmdnテーブルから、引数で指定したJMDNコードのレコード数を取得し、返却する
      * @param JMDN_code JMDNコード
      * @return 該当するデータの件数
      */
     public long countByJMDN_CODE(String JMDN_code) {
+
         //指定したJMDNの件数を取得する
         long JMDN_CODECount = (long) em.createNamedQuery(JpaConst.Q_JMDN_COUNT_REGISTEREDBY_JMDN_CODE, Long.class)
                 .setParameter(JpaConst.JPQL_PARM_JMDN_CODE, JMDN_code)
@@ -84,12 +101,12 @@ public class PackageInsertService extends ServiceBase {
      *
      */
     public Jmdn findJMDN(String JMDN_code) {
+
         Jmdn j = (Jmdn) em.createNamedQuery(JpaConst.Q_JMDN_GET_MINE_REGISTEREDBY_JMDN_CODE, Jmdn.class)
                 .setParameter(JpaConst.JPQL_PARM_JMDN_CODE, JMDN_code)
                 .getSingleResult();
 
         return j;
-
     }
 
     /**
@@ -98,20 +115,24 @@ public class PackageInsertService extends ServiceBase {
      * @return バリデーションで発生したエラーのリスト
      */
     public List<String> create(PackageInsertView pv) {
-        List<String> errors = PackageInsertValidator.validate(this, pv, true);
-        PackageInsertService service = new PackageInsertService();
 
-        System.out.println(errors);
+        //各項目の値を検証
+        List<String> errors = PackageInsertValidator.validate(this, pv, true);
+
+        PackageInsertService service = new PackageInsertService();
 
         //バリデーションエラーがなければデータを登録する
         if (errors.size() == 0) {
+            //今日の日付を登録
             LocalDate ldt = LocalDate.now();
             pv.setCreatedAt(ldt);
 
+            //添付文書テーブルとJMDNテーブルにデータを登録する。
+            //添付文書テーブルのJMDNコードは重複するため、JMDNテーブルのJMDNコードに一意制約を設け、リレーションを組んでいる。
+            //まず、JMDNテーブルに、これから登録するJMDNコードがないか確認。重複がない場合、登録。
             if (!(service.countByJMDN_CODE(pv.getJMDN_code()) > 0)) {
                 createInternalJMDN(pv);
             }
-
             createInternal_Pack(pv);
         }
 
@@ -120,7 +141,7 @@ public class PackageInsertService extends ServiceBase {
     }
 
     /**
-     * 画面から入力された添付文書情報の登録内容を元に、添付文書情報データを更新する
+     * 画面から入力された添付文書情報の登録内容をもとに、添付文書情報データを更新する
      * @param pv 添付文書情報の更新内容
      * @return バリデーションで発生したエラーのリスト
      */
@@ -150,6 +171,7 @@ public class PackageInsertService extends ServiceBase {
         //バリデーションを行う
         List<String> errors = PackageInsertValidator.validate(this, savedPack, validateApproval_number);
 
+        //エラーがなければ更新
         if (errors.size() == 0) {
             updateInternal_JMDN(pv);
             updateInternal(pv);
@@ -160,7 +182,7 @@ public class PackageInsertService extends ServiceBase {
     }
 
     /**
-     * idを条件にデータを1件取得する
+     * idを条件に添付文書（PackageInsertインスタンス）データを1件取得する
      * @param id
      * @return 取得データのインスタンス
      */
@@ -197,14 +219,20 @@ public class PackageInsertService extends ServiceBase {
      * @param pv 添付文書データ
      */
     private void updateInternal_JMDN(PackageInsertView pv) {
-        //JMDNコードがJMDNデータベースにない場合のみ、登録処理
 
         if ((countByJMDN_CODE(pv.getJMDN_code())) == 0) {
+            //JMDNコードを変更する場合（JMDNコードがJMDNデータベースにない場合のみ、登録処理）
             em.getTransaction().begin();
             em.persist(JMDNConverter.toModel(pv));
             em.getTransaction().commit();
-        }
 
+        } else {
+            //JMDNは変更せず、一般的名称のみ変更したいとき
+            Jmdn j = findJMDN(pv.getJMDN_code());
+            em.getTransaction().begin();
+            JMDNConverter.copyViewToModel_general_name(j, pv);
+            em.getTransaction().commit();
+        }
     }
 
     /**
@@ -212,9 +240,8 @@ public class PackageInsertService extends ServiceBase {
      * @param pv 添付文書データ
      */
     private void updateInternal(PackageInsertView pv) {
-
-        em.getTransaction().begin();
         PackageInsert p = findOneInternal(pv.getId());
+        em.getTransaction().begin();
         PackageInsertConverter.copyViewToModel(p, pv);
         em.getTransaction().commit();
     }

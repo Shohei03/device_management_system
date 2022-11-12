@@ -22,12 +22,27 @@ public class JMDNConverter {
 
     }
 
+    /**
+     * ViewモデルのインスタンスからデータベースにあるJMDNのインスタンスを取得
+     * @param pv PackageInsertViewのインスタンス
+     * @return
+     */
+
     public static Jmdn toModel_FROM_PACK(PackageInsertView pv) {
 
         PackageInsertService service = new PackageInsertService();
 
         return service.findJMDN(pv.getJMDN_code());
 
+    }
+
+    /**
+     * Viewモデルのフィールドの内容をDTOモデルのフィールド（一般的名称）にコピーする
+     * @param j DTOモデル(コピー先)
+     * @param pv Viewモデル(コピー元)
+     */
+    public static void copyViewToModel_general_name(Jmdn j, PackageInsertView pv) {
+        j.setGeneral_name(pv.getGeneral_name());
     }
 
 }

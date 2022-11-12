@@ -8,17 +8,19 @@ import constants.MessageConst;
 import services.PackageInsertService;
 
 /**
- *
- * 添付文書インスタンスに設定されている値のバリデーションを行うクラス
+ * 添付文書インスタンス(PackageInsertView)に設定されている値のバリデーションを行うクラス
  */
 public class PackageInsertValidator {
     /**
      * 添付文書インスタンスの各項目についてバリデーションを行う
+     * @param service PackageInsertServiceのインスタンス
      * @param pv 添付文書インスタンス
+     * @param approvalNumDuplicateCheckFlag 承認番号の重複チェックを実施するかどうか（実施する：True、実施しない：false）
      * @return エラーのリスト
      */
     public static List<String> validate(PackageInsertService service, PackageInsertView pv,
             Boolean approvalNumDuplicateCheckFlag) {
+
         List<String> errors = new ArrayList<String>();
 
         //承認番号のチェック
@@ -47,26 +49,25 @@ public class PackageInsertValidator {
         }
 
         return errors;
-
     }
 
     /**
      * 承認番号の入力チェックを行い、入力値がなければエラーメッセージを返却
-     * @param srevice PackageInsertServiceのインスタンス
+     * @param service PackageInsertServiceのインスタンス
      * @param approval_number 承認番号
      * @param approvalNumDuplicateCheckFlag 承認番号の重複チェックを実施するかどうか（実施する：True、実施しない：false）
      * @return エラーメッセージ
      */
     private static String validateApproval_number(PackageInsertService service, String approval_number,
             Boolean approvalNumDuplicateCheckFlag) {
+
         //入力値がなければエラーメッセージを返却
         if (approval_number == null || approval_number.equals("")) {
             return MessageConst.E_NOAPPROVAL_NUM.getMessage();
         }
 
         if (approvalNumDuplicateCheckFlag) {
-            //承認番号の重複チェックを実施
-
+            //承認番号の重複チェックを実施（approvalNumDuplicateCheckFlag = TRUEの場合）
             long approvalNumCount = isDuplicateApprovalNum(service, approval_number);
 
             //同じデバイス（添付文書番号）が既に登録されている場合はエラーメッセージを返却
@@ -85,7 +86,6 @@ public class PackageInsertValidator {
      * @param  approval_number 承認番号
      * @return 添付文書テーブルに登録されている同一添付文書承認番号のデータの件数
      */
-
     private static long isDuplicateApprovalNum(PackageInsertService service, String approval_number) {
 
         long approvalNumCount = service.countByAapproval_number(approval_number);
@@ -98,6 +98,7 @@ public class PackageInsertValidator {
      * @return エラーメッセージ
      */
     private static String validateJMDN_code(String JMDN_code) {
+
         if (JMDN_code == null || JMDN_code.equals("")) {
             return MessageConst.E_NOJMDN_CODE.getMessage();
         }
@@ -112,6 +113,7 @@ public class PackageInsertValidator {
      * @return エラーメッセージ
      */
     private static String validateGeneral_name(String general_name) {
+
         if (general_name == null || general_name.equals("")) {
             return MessageConst.E_NOGENERAL_NAME.getMessage();
         }
@@ -126,6 +128,7 @@ public class PackageInsertValidator {
      * @return エラーメッセージ
      */
     private static String validateDevice_name(String device_name) {
+
         if (device_name == null || device_name.equals("")) {
             return MessageConst.E_NODEVICE_NAME.getMessage();
         }
