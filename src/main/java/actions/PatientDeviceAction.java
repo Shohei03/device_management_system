@@ -139,4 +139,25 @@ public class PatientDeviceAction extends ActionBase {
         }
     }
 
+    /**
+     * 詳細画面を表示
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void show() throws ServletException, IOException {
+
+        //idを条件に体内デバイスデータを取得する
+        PatientDeviceView pdv = service.findOne(toNumber(getRequestParam(AttributeConst.PATDEV_ID)));
+
+        if(pdv == null) {
+            //該当の体内デバイスデータが存在しない場合はエラー画面を表示
+            forward(ForwardConst.FW_ERR_UNKNOWN);
+        } else {
+            putRequestScope(AttributeConst.PATIENT_DEVICE, pdv);  //取得した体内デバイスデータ
+
+            //詳細画面を表示
+            forward(ForwardConst.FW_PATDEV_SHOW);
+        }
+    }
+
 }
