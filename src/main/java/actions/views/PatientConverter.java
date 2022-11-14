@@ -1,6 +1,7 @@
 package actions.views;
 
 import models.Patient;
+import services.PatientDeviceService;
 
 /**
 *
@@ -29,5 +30,7 @@ public class PatientConverter {
 
         return service.findPatient(pdv.getPatient_id());
     }
+
+
 
 }

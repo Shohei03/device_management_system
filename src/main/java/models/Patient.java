@@ -23,7 +23,9 @@ import lombok.Setter;
 @Table(name = JpaConst.TABLE_PAT)
 @NamedQueries({
         @NamedQuery(name = JpaConst.Q_PAT_GET_ALL, query = JpaConst.Q_PAT_GET_ALL_DEF),
-        @NamedQuery(name = JpaConst.Q_PAT_COUNT, query = JpaConst.Q_PAT_COUNT_DEF)
+        @NamedQuery(name = JpaConst.Q_PAT_COUNT, query = JpaConst.Q_PAT_COUNT_DEF),
+        @NamedQuery(name = JpaConst.Q_PAT_COUNT_REGISTEREDBY_PAT_ID, query = JpaConst.Q_PAT_COUNT_REGISTEREDBY_PAT_ID_DEF),
+        @NamedQuery(name = JpaConst.Q_PAT_GET_MINE_REGISTEREDBY_PAT_ID, query = JpaConst.Q_PAT_GET_MINE_REGISTEREDBY_PAT_ID_DEF)
 })
 
 @Getter

@@ -91,6 +91,7 @@ public interface JpaConst {
     String JPQL_PARM_EMPLOYEE = "employee"; //従業員
     String JPQL_PARM_APPROVAL_NUM = "approval_number"; //社員番号
     String JPQL_PARM_JMDN_CODE = "JMDN_code"; //JMDNコード
+    String JPQL_PARM_PAT_ID = "patient_id";  //患者ID
 
     //NamedQueryの nameとquery
     //全ての従業員をidの降順に取得する
@@ -146,5 +147,12 @@ public interface JpaConst {
     //全ての患者の件数を取得する
     String Q_PAT_COUNT = ENTITY_PAT + ".count";
     String Q_PAT_COUNT_DEF = "SELECT COUNT(p) FROM Patient AS p";
+    //指定した患者IDのレコード数を取得する
+    String Q_PAT_COUNT_REGISTEREDBY_PAT_ID = ENTITY_PAT + ".countRegisteredByPatient_id";
+    String Q_PAT_COUNT_REGISTEREDBY_PAT_ID_DEF = "SELECT COUNT(p) FROM Patient AS p WHERE p.patient_id = :" + JPQL_PARM_PAT_ID;
+  //指定した患者IDのレコードを取得する
+    String Q_PAT_GET_MINE_REGISTEREDBY_PAT_ID = ENTITY_PAT + ".getMineRegisteredByPatient_id";
+    String Q_PAT_GET_MINE_REGISTEREDBY_PAT_ID_DEF = "SELECT p FROM Patient AS p WHERE p.patient_id = :" + JPQL_PARM_PAT_ID;
+
 
 }

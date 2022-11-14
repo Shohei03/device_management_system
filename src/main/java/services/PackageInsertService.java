@@ -72,12 +72,16 @@ public class PackageInsertService extends ServiceBase {
      *
      */
     public PackageInsert findPackageInsertByAppNum(String approval_number) {
-        PackageInsert p = (PackageInsert) em
-                .createNamedQuery(JpaConst.Q_PACK_GET_MINE_REGISTEREDBY_APPROVAL_NUM, PackageInsert.class)
-                .setParameter(JpaConst.PAT_DEV_COL_APP_NUM, approval_number)
-                .getSingleResult();
+        if (countByAapproval_number(approval_number) > 0) {
 
-        return p;
+            PackageInsert p = (PackageInsert) em
+                    .createNamedQuery(JpaConst.Q_PACK_GET_MINE_REGISTEREDBY_APPROVAL_NUM, PackageInsert.class)
+                    .setParameter(JpaConst.PAT_DEV_COL_APP_NUM, approval_number)
+                    .getSingleResult();
+
+            return p;
+        }
+        return null;
 
     }
 
@@ -86,7 +90,7 @@ public class PackageInsertService extends ServiceBase {
      * @param JMDN_code JMDNコード
      * @return 該当するデータの件数
      */
-    public long countByJMDN_CODE(String JMDN_code) {
+    private long countByJMDN_CODE(String JMDN_code) {
 
         //指定したJMDNの件数を取得する
         long JMDN_CODECount = (long) em.createNamedQuery(JpaConst.Q_JMDN_COUNT_REGISTEREDBY_JMDN_CODE, Long.class)
@@ -119,8 +123,6 @@ public class PackageInsertService extends ServiceBase {
         //各項目の値を検証
         List<String> errors = PackageInsertValidator.validate(this, pv, true);
 
-        PackageInsertService service = new PackageInsertService();
-
         //バリデーションエラーがなければデータを登録する
         if (errors.size() == 0) {
             //今日の日付を登録
@@ -130,7 +132,7 @@ public class PackageInsertService extends ServiceBase {
             //添付文書テーブルとJMDNテーブルにデータを登録する。
             //添付文書テーブルのJMDNコードは重複するため、JMDNテーブルのJMDNコードに一意制約を設け、リレーションを組んでいる。
             //まず、JMDNテーブルに、これから登録するJMDNコードがないか確認。重複がない場合、登録。
-            if (!(service.countByJMDN_CODE(pv.getJMDN_code()) > 0)) {
+            if (!(countByJMDN_CODE(pv.getJMDN_code()) > 0)) {
                 createInternalJMDN(pv);
             }
             createInternal_Pack(pv);
@@ -173,8 +175,8 @@ public class PackageInsertService extends ServiceBase {
 
         //エラーがなければ更新
         if (errors.size() == 0) {
-            updateInternal_JMDN(pv);
-            updateInternal(pv);
+            updateInternal_JMDN(savedPack); //
+            updateInternal(savedPack); //
         }
 
         //バリデーションで発生したエラーを返却（エラーがなければ0件の空リスト）

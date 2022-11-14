@@ -185,5 +185,32 @@ table#csv_list {
     width:120px;
 }
 
+table#patientDevice_list th {
+    font-weight: bold;
+    padding: 10px 2%;
+}
 
+table#patientDevice_list .patientDevice_patient_id {
+    width: 15%;
+}
+
+table#patientDevice_list .patientDevie_patient_name {
+    width: 15%;
+}
+
+table#patientDevice_list .patientDevice_generalName {
+    width: 20%;
+}
+
+table#patientDevice_list .patientDeviec_deviceName {
+    width: 20%;
+}
+
+table#patientDevice_list .patientDevice_implantedAt {
+    width: 15%;
+}
+
+table#patientDevice_list .patientDeviec_action {
+    width: 10%;
+}
 

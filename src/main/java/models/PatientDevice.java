@@ -55,7 +55,7 @@ public class PatientDevice {
      * 患者ID
      */
     @ManyToOne
-    @Column(name = JpaConst.PAT_DEV_COL_PAT_ID, nullable = false)
+    @JoinColumn(name = JpaConst.PAT_DEV_COL_PAT_ID, nullable = false)
     private Patient patient;
 
     /**

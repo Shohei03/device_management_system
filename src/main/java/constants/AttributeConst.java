@@ -68,6 +68,18 @@ public enum AttributeConst {
     PACK_INDEX("index_num"),
     PACK_ERR("pack_err"),  //エラーが生じたデバイス名
 
+    //患者の体内デバイス
+    PATIENT_DEVICE("patientDevice"),
+    PATIENT_DEVICES("patientDevices"),
+    PATDEV_COUNT("patientDevicesCount"),
+    PATDEV_PAT_ID("patient_id"),
+    PATDEV_PAT_NAME("patint_name"),
+    PATDEV_APP_NUM("approval_number"),
+    PATDEV_DEV_NAME("device_name"),
+    PATDEV_IMP_DATE("implantedAt"),
+    PATDEV_ID("id"),
+
+
 
 
 
