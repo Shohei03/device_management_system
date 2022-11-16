@@ -7,6 +7,8 @@ import java.util.regex.Pattern;
 
 import actions.views.PatientDeviceView;
 import constants.MessageConst;
+import models.Patient;
+import models.PatientDevice;
 import services.PackageInsertService;
 import services.PatientDeviceService;
 
@@ -21,7 +23,7 @@ public class PatientDeviceValidator {
      * @return エラーのリスト
      */
     public static List<String> validate(PackageInsertService pack_service, PatientDeviceService ptDev_service,
-            PatientDeviceView pdv, Boolean patient_idDuplicateCheckFlag) {
+            PatientDeviceView pdv, Boolean patient_idDuplicateCheckFlag, Boolean duplicateCheck) {
 
         List<String> errors = new ArrayList<String>();
 
@@ -55,6 +57,15 @@ public class PatientDeviceValidator {
             errors.add(implantedAt_error);
         }
 
+        //体内デバイステーブルの中に、入力データと重複するものがあるかチェック(重複チェックフラグ=trueの場合の処理)
+        if (duplicateCheck) {
+            String all_dupli_error = validateAll_dupli_error(ptDev_service, pdv);
+            if (!all_dupli_error.equals("")) {
+                errors.add(all_dupli_error);
+
+            }
+        }
+
         return errors;
     }
 
@@ -82,7 +93,7 @@ public class PatientDeviceValidator {
 
         //重複チェック(patient_idDuplicateCheckFlag = Trueの場合）
         if (patient_idDuplicateCheckFlag) {
-            long patient_idCount = isDuplicatePatient(ptDev_service, patient_id); /////////////
+            long patient_idCount = isDuplicatePatient(ptDev_service, patient_id);
 
             //同一患者IDが既に登録されている場合はエラーメッセージを返却
             if (patient_idCount > 0) {
@@ -195,9 +206,7 @@ public class PatientDeviceValidator {
 
         //埋込日が異常な日付の場合にエラーメッセージを返却
         LocalDate today = LocalDate.now(); //今日の日付
-        LocalDate today_minus_150y = today.minusYears(150); //今日より150年前
-
-        System.out.println(implantedAt.isBefore(today_minus_150y));
+        LocalDate today_minus_150y = today.minusYears(150); //今日より150年前（絶対ない年を指定）
 
         if (implantedAt.isBefore(today_minus_150y) || implantedAt.isAfter(today)) {
             return MessageConst.E_ERR_IMP_DATE.getMessage();
@@ -205,6 +214,34 @@ public class PatientDeviceValidator {
 
         //エラーがない場合、空文字を返却
         return "";
+    }
+
+    /**
+     * 体内デバイステーブルに、入力データと同じレコードがある場合、確認のためのエラーメッセージを返却
+     * @param service PatientDeviceServiceのインスタンス
+     * @param pdv PatientDeviceViewのインスタンス（入力データ）
+     * @return エラーメッセージ
+     */
+    private static String validateAll_dupli_error(PatientDeviceService ptDev_service, PatientDeviceView pdv) {
+        Patient p = ptDev_service.findPatient(pdv.getPatient_id());
+
+        if (p != null) {
+
+            PatientDevice pd = ptDev_service.findPatDev(p);
+            if (pd != null) {
+
+                //入力データ（患者ID・デバイスの添付文書承認番号・埋込日）が体内デバイステーブルに既に存在している場合は、登録してもいいか確認のエラーメッセージを返す
+                if (p.getPatient_id().equals(pdv.getPatient_id())
+                        && pd.getPackageInsert().getApproval_number().equals(pdv.getApproval_number())
+                        && pd.getImplantedAt().isEqual(pdv.getImplantedAt())) {
+                    return MessageConst.E_DUPLI_DATA.getMessage();
+                }
+            }
+        }
+        System.out.println("PatinetはNull");
+
+        return "";
+
     }
 
 }

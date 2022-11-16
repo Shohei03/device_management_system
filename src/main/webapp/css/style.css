@@ -214,3 +214,6 @@ table#patientDevice_list .patientDeviec_action {
     width: 10%;
 }
 
+input[name="device_name"] {
+    width: 40%
+}

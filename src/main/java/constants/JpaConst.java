@@ -69,6 +69,9 @@ public interface JpaConst {
     String PAT_DEV_COL_UPDATED_AT = "updated_at"; //更新日
     String PAT_DEV_COL_DELETE_FLAG = "delete_flag"; //削除フラグ
 
+    int PAT_DEL_TRUE = 1; //削除フラグON(削除済み)
+    int PAT_DEL_FALSE = 0; //削除フラグOFF(未削除)
+
     //患者テーブル
     String TABLE_PAT = "patients"; //テーブル名
     //患者テーブルカラム
@@ -92,6 +95,7 @@ public interface JpaConst {
     String JPQL_PARM_APPROVAL_NUM = "approval_number"; //社員番号
     String JPQL_PARM_JMDN_CODE = "JMDN_code"; //JMDNコード
     String JPQL_PARM_PAT_ID = "patient_id";  //患者ID
+    String JPQL_PARM_PATIENT = "patient";  //患者インスタンス
 
     //NamedQueryの nameとquery
     //全ての従業員をidの降順に取得する
@@ -139,6 +143,14 @@ public interface JpaConst {
     //全ての体内デバイスの件数を取得する
     String Q_PAT_DEV_COUNT = ENTITY_PAT_DEV + ".count";
     String Q_PAT_DEV_COUNT_DEF = "SELECT COUNT(d) FROM PatientDevice AS d";
+    //指定した患者の体内デバイステーブルにあるレコード数を取得する
+    String Q_PAT_DEV_COUNT_REGISTEREDBY_PAT = ENTITY_PAT_DEV + ".countRegisteredByPatient";
+    String Q_PAT_DEV_COUNT_REGISTEREDBY_PAT_DEF = "SELECT COUNT(p) FROM PatientDevice AS p WHERE p.patient = :" +  JPQL_PARM_PATIENT;
+    //指定した患者IDのレコードを取得する
+    String Q_PAT_DEV_GET_MINE_REGISTEREDBY_PAT = ENTITY_PAT_DEV + ".getMineRegisteredByPatient";
+    String Q_PAT_DEV_GET_MINE_REGISTEREDBY_PAT_DEF = "SELECT p FROM PatientDevice AS p WHERE p.patient = :" + JPQL_PARM_PATIENT;
+
+
 
 
     //全ての患者を患者idの昇順で取得する
@@ -150,7 +162,7 @@ public interface JpaConst {
     //指定した患者IDのレコード数を取得する
     String Q_PAT_COUNT_REGISTEREDBY_PAT_ID = ENTITY_PAT + ".countRegisteredByPatient_id";
     String Q_PAT_COUNT_REGISTEREDBY_PAT_ID_DEF = "SELECT COUNT(p) FROM Patient AS p WHERE p.patient_id = :" + JPQL_PARM_PAT_ID;
-  //指定した患者IDのレコードを取得する
+    //指定した患者IDのレコードを取得する
     String Q_PAT_GET_MINE_REGISTEREDBY_PAT_ID = ENTITY_PAT + ".getMineRegisteredByPatient_id";
     String Q_PAT_GET_MINE_REGISTEREDBY_PAT_ID_DEF = "SELECT p FROM Patient AS p WHERE p.patient_id = :" + JPQL_PARM_PAT_ID;
 

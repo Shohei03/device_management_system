@@ -2,11 +2,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="constants.ForwardConst" %>
+<%@ page import="constants.AttributeConst" %>
 
 <c:set var="actPatDev" value="${ForwardConst.ACT_PATDEV.getValue()}" />
 <c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
 <c:set var="commShow" value="${ForwardConst.CMD_SHOW.getValue()}" />
 <c:set var="commNew" value="${ForwardConst.CMD_NEW.getValue()}" />
+<c:set var="commCSVAllImp" value="${ForwardConst.CMD_CSV_ALL_IMPORT.getValue()}" />
 
 <c:import url="/WEB-INF/views/layout/app.jsp">
     <c:param name="content">
@@ -16,6 +18,15 @@
             </div>
         </c:if>
         <h2>体内デバイス 一覧</h2>
+
+        <form enctype="multipart/form-data" method="POST" action="<c:url value='?action=${actPatDev}&command=${commCSVAllImp}' />" >
+            <p>複数データCSV読込
+                <input name="csv" type="file" required/>→→
+                <input type="submit" value="読込" /><br />
+            </p>
+        </form>
+
+
         <table id="patientDevice_list">
             <tbody>
                 <tr>
@@ -33,7 +44,17 @@
                         <td class="patientDevie_patient_name"><c:out value="${patientDevice.patient_name}" /></td>
                         <td class="patientDeviec_deviceName"><c:out value="${patientDevice.device_name}" /></td>
                         <td class="patientDevice_implantedAt"><fmt:formatDate value='${implantedDay}' pattern='yyyy-MM-dd' /></td>
-                        <td class="patientDeviec_action"><a href="<c:url value='?action=${actPatDev}&command=${commShow}&id=${patientDevice.id}' />">詳細を見る</a></td>
+                        <td class="patientDeviec_action">
+                            <c:choose>
+                                <c:when test="${patientDevice.deleteFlag == AttributeConst.DEL_FLAG_TRUE.getIntegerValue()}">
+                                    （削除済み）
+                                </c:when>
+
+                                <c:otherwise>
+                                    <a href="<c:url value='?action=${actPatDev}&command=${commShow}&id=${patientDevice.id}' />">詳細を見る</a>
+                                </c:otherwise>
+                            </c:choose>
+                        </td>
                     </tr>
                 </c:forEach>
             </tbody>

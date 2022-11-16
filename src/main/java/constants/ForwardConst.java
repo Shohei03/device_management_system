@@ -34,6 +34,7 @@ public enum ForwardConst {
     CMD_CSV_ALL_IMPORT("csvAllImport"),
     CMD_CSV_MODIFY("csvModify"),
     CMD_CSV_ALL_CREATE("csvAllCreate"),
+    CMD_CHECK("check"),
 
     //jsp
     FW_ERR_UNKNOWN("error/unknown"),
@@ -52,7 +53,9 @@ public enum ForwardConst {
     FW_PATDEV_INDEX("patientDevices/index"),
     FW_PATDEV_SHOW("patientDevices/show"),
     FW_PATDEV_NEW("patientDevices/new"),
-    FW_PATDEV_EDIT("patientDevices/edit");
+    FW_PATDEV_EDIT("patientDevices/edit"),
+    FW_PATDEV_CSV_CHECK("patientDevices/csv_check"),
+    FW_PATDEV_CHECK("patientDevices/check");
 
 
 

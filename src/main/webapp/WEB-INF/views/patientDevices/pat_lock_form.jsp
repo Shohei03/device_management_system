@@ -2,8 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="constants.AttributeConst" %>
-<%@ page import="constants.MessageConst" %>
-
 
 <c:if test="${errors != null}">
     <div id="flush_error">
@@ -28,11 +26,11 @@
 </c:if>
 
 <label for="${AttributeConst.PATDEV_PAT_ID.getValue()}">患者ID</label><br />
-<input type="text" name="${AttributeConst.PATDEV_PAT_ID.getValue()}" id="${AttributeConst.PATDEV_PAT_ID.getValue()}" value="${patientDevice.patient_id}" />
+<input type="text" name="${AttributeConst.PATDEV_PAT_ID.getValue()}" id="${AttributeConst.PATDEV_PAT_ID.getValue()}" value="${patientDevice.patient_id}" readonly/>
 <br /><br />
 
 <label for="${AttributeConst.PATDEV_PAT_NAME.getValue()}">患者名</label><br />
-<input type="text" name="${AttributeConst.PATDEV_PAT_NAME.getValue()}" id="${AttributeConst.PATDEV_PAT_NAME.getValue()}" value="${patientDevice.patient_name}" />
+<input type="text" name="${AttributeConst.PATDEV_PAT_NAME.getValue()}" id="${AttributeConst.PATDEV_PAT_NAME.getValue()}" value="${patientDevice.patient_name}" readonly/>
 <br /><br />
 
 <label for="${AttributeConst.PATDEV_APP_NUM.getValue()}">デバイスの添付文書承認番号</label><br />
@@ -49,6 +47,4 @@
 
 <input type="hidden" name="${AttributeConst.PATDEV_ID.getValue()}" value="${patientDevice.id}" />
 <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}" />
-
-
-
+<button type="submit">登録</button>

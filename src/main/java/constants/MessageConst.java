@@ -16,6 +16,9 @@ public enum MessageConst {
     I_UPDATED("更新が完了しました。"),
     I_DELETED("削除が完了しました。"),
 
+    //確認
+    I_CHECK("内容を確認しよろしければ登録してください。間違いがあれば修正して登録してください。"),
+
     //バリデーション
     E_NONAME("氏名を入力してください。"),
     E_NOPASSWORD("パスワードを入力してください。"),
@@ -34,7 +37,9 @@ public enum MessageConst {
     E_PAT_ID_EXIST("入力された患者IDは既に存在しています。"),
     E_NOAPP_NUM_IN_PACK_DATABASE("入力した添付文書承認番号のデバイスはまだ登録されていません。さきに添付文書情報を登録してください。"),
     E_ERR_DEVICE_NAME("指定した添付文書承認番号で登録されているデバイス名と入力されているデバイス名が異なります。"),
-    E_ERR_IMP_DATE("正しい埋込日を入力してください");
+    E_ERR_IMP_DATE("正しい埋込日を入力してください"),
+    E_DUPLI_DATA("入力したデータは既に登録されていますが、登録しますか。");
+
 
 
 

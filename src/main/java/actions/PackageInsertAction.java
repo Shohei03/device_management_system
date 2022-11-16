@@ -255,7 +255,7 @@ public class PackageInsertAction extends ActionBase {
 
         // csv読み込み
         try (InputStream is = filePart.getInputStream();
-                InputStreamReader isr = new InputStreamReader(is, "Shift-JIS");
+                InputStreamReader isr = new InputStreamReader(is, "utf-8");  //shift-JISからUTF-8に変更
                 BufferedReader br = new BufferedReader(isr);) {
 
             String line;
@@ -310,7 +310,7 @@ public class PackageInsertAction extends ActionBase {
 
         // csv読み込み
         try (InputStream is = filePart.getInputStream();
-                InputStreamReader isr = new InputStreamReader(is, "Shift-JIS");
+                InputStreamReader isr = new InputStreamReader(is, "utf-8");  //shift-JISからUTF-8に変更
                 BufferedReader br = new BufferedReader(isr);) {
 
             String line;

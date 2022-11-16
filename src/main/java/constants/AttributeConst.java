@@ -71,6 +71,7 @@ public enum AttributeConst {
     //患者の体内デバイス
     PATIENT_DEVICE("patientDevice"),
     PATIENT_DEVICES("patientDevices"),
+    PATIENT_DEVICE_LIST("patientDeviceList"),
     PATDEV_COUNT("patientDevicesCount"),
     PATDEV_PAT_ID("patient_id"),
     PATDEV_PAT_NAME("patint_name"),
@@ -78,6 +79,10 @@ public enum AttributeConst {
     PATDEV_DEV_NAME("device_name"),
     PATDEV_IMP_DATE("implantedAt"),
     PATDEV_ID("id"),
+    PATDEV_CSV("csv"),
+    PATDEV_INDEX("index_num"),
+    PATDEV_ERR_PAT_NAME("patDev_err_pat_name"),  //CSV取り込み時にエラーが生じた患者名
+    PATDEV_DUPLICATE_CHECK("patDev_duplicateCheck"),  //入力データの重複チェック
 
 
 

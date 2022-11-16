@@ -159,7 +159,7 @@ public abstract class ActionBase {
      * @return 変換後数値
      */
     protected int toNumber(String strNumber) {
-        int number = 0;
+        Integer number = 0;
         try {
             number = Integer.parseInt(strNumber);
         } catch (Exception e) {
