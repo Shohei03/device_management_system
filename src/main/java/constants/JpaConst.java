@@ -40,9 +40,6 @@ public interface JpaConst {
     String PACK_COL_APP_NUM = "approval_number"; //承認番号
     String PACK_COL_JMDN = "JMDN_id"; //添付文書のJMDN_id番号
     String PACK_COL_DEV_NAME = "device_name"; //デバイスの販売名
-    String PACK_COL_MR_STR = "MR_magnetic_field_strength"; //MRI静磁場強度の制限値
-    String PACK_COL_MR_GRADI = "MR_gradient_magnetic_field"; //MR傾斜磁場強度の制限値
-    String PACK_COL_MR_SAR = "MR_SAR"; //MR SAR制限値
     String PACK_COL_Manma = "acceptability_of_Manma_exam"; //マンモグラフィ検査の可否
     String PACK_COL_X_RAY = "acceptability_of_X_ray_exam"; //一般（X線）検査の可否
     String PACK_COL_CT = "acceptability_of_CT_exam"; //CT検査の可否
@@ -78,7 +75,26 @@ public interface JpaConst {
     String PAT_COL_ID = "id"; //id
     String PAT_COL_PAT_ID = "patient_id"; //患者ID
     String PAT_COL_PAT_NAME ="patient_name";  //患者名
+    String PAT_COL_PAT_NAME_KANA = "patient_name_kana";  //患者名（ひらがな）
     String PAT_COL_DELETE_FLAG = "delete_flag"; //削除フラグ
+
+    //検査テーブル
+    String TABLE_EXAM = "examinations";  //テーブル名
+    //検査項目テーブルカラム
+    String EXAM_COL_ID = "id";  //id
+    String EXAM_COL_ITEM = "examination_item";  //検査項目
+
+    //患者の検査情報テーブル
+    String TABLE_PAT_EXAM = "patient_examinations";  //デーブル名
+    //患者の検査情報テーブルカラム
+    String PAT_EXAM_COL_ID = "id";  //id
+    String PAT_EXAM_COL_EXAM = "examination_id";  //患者さんがうける検査項目id
+    String PAT_EXAM_COL_EXAM_DATE = "examination_date";  //検査日
+    String PAT_EXAM_COL_RESERVATION_TIME = "reservation_time";  //予約時間
+    String PAT_EXAM_COL_PAT_ID = "patient_id";  //患者ID
+    String PAT_EXAM_CREATED_AT = "created_at"; //登録日
+
+
 
 
     //Entity名

@@ -9,6 +9,7 @@ import services.PatientDeviceService;
 *
 */
 public class PatientConverter {
+
     /**
      * ViewモデルのインスタンスからPatientのDTOモデルのインスタンスを作成する
      * @param pdv PatientDeviceViewのインスタンス
@@ -16,8 +17,8 @@ public class PatientConverter {
      */
     public static Patient toModel(PatientDeviceView pdv) {
 
-        Patient pt = new Patient(null, pdv.getPatient_id(), pdv.getPatient_name());
-        return pt;
+        Patient pat = new Patient(null, pdv.getPatient_id(), pdv.getPatient_name(), null);
+        return pat;
     }
 
     /**
@@ -30,6 +31,17 @@ public class PatientConverter {
 
         return service.findPatient(pdv.getPatient_id());
     }
+
+    /**
+     * PatientExaminationViewのインスタンスからPatientのDTOモデルのインスタンスを作成する
+     * @pev PatientExaminationViewのインスタンス
+     * @return pat Patientのインスタンス
+     */
+    public static  Patient toModel_from_PatExamV(PatientExaminationView pev) {
+        Patient pat = new Patient(null, pev.getId(), pev.getPatient_name(), pev.getPatient_name_kana());
+        return pat;
+    }
+
 
 
 

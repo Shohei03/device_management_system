@@ -55,4 +55,10 @@ public class Patient {
     @Column(name = JpaConst.PAT_COL_PAT_NAME, nullable = false)
     private String patient_name;
 
+    /**
+     * 患者名（ひらがな）
+     */
+    @Column(name = JpaConst.PAT_COL_PAT_NAME_KANA, nullable = true)
+    private String patient_name_kana;
+
 }
