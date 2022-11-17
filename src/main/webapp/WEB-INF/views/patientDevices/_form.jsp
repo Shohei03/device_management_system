@@ -11,7 +11,7 @@
         <c:forEach var="error" items="${errors}">
             ・<c:out value="${error}" /><br />
             <c:if test="${error == MessageConst.E_DUPLI_DATA.getMessage()}">
-                <form method="POST" action="<c:url value='?action=${actPatDev}&command=${commCre}' />" >
+                <form method="POST" action="<c:url value='?action=${actPatDev}&command=${commCrt}' />" >
                     <input type="hidden" name="${AttributeConst.PATDEV_DUPLICATE_CHECK.getValue()}" value="false" />
                     <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}" />
                     <input type="hidden" name="${AttributeConst.PATDEV_PAT_ID.getValue()}" value="${patientDevice.patient_id}" />

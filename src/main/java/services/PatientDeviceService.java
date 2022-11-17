@@ -77,8 +77,6 @@ public class PatientDeviceService extends ServiceBase {
                 .setParameter(JpaConst.JPQL_PARM_PATIENT, pat)
                 .getSingleResult();
 
-        System.out.println("患者ID" + pat.getId() + ":数--------------" + patientDeviceCount);
-
         return patientDeviceCount;
     }
 

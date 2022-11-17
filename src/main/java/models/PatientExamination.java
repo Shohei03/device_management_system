@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import constants.JpaConst;
@@ -24,6 +26,16 @@ import lombok.Setter;
 *
 */
 @Table(name = JpaConst.TABLE_PAT_EXAM)
+@NamedQueries({
+    @NamedQuery(name = JpaConst.Q_PAT_EXAM_GET_MINE, query = JpaConst.Q_PAT_EXAM_GET_MINE_DEF),
+    @NamedQuery(name = JpaConst.Q_PAT_EXAM_COUNT_ALL, query = JpaConst.Q_PAT_EXAM_COUNT_ALL_DEF),
+    @NamedQuery(name = JpaConst.Q_PAT_EXAM_GET_MINE_REGISTEREDBY_EXAM_DATE, query = JpaConst.Q_PAT_EXAM_GET_MINE_REGISTEREDBY_EXAM_DATE_DEF),
+    @NamedQuery(name = JpaConst.Q_PAT_EXAM_COUNT_REGISTEREDBY_EXAM_DATE, query = JpaConst.Q_PAT_EXAM_COUNT_REGISTEREDBY_EXAM_DATE_DEF),
+    @NamedQuery(name = JpaConst.Q_PAT_EXAM_COUNT_REGISTEREDBY_PAT, query = JpaConst.Q_PAT_EXAM_COUNT_REGISTEREDBY_PAT_DEF),
+    @NamedQuery(name = JpaConst.Q_PAT_EXAM_GET_MINE_REGISTEREDBY_PAT, query = JpaConst.Q_PAT_EXAM_GET_MINE_REGISTEREDBY_PAT_DEF)
+})
+
+
 
 @Getter //全てのクラスフィールドについてgetterを自動生成する(Lombok)
 @Setter //全てのクラスフィールドについてsetterを自動生成する(Lombok)
@@ -58,19 +70,19 @@ public class PatientExamination {
      * 検査日
      */
     @Column(name = JpaConst.PAT_EXAM_COL_EXAM_DATE, nullable = false)
-    LocalDate examination_date;
+    private LocalDate examination_date;
 
     /**
      * 予約時間
      */
     @Column(name = JpaConst.PAT_EXAM_COL_RESERVATION_TIME)
-    LocalTime reservation_time;
+    private LocalTime reservation_time;
 
     /**
      * 登録日
      */
     @Column(name = JpaConst.PAT_EXAM_CREATED_AT)
-    LocalDate createdAt;
+    private LocalDate createdAt;
 
 
 

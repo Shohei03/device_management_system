@@ -217,3 +217,8 @@ table#patientDevice_list .patientDeviec_action {
 input[name="device_name"] {
     width: 40%
 }
+
+table#patientExam_list th {
+    font-weight: bold;
+    padding: 10px 2%;
+}

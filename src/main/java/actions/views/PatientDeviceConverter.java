@@ -21,7 +21,7 @@ public class PatientDeviceConverter {
         return new PatientDevice(
                 pdv.getId(),
                 PackageInsertConverter.toModel_from_AppNum(pdv.getApproval_number()), // 添付文書番号をもとにPackageInsertテーブルにアクセスしてインスタンスを取得
-                PatientConverter.toModel_FROM_PAT(pdv), //指定したPatientDeviceViewインスタンスとリレーション関係にあるPatientインスタンスを取得
+                PatientConverter.toModel_FROM_PAT(pdv.getPatient_id()), //指定したPatientDeviceViewインスタンスとリレーション関係にあるPatientインスタンスを取得
                 pdv.getImplantedAt(),
                 pdv.getCreatedAt(),
                 pdv.getUpdatedAt(),
@@ -75,7 +75,7 @@ public class PatientDeviceConverter {
 
         pd.setId(pdv.getId());
         pd.setPackageInsert(PackageInsertConverter.toModel_from_AppNum(pdv.getApproval_number()));
-        pd.setPatient(PatientConverter.toModel_FROM_PAT(pdv));
+        pd.setPatient(PatientConverter.toModel_FROM_PAT(pdv.getPatient_id()));
         pd.setImplantedAt(pdv.getImplantedAt());
         pd.setCreatedAt(pdv.getCreatedAt());
         pd.setUpdatedAt(pdv.getUpdatedAt());

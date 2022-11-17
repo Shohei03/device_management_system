@@ -22,7 +22,7 @@
                     <td><c:out value="${patientDevice.patient_name}" /></td>
                 </tr>
                 <tr>
-                    <th>添付文書承認番号
+                    <th>添付文書承認番号</th>
                     <td><c:out value="${patientDevice.approval_number}" /></td>
                 </tr>
                 <tr>

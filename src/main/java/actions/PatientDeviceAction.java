@@ -102,7 +102,7 @@ public class PatientDeviceAction extends ActionBase {
 
         //患者名の苗字と名前の間の空白スペースが半角の場合は、全角に変換する
         String patient_name = getRequestParam(AttributeConst.PATDEV_PAT_NAME);
-        if (patient_name != null ) {
+        if (patient_name != null) {
             patient_name = patient_name.replaceAll(" ", "  ");
         }
 
@@ -132,10 +132,8 @@ public class PatientDeviceAction extends ActionBase {
         //確認呼びかけのメッセージを設定
         putRequestScope(AttributeConst.FLUSH, MessageConst.I_CHECK.getMessage());
 
-      //新規登録画面を表示
+        //確認画面を表示
         forward(ForwardConst.FW_PATDEV_CHECK);
-
-
 
     }
 
@@ -390,12 +388,9 @@ public class PatientDeviceAction extends ActionBase {
             while ((line = br.readLine()) != null) {
                 String[] data = line.split(",");
 
-
                 //患者IDに数字以外に記号があれば除去
                 String patient_id = data[0];
                 String intStr_patient_id = patient_id.replaceAll("[^0-9]", "");
-
-
 
                 //CSVの埋込日をLocalDate型に変換
                 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/[]M/[]d");

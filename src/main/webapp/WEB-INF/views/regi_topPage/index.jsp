@@ -5,6 +5,7 @@
 
 <c:set var="actPack" value="${ForwardConst.ACT_PACK.getValue()}" />
 <c:set var="actPatDev" value="${ForwardConst.ACT_PATDEV.getValue()}" />
+<c:set var="actPatExam" value="${ForwardConst.ACT_PATEXAM.getValue()}" />
 <c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
 
 <c:import url="../layout/app.jsp">
@@ -23,7 +24,7 @@
             <a href="<c:url value='?action=${actPack}&command=${commIdx}' />">添付文書情報</a>
         </div>
         <div class="regi_top_item">
-            <a>検査情報</a>
+            <a href="<c:url value='?action=${actPatExam}&command=${commIdx}' />">検査情報</a>
         </div>
 
 

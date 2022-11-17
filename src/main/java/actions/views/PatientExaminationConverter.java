@@ -19,8 +19,8 @@ public class PatientExaminationConverter {
     public static PatientExamination toModel(PatientExaminationView pev) {
         return new PatientExamination(
                 pev.getId(),
-                PatientConverter.toModel_from_PatExamV (pev),
-                ExaminationConverter.toModel(pev),
+                PatientConverter.toModel_FROM_PAT(pev.getPatient_id()),
+                ExaminationConverter.CopyModel(pev),
                 pev.getExamination_date(),
                 pev.getReservation_time(),
                 pev.getCreatedAt());
@@ -69,8 +69,8 @@ public class PatientExaminationConverter {
      */
     public static void copyViewToModel(PatientExamination pe, PatientExaminationView pev) {
         pe.setId(pev.getId());
-        pe.setPatient(PatientConverter.toModel_from_PatExamV(pev));
-        pe.setExamination(ExaminationConverter.toModel(pev));
+        pe.setPatient(PatientConverter.toModel_FROM_PAT(pev.getPatient_id()));
+        pe.setExamination(ExaminationConverter.CopyModel(pev));
         pe.setExamination_date(pev.getExamination_date());
         pe.setReservation_time(pev.getReservation_time());
         pe.setCreatedAt(pev.getCreatedAt());

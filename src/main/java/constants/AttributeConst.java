@@ -53,7 +53,7 @@ public enum AttributeConst {
     PACK_JMDN("JMDN_code"),  //JMDNコード
     PACK_GENERAL_NAME("general_name"),
     PACK_DEV_NAME("device_name"),
-    PACK_MR_STR("MR_magnetic_field_strength"),
+
     PACK_Manma("acceptability_of_Manma_exam"),
     PACK_X_RAY("acceptability_of_X_ray_exam"),
     PACK_CT("acceptability_of_CT_exam"),
@@ -84,8 +84,30 @@ public enum AttributeConst {
     PATDEV_ERR_PAT_NAME("patDev_err_pat_name"),  //CSV取り込み時にエラーが生じた患者名
     PATDEV_DUPLICATE_CHECK("patDev_duplicateCheck"),  //入力データの重複チェック
 
+    //検査情報
+    PATIENT_EXAMINATION("patientExamination"),
+    PATIENT_EXAMINATIONS("patientExaminations"),
+    PATEXAM_ID("id"),
+    PATEXAM_COUNT_BY_DAY("patintExaminationsCount_byDay"),
+    PATEXAM_PAT_ID("patient_id"),
+    PATEXAM_PAT_NAME("patient_name"),
+    PATEXAM_PAT_NAME_KANA("patient_name_kana"),
+    PATEXAM_DAY("day"),
+    PATEXAM_EXAM_ITEM("examination_item"),
+    PATEXAM_EXAM_DATE("examination_date"),
+    PATEXAM_RESERVATION_TIME("reservation_time"),
+    PATEXAM_DUPLICATE_CHECK("duplicateCheck"),  //入力データの重複チェック
 
 
+
+    //検査項目
+    EXAMINATION("examination"),
+    EXAMINATIONS("examinations"),
+    EXAM_X_RAY("単純X線検査"),
+    EXAM_CT("CT検査"),
+    EXAM_TV("X線TV検査"),
+    EXAM_Manma("乳腺X線検査"),
+    EXAM_MRI("MR検査"),
 
 
 

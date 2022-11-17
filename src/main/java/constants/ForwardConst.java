@@ -16,6 +16,7 @@ public enum ForwardConst {
     ACT_REGI_TOP("RegisterTop"),
     ACT_PACK("PackageInsert"),
     ACT_PATDEV("PatientDevice"),
+    ACT_PATEXAM("PatientExamination"),
 
     //command
     CMD("command"),
@@ -55,7 +56,15 @@ public enum ForwardConst {
     FW_PATDEV_NEW("patientDevices/new"),
     FW_PATDEV_EDIT("patientDevices/edit"),
     FW_PATDEV_CSV_CHECK("patientDevices/csv_check"),
-    FW_PATDEV_CHECK("patientDevices/check");
+    FW_PATDEV_CHECK("patientDevices/check"),
+    FW_PATEXAM_INDEX("patientExaminations/index"),
+    FW_PATEXAM_SHOW("patientExaminations/show"),
+    FW_PATEXAM_NEW("patientExaminations/new"),
+    FW_PATEXAM_EDIT("patientExaminations/edit"),
+    FW_PATEXAM_CSV_CHECK("patientExaminations/csv_check"),
+    FW_PATEXAM_CHECK("patientExaminations/check");
+
+
 
 
 

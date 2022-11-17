@@ -26,11 +26,13 @@ public class PatientConverter {
      * @param pdv PatientDeviceViewのインスタンス
      * @return pt Patientのインスタンス
      */
-    public static Patient toModel_FROM_PAT(PatientDeviceView pdv) {
+    public static Patient toModel_FROM_PAT(int patient_id) {
         PatientDeviceService service = new PatientDeviceService();
 
-        return service.findPatient(pdv.getPatient_id());
+        return service.findPatient(patient_id);
     }
+
+
 
     /**
      * PatientExaminationViewのインスタンスからPatientのDTOモデルのインスタンスを作成する

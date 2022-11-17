@@ -21,7 +21,6 @@ import lombok.Setter;
 */
 
 @Table(name = JpaConst.TABLE_JMDN)
-
 @NamedQueries({
         @NamedQuery(name = JpaConst.Q_JMDN_COUNT_REGISTEREDBY_JMDN_CODE, query = JpaConst.Q_JMDN_COUNT_REGISTEREDBY_JMDN_CODE_DEF),
         @NamedQuery(name = JpaConst.Q_JMDN_GET_MINE_REGISTEREDBY_JMDN_CODE, query = JpaConst.Q_JMDN_GET_MINE_REGISTEREDBY_JMDN_CODE_DEF)

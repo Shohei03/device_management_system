@@ -103,6 +103,8 @@ public interface JpaConst {
     String ENTITY_JMDN = "jmdn"; //JMDN
     String ENTITY_PAT_DEV = "patient_device";  //患者の体内デバイス
     String ENTITY_PAT = "patient";  //患者
+    String ENTITY_PAT_EXAM = "patient_examination";  //患者の検査情報
+    String ENTITY_EXAM = "examination";  //検査項目
 
     //JPQL内パラメータ
     String JPQL_PARM_CODE = "code"; //社員番号
@@ -112,6 +114,8 @@ public interface JpaConst {
     String JPQL_PARM_JMDN_CODE = "JMDN_code"; //JMDNコード
     String JPQL_PARM_PAT_ID = "patient_id";  //患者ID
     String JPQL_PARM_PATIENT = "patient";  //患者インスタンス
+    String JPQL_PARM_EXAM_DATE = "examination_date";  //検査日
+    String JPQL_PARM_EXAM_ITEM = "examination_item" ;  //検査項目
 
     //NamedQueryの nameとquery
     //全ての従業員をidの降順に取得する
@@ -166,9 +170,6 @@ public interface JpaConst {
     String Q_PAT_DEV_GET_MINE_REGISTEREDBY_PAT = ENTITY_PAT_DEV + ".getMineRegisteredByPatient";
     String Q_PAT_DEV_GET_MINE_REGISTEREDBY_PAT_DEF = "SELECT p FROM PatientDevice AS p WHERE p.patient = :" + JPQL_PARM_PATIENT;
 
-
-
-
     //全ての患者を患者idの昇順で取得する
     String Q_PAT_GET_ALL = ENTITY_PAT + ".getAll";
     String Q_PAT_GET_ALL_DEF = "SELECT p FROM Patient AS p ORDER BY p.patient_id";
@@ -182,5 +183,28 @@ public interface JpaConst {
     String Q_PAT_GET_MINE_REGISTEREDBY_PAT_ID = ENTITY_PAT + ".getMineRegisteredByPatient_id";
     String Q_PAT_GET_MINE_REGISTEREDBY_PAT_ID_DEF = "SELECT p FROM Patient AS p WHERE p.patient_id = :" + JPQL_PARM_PAT_ID;
 
+
+    //検査情報を取得する
+    String Q_PAT_EXAM_GET_MINE = ENTITY_PAT_EXAM + ".getMine";
+    String Q_PAT_EXAM_GET_MINE_DEF = "SELECT pe FROM PatientExamination AS pe";
+    //全検査のレコード数を取得する
+    String Q_PAT_EXAM_COUNT_ALL = ENTITY_PAT_EXAM + ".countAll";
+    String Q_PAT_EXAM_COUNT_ALL_DEF = "SELECT COUNT(pe) FROM PatientExamination AS pe";
+    //指定した検査日の検査情報を取得する
+    String Q_PAT_EXAM_GET_MINE_REGISTEREDBY_EXAM_DATE = ENTITY_PAT_EXAM + ".getMineRegisteredByExam_date";
+    String Q_PAT_EXAM_GET_MINE_REGISTEREDBY_EXAM_DATE_DEF = "SELECT pe FROM PatientExamination AS pe WHERE pe.examination_date = :" + JPQL_PARM_EXAM_DATE;
+    //指定した検査日の全検査のレコード数を取得する
+    String Q_PAT_EXAM_COUNT_REGISTEREDBY_EXAM_DATE = ENTITY_PAT_EXAM + ".countRegisteredByExamination_date";
+    String Q_PAT_EXAM_COUNT_REGISTEREDBY_EXAM_DATE_DEF = "SELECT COUNT(pe) FROM PatientExamination AS pe WHERE pe.examination_date = :" + JPQL_PARM_EXAM_DATE;
+    //指定した患者の検査数を取得する
+    String Q_PAT_EXAM_COUNT_REGISTEREDBY_PAT = ENTITY_PAT_EXAM + ".countRegisteredByPatient";
+    String Q_PAT_EXAM_COUNT_REGISTEREDBY_PAT_DEF = "SELECT COUNT(pe) FROM PatientExamination AS pe WHERE pe.patient = :" + JPQL_PARM_PATIENT;
+    //指定した患者の検査情報を取得する
+    String Q_PAT_EXAM_GET_MINE_REGISTEREDBY_PAT = ENTITY_PAT_EXAM + ".getMineRegisteredByPatient";
+    String Q_PAT_EXAM_GET_MINE_REGISTEREDBY_PAT_DEF = "SELECT pe FROM PatientExamination AS pe WHERE pe.patient = :" + JPQL_PARM_PATIENT;
+
+    //検査項目テーブルから指定した検査項目のレコードを取得する
+    String Q_EXAM_GET_MINE_REGISTEREDBY_PAT = ENTITY_EXAM + ".getMineRegisteredByExamination_item";
+    String Q_EXAM_GET_MINE_REGISTEREDBY_PAT_DEF = "SELECT e FROM Examination AS e WHERE e.examination_item = :" + JPQL_PARM_EXAM_ITEM;
 
 }

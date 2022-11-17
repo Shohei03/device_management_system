@@ -1,6 +1,7 @@
 package actions.views;
 
 import models.Examination;
+import services.PatientExaminationService;
 
 public class ExaminationConverter {
 
@@ -20,11 +21,11 @@ public class ExaminationConverter {
      * @return
      */
 
-    public static Examination toModel_FROM_PatExamV(PatientExaminationView pev) {
+    public static Examination CopyModel(PatientExaminationView pev) {
 
         PatientExaminationService service = new PatientExaminationService();
 
-        return service.findExam(pev.getExamination_item());
+        return service.findExamination(pev.getExamination_item());
 
     }
 
