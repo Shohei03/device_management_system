@@ -32,7 +32,7 @@ public class PatientExaminationConverter {
      * @return PatienExaminationViewのインスタンス
      */
     public static PatientExaminationView toView(PatientExamination pe) {
-        if(pe == null) {
+        if (pe == null) {
             return null;
         }
 
@@ -55,7 +55,7 @@ public class PatientExaminationConverter {
     public static List<PatientExaminationView> toViewList(List<PatientExamination> list) {
         List<PatientExaminationView> pevs = new ArrayList<>();
 
-        for(PatientExamination pe : list) {
+        for (PatientExamination pe : list) {
             pevs.add(toView(pe));
         }
 
@@ -75,9 +75,5 @@ public class PatientExaminationConverter {
         pe.setReservation_time(pev.getReservation_time());
         pe.setCreatedAt(pev.getCreatedAt());
 
-
     }
-
-
-
 }

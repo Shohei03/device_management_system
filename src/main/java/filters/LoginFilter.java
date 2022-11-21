@@ -82,7 +82,7 @@ public class LoginFilter implements Filter {
                         //ログインページの表示はトップ画面にリダイレクト
                         ((HttpServletResponse) response).sendRedirect(
                                 contextPath
-                                        + "?action=" + ForwardConst.ACT_SEARCH.getValue()
+                                        + "?action=" + ForwardConst.ACT_SEARCHER.getValue()
                                         + "&command=" + ForwardConst.CMD_INDEX.getValue());
 
                         return;

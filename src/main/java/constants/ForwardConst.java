@@ -12,7 +12,7 @@ public enum ForwardConst {
     ACT("action"),
     ACT_EMP("Employee"),
     ACT_AUTH("Auth"),
-    ACT_SEARCH("Searcher"),
+    ACT_SEARCHER("Searcher"),
     ACT_REGI_TOP("RegisterTop"),
     ACT_PACK("PackageInsert"),
     ACT_PATDEV("PatientDevice"),
@@ -36,6 +36,8 @@ public enum ForwardConst {
     CMD_CSV_MODIFY("csvModify"),
     CMD_CSV_ALL_CREATE("csvAllCreate"),
     CMD_CHECK("check"),
+    CMD_SEARCH_BY_DEPARTMENT("searchByDepartment"),
+    CMD_SEARCH_BY_PAT_ID("searchByPatId"),
 
     //jsp
     FW_ERR_UNKNOWN("error/unknown"),
@@ -45,6 +47,9 @@ public enum ForwardConst {
     FW_EMP_NEW("employees/new"),
     FW_EMP_EDIT("employees/edit"),
     FW_SEARCH_INDEX("searches/index"),
+    FW_SEARCH_INDEX_BY_EXAM_ITEM("searches/search_by_exam_item"),
+    FW_SEARCH_INDEX_BY_PAT_ID("searches/search_by_patient_id"),
+    FW_SEARCH_SHOW("searches/show"),
     FW_REGI_TOP_INDEX("regi_topPage/index"),
     FW_PACK_INDEX("packageInserts/index"),
     FW_PACK_NEW("packageInserts/new"),
@@ -63,6 +68,7 @@ public enum ForwardConst {
     FW_PATEXAM_EDIT("patientExaminations/edit"),
     FW_PATEXAM_CSV_CHECK("patientExaminations/csv_check"),
     FW_PATEXAM_CHECK("patientExaminations/check");
+
 
 
 

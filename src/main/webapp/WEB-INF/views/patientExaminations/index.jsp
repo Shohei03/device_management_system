@@ -29,16 +29,19 @@
             <tbody>
                 <tr>
                     <th class="patientExam_exam_item">検査項目</th>
+                    <th class="patientExam_examination_date">検査日</th>
                     <th class="patientExam_reservation_time">予約時間</th>
                     <th class="patientExam_patient_id">患者ID</th>
                     <th class="patientExam_ptient_name">患者名</th>
                     <th class="patientDeviec_action">操作</th>
                 </tr>
                 <c:forEach var="patientExamination" items="${patientExaminations}" varStatus="status">
-                    <fmt:parseDate value="${patientExamination.reservation_time}" pattern='HH:mm' var='reservationTime' type="time" />
+                    <fmt:parseDate value="${patientExamination.reservation_time}" pattern='HH:mm' var='reservationTime' type='time' />
+                    <fmt:parseDate value="${patientExamination.examination_date}" pattern='yyyy-MM-dd' var='examDay' type='date' />
 
                     <tr class="row${status.count % 2}">
                         <td class="patientExam_exam_item"><c:out value="${patientExamination.examination_item}" /></td>
+                        <td class="patientExam_examination_date"><fmt:formatDate value="${examDay}" pattern="yyyy-MM-dd" /></td>
                         <td class="patientExam_reservation_time"><fmt:formatDate value='${reservationTime}' pattern='HH:mm' /></td>
                         <td class="patientExam_patient_id"><c:out value="${patientExamination.patient_id}" /></td>
                         <td class="patientExam_patient_name"><c:out value="${patientExamination.patient_name}" /></td>

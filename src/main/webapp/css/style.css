@@ -69,6 +69,7 @@ button {
 
 #footer {
     text-align: center;
+    margin: 100px;
 }
 
 #flush_success {
@@ -222,3 +223,84 @@ table#patientExam_list th {
     font-weight: bold;
     padding: 10px 2%;
 }
+
+ul#examination_condition {
+    background-color:#FFEFEF;
+    color:#C25338;
+    margin:0 0 1em 0; padding:10px;
+    border:1px solid #D4440D;
+    line-height:1.5;
+    clear:both;
+    background-repeat:no-repeat;
+    background-position:5px 5px;
+    font-weight:1000 ;
+    border-left: solid 6px #e03e18;
+    list-style-type: none!important;
+}
+
+ul#notSafe_count {
+    background-color:#d0effa;
+    color:#0973fe;
+    margin:0 0 1em 0; padding:10px;
+    border:1px solid #0828f4;
+    line-height:1.5;
+    clear:both;
+    background-repeat:no-repeat;
+    background-position:5px 5px;
+    font-weight:1000 ;
+    border-left: solid 6px #0fa0cd;
+    list-style-type: none!important;
+}
+
+
+
+#search_item_patId {
+    width: 100%;
+    line-height: 20px;
+    text-align: center;
+    margin-bottom: 3px;
+    display: flex;
+    justify-content: space-between;
+    background-color: #1399b347;
+}
+#search_item {
+    margin: 8px;
+    padding: 8px;
+    line-height: 20px;
+    text-align: center;
+}
+#search_patId {
+    margin: 8px;
+    padding: 8px;
+    line-height: 20px;
+    text-align: left;
+  background-color: #57b1e9fc;
+
+}
+
+
+table#search_list_by_patient .search_general_name {
+    width: 15%;
+
+}
+
+table#search_list_by_patient .search_device_nam {
+    width: 20%;
+}
+
+table#search_list_by_patient .search_implantedAt {
+    width: 15%;
+}
+
+table#search_list_by_patient .search_acceptability_of_exam {
+    width: 50%;
+}
+
+
+
+table#search_list_by_patient th {
+    font-weight: bold;
+    padding: 10px 2%;
+    text-align: center;
+}
+

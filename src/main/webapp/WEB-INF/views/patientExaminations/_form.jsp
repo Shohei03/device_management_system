@@ -11,16 +11,12 @@
         入力内容にエラーがあります。<br />
         <c:forEach var="error" items="${errors}">
                     ・<c:out value="${error}" />
-            <c:if test="${error == MessageConst.E_DUPLI_DATA.getMessage()}">
-                <button type="submit">重複登録</button>
-            </c:if>
-            <br />
+                    <c:if test="${error == MessageConst.E_DUPLI_DATA.getMessage()}">
+                        <button type="submit">重複登録</button>
+                    </c:if>
         </c:forEach>
     </div>
 </c:if>
-
-
-
 
 <label for="${AttributeConst.PATEXAM_EXAM_ITEM.getValue()}">検査項目</label>
 <br />

@@ -80,6 +80,54 @@ public class PatientExaminationService extends ServiceBase {
     }
 
     /**
+     * 検査日と検査項目を指定して検査情報データを取得し、PatientExaminationのリストで返却する
+     * @param examination_item 検査項目
+     * @param exam_date 指定日
+     * @return 一覧画面に表示するデータのリスト
+     */
+    public List<PatientExamination> getTheExamInTheExamDate(LocalDate exam_date, Examination e) {
+        List<PatientExamination> patientExamination_list = em
+                .createNamedQuery(JpaConst.Q_PAT_EXAM_GET_MINE_REGISTEREDBY_EXAM_DATE_AND_ITEM, PatientExamination.class)
+                .setParameter(JpaConst.JPQL_PARM_EXAM_DATE, exam_date)
+                .setParameter(JpaConst.JPQL_PARM_EXAMINATION, e)
+                .getResultList();
+
+        return patientExamination_list;
+    }
+
+    /**
+     * 検査日を指定して患者データを取得し、患者のリストで返却する(患者IDの重複なし)
+     * @param exam_date 指定日
+     * @return 一覧画面に表示するデータのリスト
+     */
+    public List<Patient> getPatNoDupliInTheExamDate(LocalDate exam_date) {
+        List<Patient> patient_list = em
+                .createNamedQuery(JpaConst.Q_PAT_EXAM_GET_PAT_DISTINCT_PAT_REGISTEREDBY_EXAM_DATE, Patient.class)
+                .setParameter(JpaConst.JPQL_PARM_EXAM_DATE, exam_date)
+                .getResultList();
+
+        return patient_list;
+    }
+
+
+    /**
+     * 検査日と検査項目を指定して患者データを取得し、患者のリストで返却する(患者IDの重複なし)
+     * @param examination_item 検査項目
+     * @param exam_date 指定日
+     * @return 一覧画面に表示するデータのリスト
+     */
+    public List<Patient> getPatNoDupliByExamItemInTheExamDate(LocalDate exam_date, Examination e) {
+        List<Patient> patient_list = em
+                .createNamedQuery(JpaConst.Q_PAT_EXAM_GET_PAT_DISTINCT_PAT_REGISTEREDBY_EXAM_DATE_AND_ITEM, Patient.class)
+                .setParameter(JpaConst.JPQL_PARM_EXAM_DATE, exam_date)
+                .setParameter(JpaConst.JPQL_PARM_EXAMINATION, e)
+                .getResultList();
+
+        return patient_list;
+    }
+
+
+    /**
      * idを条件に取得したデータをPatientExaminationのインスタンスで返却する
      * @param id
      * @return 取得データのインスタンス
@@ -99,7 +147,7 @@ public class PatientExaminationService extends ServiceBase {
     }
 
     /**
-     * 患者idを条件に検査情報テーブルから取得したレコードをPatientExaminationインスタンスのリストとして返却する
+     * 患者インスタンスを条件に検査情報テーブルから取得したレコードをPatientExaminationインスタンスのリストとして返却する
      * @param p 患者インスタンス
      * @return 取得データのインスタンス
      */
@@ -168,11 +216,13 @@ public class PatientExaminationService extends ServiceBase {
      * return 指定した検査項目をもつExaminationインスタンス
      */
     public Examination findExamination(String examination_item) {
+
         Examination e = (Examination) em.createNamedQuery(JpaConst.Q_EXAM_GET_MINE_REGISTEREDBY_PAT, Examination.class)
                 .setParameter(JpaConst.JPQL_PARM_EXAM_ITEM, examination_item)
                 .getSingleResult();
 
         return e;
+
     }
 
     /**
@@ -187,7 +237,6 @@ public class PatientExaminationService extends ServiceBase {
 
         //バリデーションエラーがなければデータを登録する
         if (errors.size() == 0) {
-            System.out.println("エラーサイズ============" + errors.size());
 
             //登録日に今日の日付を登録する
             LocalDate ldt = LocalDate.now();
@@ -196,10 +245,8 @@ public class PatientExaminationService extends ServiceBase {
             //患者の検査情報テーブルと患者テーブルにデータを登録する
             //まず、患者テーブルにこれから登録する患者IDが存在していないか確認。存在している場合は登録しない。
             if (!(countByPatient_id(pev.getPatient_id()) > 0)) {
-                System.out.println("指定患者のidの数①=======" + countByPatient_id(pev.getPatient_id()));
                 createInternalPatient(pev);
             }
-            System.out.println("指定患者のidの数②=======" + countByPatient_id(pev.getPatient_id()));
             createInternalPatExam(pev);
         }
         //バリデーションで発生したエラーを返却（エラーがなければ0件の空リスト）
@@ -273,12 +320,14 @@ public class PatientExaminationService extends ServiceBase {
      * @param id
      */
     public void destroy(Integer id) {
-        //idを条件に登録済みの検査情報を取得する
-        PatientExaminationView savedPev = findOne(id);
-        //指定した検査情報を削除
-        em.remove(PatientExaminationConverter.toModel(savedPev));
-        em.getTransaction().commit();
 
+        //idを条件に登録済みの検査情報を取得する
+        PatientExamination pe = findOneInternal(id);
+
+        em.getTransaction().begin();
+        //指定した検査情報を削除
+        em.remove(pe);
+        em.getTransaction().commit();
     }
 
 }

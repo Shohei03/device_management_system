@@ -40,7 +40,8 @@ public class PatientConverter {
      * @return pat Patientのインスタンス
      */
     public static  Patient toModel_from_PatExamV(PatientExaminationView pev) {
-        Patient pat = new Patient(null, pev.getId(), pev.getPatient_name(), pev.getPatient_name_kana());
+
+        Patient pat = new Patient(null, pev.getPatient_id(), pev.getPatient_name(), pev.getPatient_name_kana());
         return pat;
     }
 

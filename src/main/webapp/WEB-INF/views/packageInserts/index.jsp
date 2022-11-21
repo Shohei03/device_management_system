@@ -4,7 +4,7 @@
 <%@ page import="constants.ForwardConst" %>
 
 <c:set var="actPack" value="${ForwardConst.ACT_PACK.getValue()}" />
-<c:set var="actSearch" value="${ForwardConst.ACT_SEARCH.getValue()}" />
+<c:set var="actSearcher" value="${ForwardConst.ACT_SEARCHER.getValue()}" />
 <c:set var="actRegi_top" value="${ForwardConst.ACT_REGI_TOP.getValue()}" />
 <c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
 <c:set var="commShow" value="${ForwardConst.CMD_SHOW.getValue()}" />

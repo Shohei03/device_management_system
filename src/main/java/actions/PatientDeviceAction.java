@@ -251,7 +251,7 @@ public class PatientDeviceAction extends ActionBase {
      */
     public void update() throws ServletException, IOException {
 
-        //入力データが体内デバイスデータに既に存在するか確認（duplicateCheck = true）
+
         Boolean duplicateCheck = false;
 
         //CSRF対策 tokenのチェック
@@ -484,8 +484,6 @@ public class PatientDeviceAction extends ActionBase {
                     //登録中にエラーがあった場合
                     putRequestScope(AttributeConst.PATDEV_ERR_PAT_NAME, pdv.getPatient_name()); //エラーが生じた患者名
                     putRequestScope(AttributeConst.ERR, errors); //エラーリスト
-
-                    System.out.println("エラーがおきた患者名：：：：：：：：：：" + pdv.getPatient_name());
 
                     //csv取り込みデータ確認画面に戻る
                     forward(ForwardConst.FW_PATDEV_CSV_CHECK);

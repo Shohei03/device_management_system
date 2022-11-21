@@ -21,9 +21,11 @@ import lombok.Setter;
 *
 */
 @Table(name = JpaConst.TABLE_EXAM)
+
 @NamedQueries({
     @NamedQuery(name = JpaConst.Q_EXAM_GET_MINE_REGISTEREDBY_PAT, query = JpaConst.Q_EXAM_GET_MINE_REGISTEREDBY_PAT_DEF)
 })
+
 
 @Getter //全てのクラスフィールドについてgetterを自動生成する(Lombok)
 @Setter //全てのクラスフィールドについてsetterを自動生成する(Lombok)

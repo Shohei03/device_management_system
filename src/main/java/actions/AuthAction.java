@@ -80,7 +80,7 @@ public class AuthAction extends ActionBase {
                 //セッションにログイン完了のフラッシュメッセージを設定
                 putSessionScope(AttributeConst.FLUSH, MessageConst.I_LOGINED.getMessage());
                 //トップページにリダイレクト
-                redirect(ForwardConst.ACT_SEARCH, ForwardConst.CMD_INDEX);
+                redirect(ForwardConst.ACT_SEARCHER, ForwardConst.CMD_SEARCH_BY_DEPARTMENT);
 
             }
         } else {

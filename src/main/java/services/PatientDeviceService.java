@@ -7,6 +7,8 @@ import java.util.List;
 import actions.views.PatientConverter;
 import actions.views.PatientDeviceConverter;
 import actions.views.PatientDeviceView;
+import actions.views.SearchConverter;
+import actions.views.SearchPatientDeviceView;
 import constants.JpaConst;
 import models.Patient;
 import models.PatientDevice;
@@ -19,6 +21,19 @@ import models.validators.PatientDeviceValidator;
  */
 
 public class PatientDeviceService extends ServiceBase {
+    /**
+     * 指定されたページ数の一覧画面に表示する体内デバイスデータ（添付文書データつき）を取得し、SearchPatientDeviceViewのリストで返却する
+     * @param page ページ数
+     */
+    public List<SearchPatientDeviceView> getDevAndPackPerPage(int page) {
+        List<PatientDevice> pd_list = em.createNamedQuery(JpaConst.Q_PAT_DEV_GET_ALL, PatientDevice.class)
+                .setFirstResult(JpaConst.ROW_PER_PAGE * (page - 1))
+                .setMaxResults(JpaConst.ROW_PER_PAGE)
+                .getResultList();
+
+        return SearchConverter.toViewList(pd_list);
+
+    }
 
     /**
      * 指定されたページ数の一覧画面に表示する体内デバイスデータを取得し、PatientDeviceViewのリストで返却する
@@ -81,7 +96,7 @@ public class PatientDeviceService extends ServiceBase {
     }
 
     /**
-     * PatientDevice（体内デバイス）テーブルから、引数で指定した患者インスタンスのレコードを取得。
+     * PatientDevice（体内デバイス）テーブルから、引数で指定した患者インスタンスのレコードを1件だけ取得。
      * @param pat Patient 患者インスタンス
      * return 指定した患者インスタンス（患者ID）をもつpatientDeviceインスタンス
      */
@@ -105,6 +120,22 @@ public class PatientDeviceService extends ServiceBase {
             return patDev;
         }
         return patDev;
+    }
+
+    /**
+     * PatientDevice（体内デバイス）テーブルから、引数で指定した患者インスタンスのレコードを取得。
+     * @param pat Patient 患者インスタンス
+     * return 指定した患者インスタンス（患者ID）をもつpatientDeviceインスタンス
+     */
+    public List<PatientDevice> findAllPatDevbyPatient(Patient pat) {
+
+        List<PatientDevice> patDev_list = null;
+
+        patDev_list = em.createNamedQuery(JpaConst.Q_PAT_DEV_GET_MINE_REGISTEREDBY_PAT, PatientDevice.class)
+                .setParameter(JpaConst.JPQL_PARM_PATIENT, pat)
+                .getResultList();
+
+        return patDev_list;
     }
 
     /**

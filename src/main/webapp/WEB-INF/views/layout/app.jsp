@@ -5,11 +5,12 @@
 
 <c:set var="actEmp" value="${ForwardConst.ACT_EMP.getValue()}" />
 <c:set var="actAuth" value="${ForwardConst.ACT_AUTH.getValue()}" />
-<c:set var="actSearch" value="${ForwardConst.ACT_SEARCH.getValue()}" />
+<c:set var="actSearcher" value="${ForwardConst.ACT_SEARCHER.getValue()}" />
 <c:set var="actRegi" value="${ForwardConst.ACT_REGI_TOP.getValue()}" />
 
 <c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
 <c:set var="commOut" value="${ForwardConst.CMD_LOGOUT.getValue()}" />
+<c:set var="commSearchByDep" value="${ForwardConst.CMD_SEARCH_BY_DEPARTMENT.getValue()}" />
 
 
 <!DOCTYPE html>
@@ -32,7 +33,7 @@
                         <c:if test="${sessionScope.login_employee.adminFlag == AttributeConst.ROLE_ADMIN.getIntegerValue() or sessionScope.login_employee.adminFlag == AttributeConst.ROLE_PARTIAL_ADMIN.getIntegerValue()}">
                             <a href="<c:url value='?action=${actRegi}&command=${commIdx}' />">データ登録</a>&nbsp;
                         </c:if>
-                        <a href="<c:url value='?action=${actSearch}&command=${commIdx}' />">デバイス検索</a>&nbsp;
+                        <a href="<c:url value='?action=${actSearcher}&command=${commSearchByDep}' />">デバイス検索</a>&nbsp;
                     </c:if>
                 </div>
                 <c:if test="${sessionScope.login_employee != null}">

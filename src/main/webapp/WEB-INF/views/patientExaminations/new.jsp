@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="constants.ForwardConst" %>
 <%@ page import="constants.MessageConst"%>
+<%@ page import="constants.AttributeConst"%>
 
 <c:set var="actPatExam" value="${ForwardConst.ACT_PATEXAM.getValue()}" />
 <c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
@@ -21,21 +22,22 @@
 
         <c:forEach var="error" items="${errors}">
             <c:if test="${error == MessageConst.E_DUPLI_DATA.getMessage()}">
-                <c:set var="duplicate" value="${MessageConst.E_DUPLI_DATA.getMessage()}" />
+                <c:set var="duplica" value="${MessageConst.E_DUPLI_DATA.getMessage()}" />
             </c:if>
         </c:forEach>
 
         <c:choose>
-            <c:when test="${duplicate == MessageConst.E_DUPLI_DATA.getMessage()}">
+            <c:when test="${duplica == MessageConst.E_DUPLI_DATA.getMessage()}">
                 <form method="POST" action="<c:url value='?action=${actPatExam}&command=${commCrt}' />">
                     <c:import url="_form.jsp" />
-                    <input type="hidden" name="${AttributeConst.PATEXAM_DUPLICATE_CHECK.getValue()}" value="false" />
+                    <input type="text" name="${AttributeConst.PATEXAM_DUPLICATE_CHECK.getValue()}" value="false" />
                     <button type="submit">重複登録</button>
                 </form>
             </c:when>
             <c:otherwise>
                 <form method="POST" action="<c:url value='?action=${actPatExam}&command=${commCheck}' />">
                     <c:import url="_form.jsp" />
+
                     <button type="submit">確認</button>
                 </form>
             </c:otherwise>

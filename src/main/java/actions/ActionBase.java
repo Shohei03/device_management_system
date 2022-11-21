@@ -163,6 +163,7 @@ public abstract class ActionBase {
         try {
             number = Integer.parseInt(strNumber);
         } catch (Exception e) {
+            e.printStackTrace();                /////////////////
             number = Integer.MIN_VALUE;
         }
         return number;
@@ -207,7 +208,6 @@ public abstract class ActionBase {
         return request.getPart(key.getValue());
     }
 
-
     /**
      * セッションスコープから指定されたパラメータの値を取得し、返却する
      * @param key パラメータ名
@@ -244,7 +244,5 @@ public abstract class ActionBase {
     protected <R> R getContextScope(PropertyConst key) {
         return (R) context.getAttribute(key.getValue());
     }
-
-
 
 }

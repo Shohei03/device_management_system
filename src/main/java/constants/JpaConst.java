@@ -116,6 +116,7 @@ public interface JpaConst {
     String JPQL_PARM_PATIENT = "patient";  //患者インスタンス
     String JPQL_PARM_EXAM_DATE = "examination_date";  //検査日
     String JPQL_PARM_EXAM_ITEM = "examination_item" ;  //検査項目
+    String JPQL_PARM_EXAMINATION = "examination" ;  //検査項目インスタンス
 
     //NamedQueryの nameとquery
     //全ての従業員をidの降順に取得する
@@ -196,6 +197,16 @@ public interface JpaConst {
     //指定した検査日の全検査のレコード数を取得する
     String Q_PAT_EXAM_COUNT_REGISTEREDBY_EXAM_DATE = ENTITY_PAT_EXAM + ".countRegisteredByExamination_date";
     String Q_PAT_EXAM_COUNT_REGISTEREDBY_EXAM_DATE_DEF = "SELECT COUNT(pe) FROM PatientExamination AS pe WHERE pe.examination_date = :" + JPQL_PARM_EXAM_DATE;
+    //検査日と検査項目を指定し、その検査情報を取得する
+    String Q_PAT_EXAM_GET_MINE_REGISTEREDBY_EXAM_DATE_AND_ITEM = ENTITY_PAT_EXAM + ".getMineRegisteredByExam_date_and_item";
+    String Q_PAT_EXAM_GET_MINE_REGISTEREDBY_EXAM_DATE_AND_ITEM_DEF = "SELECT pe FROM PatientExamination AS pe WHERE pe.examination_date = :" + JPQL_PARM_EXAM_DATE + " and pe.examination = :" + JPQL_PARM_EXAMINATION;
+    //検査日と検査項目を指定し、その患者情報を取得する（患者の重複なし）
+    String Q_PAT_EXAM_GET_PAT_DISTINCT_PAT_REGISTEREDBY_EXAM_DATE_AND_ITEM = ENTITY_PAT_EXAM + ".getMineDistinctPatientRegisteredByExam_date_and_item";
+    String Q_PAT_EXAM_GET_PAT_DISTINCT_PAT_REGISTEREDBY_EXAM_DATE_AND_ITEM_DEF = "SELECT DISTINCT pe.patient FROM PatientExamination AS pe WHERE pe.examination_date = :" + JPQL_PARM_EXAM_DATE + " and pe.examination = :" + JPQL_PARM_EXAMINATION;
+    //検査日を指定し、その患者情報を取得する（患者の重複なし）
+    String Q_PAT_EXAM_GET_PAT_DISTINCT_PAT_REGISTEREDBY_EXAM_DATE = ENTITY_PAT_EXAM + ".getMineDistinctPatientRegisteredByExam_date";
+    String Q_PAT_EXAM_GET_PAT_DISTINCT_PAT_REGISTEREDBY_EXAM_DATE_DEF = "SELECT DISTINCT pe.patient FROM PatientExamination AS pe WHERE pe.examination_date = :" + JPQL_PARM_EXAM_DATE;
+
     //指定した患者の検査数を取得する
     String Q_PAT_EXAM_COUNT_REGISTEREDBY_PAT = ENTITY_PAT_EXAM + ".countRegisteredByPatient";
     String Q_PAT_EXAM_COUNT_REGISTEREDBY_PAT_DEF = "SELECT COUNT(pe) FROM PatientExamination AS pe WHERE pe.patient = :" + JPQL_PARM_PATIENT;

@@ -96,7 +96,10 @@ public enum AttributeConst {
     PATEXAM_EXAM_ITEM("examination_item"),
     PATEXAM_EXAM_DATE("examination_date"),
     PATEXAM_RESERVATION_TIME("reservation_time"),
+    PATEXAM_CSV("csv"),
     PATEXAM_DUPLICATE_CHECK("duplicateCheck"),  //入力データの重複チェック
+    PATEXAM_INDEX("index_num"),
+    PATEXAM_ERR_PAT_NAME("err_patient_name"),  //CSV取り込み時エラーが生じた患者名
 
 
 
@@ -108,6 +111,27 @@ public enum AttributeConst {
     EXAM_TV("X線TV検査"),
     EXAM_Manma("乳腺X線検査"),
     EXAM_MRI("MR検査"),
+    EXAM_ALL("すべて"),
+
+    //検索機能項目
+    SEARCHER("searcher"),
+    SEARCHES("searches"),
+    SEARCH_ID("id"),
+    SEARCH_DEVICE("search_devices"),
+    SEARCHES_BY_EXAM_ITEM("searches_by_exam_item"),  //検査項目ごとの検索（患者重複なし）
+    SEARCH_DATE("search_date"),  //検索日
+    SEARCH_PAT_ID("patient_id"),  //患者ID
+    SEARCH_PAT("patient"),  //患者名
+    SEARCH_PAT_DEV_PACKS("pat_dev_packs"),  //患者の体内デバイス情報（添付文書データつき）
+    SEARCHES_COUNT("searches_count"),  //検索件数
+    SEARCH_DEATIL("detail"),
+    SEARCH_DEATILS("details"),
+    SEARCH_PATDEVS("patient_devices"),
+    SEARCH_EXAM_ITEM("examination_item"),
+    SEARCH_EXAM_CONDITION("examination_condition"),
+    SEARCH_NOTSAFE_COUNT("notSafe_count"),
+    SEARCH_DEV_PACEMAKER("植込み型心臓ペースメーカ"),
+
 
 
 
