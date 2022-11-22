@@ -14,11 +14,14 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.Part;
 
+import actions.views.PatientDeviceConverter;
 import actions.views.PatientDeviceView;
 import constants.AttributeConst;
 import constants.ForwardConst;
 import constants.JpaConst;
 import constants.MessageConst;
+import models.Patient;
+import models.PatientDevice;
 import services.PatientDeviceService;
 
 /**
@@ -106,6 +109,13 @@ public class PatientDeviceAction extends ActionBase {
             patient_name = patient_name.replaceAll(" ", "  ");
         }
 
+        //患者名の苗字と名前の間の空白スペースが半角の場合は、全角に変換する
+        String patient_name_kana = getRequestParam(AttributeConst.PATDEV_PAT_NAME_KANA);
+        if (patient_name_kana != null) {
+            patient_name_kana = patient_name_kana.replaceAll(" ", "  ");
+        }
+
+
         //デバイス埋込日が入力されている場合のみ、LocalDateに。
         String inputDate = getRequestParam(AttributeConst.PATDEV_IMP_DATE);
         LocalDate implantedAt;
@@ -120,6 +130,7 @@ public class PatientDeviceAction extends ActionBase {
                 null,
                 toNumber(getRequestParam(AttributeConst.PATDEV_PAT_ID)),
                 patient_name,
+                patient_name_kana,
                 getRequestParam(AttributeConst.PATDEV_APP_NUM),
                 getRequestParam(AttributeConst.PATDEV_DEV_NAME),
                 implantedAt,
@@ -169,6 +180,7 @@ public class PatientDeviceAction extends ActionBase {
                     null,
                     toNumber(getRequestParam(AttributeConst.PATDEV_PAT_ID)),
                     getRequestParam(AttributeConst.PATDEV_PAT_NAME),
+                    getRequestParam(AttributeConst.PATDEV_PAT_NAME_KANA),
                     getRequestParam(AttributeConst.PATDEV_APP_NUM),
                     getRequestParam(AttributeConst.PATDEV_DEV_NAME),
                     implantedAt,
@@ -250,7 +262,6 @@ public class PatientDeviceAction extends ActionBase {
      * @throws IOException
      */
     public void update() throws ServletException, IOException {
-
 
         Boolean duplicateCheck = false;
 
@@ -342,6 +353,7 @@ public class PatientDeviceAction extends ActionBase {
                     data[1].trim(),
                     data[2].trim(),
                     data[3].trim(),
+                    data[4].trim(),
                     imp_date,
                     LocalDate.now(),
                     LocalDate.now(),
@@ -402,6 +414,7 @@ public class PatientDeviceAction extends ActionBase {
                         data[1].trim(),
                         data[2].trim(),
                         data[3].trim(),
+                        data[4].trim(),
                         imp_date,
                         LocalDate.now(),
                         LocalDate.now(),
@@ -505,6 +518,40 @@ public class PatientDeviceAction extends ActionBase {
             //一覧画面にリダイレクト
             redirect(ForwardConst.ACT_PATDEV, ForwardConst.CMD_INDEX);
         }
+    }
+
+    /**
+     * 患者IDをもとに検索
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void searchByPatId() throws ServletException, IOException {
+
+        //指定されたページ数の一覧画面に表示する体内デバイスデータを取得
+        int page = getPage();
+
+        //検索フォームに入力された患者IDを取得
+        int patient_id = toNumber(getRequestParam(AttributeConst.PATDEV_PAT_ID));
+
+        //患者IDを指定して、患者テーブルからその患者インスタンスを取得
+        Patient p = service.findPatient(patient_id);
+
+        //指定した患者がもつ体内デバイスのリストを取得
+        List<PatientDevice> patientDevices = service.findAllPatDevbyPatient(p);
+
+        List<PatientDeviceView> patientDevicesViews = PatientDeviceConverter.toViewList(patientDevices);
+
+        //患者がもつデバイスデータの数を取得
+        long patientsDevicesCount = service.count_PatDev_byPatient_id(p);
+
+        putRequestScope(AttributeConst.PATIENT_DEVICES, patientDevicesViews); //取得した体内デバイスデータ
+        putRequestScope(AttributeConst.PATDEV_COUNT, patientsDevicesCount); //体内デバイスデータの件数
+        putRequestScope(AttributeConst.PAGE, page); //ページ数
+        putRequestScope(AttributeConst.MAX_ROW, JpaConst.ROW_PER_PAGE); //1ページに表示するレコード数
+
+        //検索結果画面を表示
+        forward(ForwardConst.FW_PATDEV_INDEX);
+
     }
 
 }

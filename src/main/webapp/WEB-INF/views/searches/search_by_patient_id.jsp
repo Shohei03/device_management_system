@@ -14,9 +14,10 @@
 <c:import url="../layout/app.jsp">
     <c:param name="content">
         <h2>体内デバイス一覧 検索画面</h2>
-        <div>患者ID <c:out value="${patient.patient_id}" /></div>
-        <div>患者名 <ruby><c:out value="${patient.patient_name}" /><rt>${patient.patient_name_kana}</rt></ruby></div>
-
+        <div class="search_patient">
+            <div class="search_patient_id">患者ID：<c:out value="${patient.patient_id}" /></div>
+            <div class="search_patient_name">患者名：<ruby><c:out value="${patient.patient_name}" /><rt>${patient.patient_name_kana}</rt></ruby></div>
+        </div>
         <table id="search_list_by_patient">
             <tbody>
                 <tr>

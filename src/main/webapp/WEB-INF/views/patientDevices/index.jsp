@@ -9,6 +9,7 @@
 <c:set var="commShow" value="${ForwardConst.CMD_SHOW.getValue()}" />
 <c:set var="commNew" value="${ForwardConst.CMD_NEW.getValue()}" />
 <c:set var="commCSVAllImp" value="${ForwardConst.CMD_CSV_ALL_IMPORT.getValue()}" />
+<c:set var="commSearchByPatId" value="${ForwardConst.CMD_SEARCH_BY_PAT_ID.getValue()}" />
 
 <c:import url="/WEB-INF/views/layout/app.jsp">
     <c:param name="content">
@@ -18,6 +19,14 @@
             </div>
         </c:if>
         <h2>体内デバイス 一覧</h2>
+        <div id="search_patId">
+            <form  method="POST" action="<c:url value='?action=${actPatDev}&command=${commSearchByPatId}' />">
+                <label for="${AttributeConst.PATDEV_PAT_ID.getValue()}">患者IDで検索</label><br />
+                <input type="text" name="${AttributeConst.PATDEV_PAT_ID.getValue()}" id="${AttributeConst.PATDEV_PAT_ID.getValue()}" />
+                <button type="submit">検索</button><br /><br />
+            </form>
+        </div>
+
 
         <form enctype="multipart/form-data" method="POST" action="<c:url value='?action=${actPatDev}&command=${commCSVAllImp}' />" >
             <p>複数データCSV読込
@@ -74,5 +83,6 @@
             </c:forEach>
         </div>
         <p><a href="<c:url value='?action=${actPatDev}&command=${commNew}' />">新規体内デバイス登録</a></p>
+        <p><a href="<c:url value='?action=${actPatDev}&command=${commIdx}' />">一覧に戻る</a></p>
     </c:param>
 </c:import>

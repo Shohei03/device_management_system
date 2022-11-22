@@ -128,7 +128,7 @@ public class PatientExaminationService extends ServiceBase {
 
 
     /**
-     * idを条件に取得したデータをPatientExaminationのインスタンスで返却する
+     * idを条件に取得したデータをPatientExaminationViewのインスタンスで返却する
      * @param id
      * @return 取得データのインスタンス
      */
@@ -164,11 +164,11 @@ public class PatientExaminationService extends ServiceBase {
     }
 
     /**
-     * 検査情報テーブルにある指定した患者IDの件数を取得
+     * 検査情報テーブルにある指定した患者の件数を取得
      * @param p 患者インスタンス
      * @return 取得したデータのインスタンス
      */
-    private long countPatExamByPatient(Patient p) {
+    public long countPatExamByPatient(Patient p) {
 
         //指定した患者IDの件数を取得する
         long patExam_Count = (long) em.createNamedQuery(JpaConst.Q_PAT_EXAM_COUNT_REGISTEREDBY_PAT, Long.class)

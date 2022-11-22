@@ -14,11 +14,14 @@ import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.Part;
 
+import actions.views.PatientExaminationConverter;
 import actions.views.PatientExaminationView;
 import constants.AttributeConst;
 import constants.ForwardConst;
 import constants.JpaConst;
 import constants.MessageConst;
+import models.Patient;
+import models.PatientExamination;
 import services.PatientExaminationService;
 
 /**
@@ -164,7 +167,6 @@ public class PatientExaminationAction extends ActionBase {
 
         //入力データが検査情報テーブルのレコードと重複してもいい場合（duplicate = false） =同日に同じ検査を施行してもいい場合
         if (getRequestParam(AttributeConst.PATEXAM_DUPLICATE_CHECK) != null) {
-
 
             duplicateCheck = Boolean.valueOf(getRequestParam(AttributeConst.PATEXAM_DUPLICATE_CHECK));
         }
@@ -566,4 +568,50 @@ public class PatientExaminationAction extends ActionBase {
         }
     }
 
+    /**
+     * 患者IDをもとに検索
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void searchByPatId() throws ServletException, IOException {
+
+        //指定されたページ数の一覧画面に表示する体内デバイスデータを取得
+        int page = getPage();
+
+        //検索フォームに入力された患者IDを取得
+        int patient_id = toNumber(getRequestParam(AttributeConst.PATEXAM_PAT_ID));
+
+        //患者IDを指定して、患者テーブルからその患者インスタンスを取得
+        Patient p = patExamservice.findPatient(patient_id);
+
+        List<PatientExamination> patientExaminations = null;
+        List<PatientExaminationView> patientExamViews = null;
+        long patientExamCount = 0;
+
+        if (p != null) {
+
+            //指定した患者がもつ検査情報のリストを取得
+            patientExaminations = patExamservice.findByPat_id(p);
+
+            patientExamViews = PatientExaminationConverter.toViewList(patientExaminations);
+
+            //患者の検査数を取得
+            patientExamCount = patExamservice.countPatExamByPatient(p);
+        }
+
+        putRequestScope(AttributeConst.PATIENT_EXAMINATIONS, patientExamViews); //取得した検査情報データ
+        putRequestScope(AttributeConst.PATEXAM_COUNT_BY_DAY, patientExamCount); // 検査件数
+        putRequestScope(AttributeConst.PAGE, page); //ページ数
+        putRequestScope(AttributeConst.MAX_ROW, JpaConst.ROW_PER_PAGE); //1ページに表示するレコードの数
+
+        //セッションにフラッシュメッセージが設定されている場合はリクエストスコープに移し替え、セッションからは削除する
+        String flush = getSessionScope(AttributeConst.FLUSH);
+        if (flush != null) {
+            putRequestScope(AttributeConst.FLUSH, flush);
+            removeSessionScope(AttributeConst.FLUSH);
+        }
+
+        //一覧画面を表示
+        forward(ForwardConst.FW_PATEXAM_INDEX);
+    }
 }

@@ -34,6 +34,11 @@ public class PatientDeviceView {
     private String patient_name;
 
     /**
+     * 患者名（ひらがな）
+     */
+    private String patient_name_kana;
+
+    /**
      * 添付文書承認番号
      */
     private String approval_number;

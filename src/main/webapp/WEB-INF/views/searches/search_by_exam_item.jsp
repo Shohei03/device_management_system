@@ -61,86 +61,87 @@
                 </form>
             </div>
         </div>
-            <br />
+        <br />
 
 
-            <ul id="${AttributeConst.SEARCH_EXAM_CONDITION.getValue()}">
-                <c:forEach var="search" items="${search_devices}">
-                    <li>
-                        <c:choose>
-                            <c:when test="${examination_item == AttributeConst.EXAM_X_RAY.getValue()}">
-                                <c:if test="${search.acceptability_of_X_ray_exam !=  AttributeConst.PACK_EXM_SAFE.getValue()}">
-                                    〇 <c:out value= "${search.patient_name} 様には、${examination_item}に${search.acceptability_of_X_ray_exam}なデバイス【${search.device_name}】 があります。" />
-                                </c:if>
-                            </c:when>
-                            <c:when test="${examination_item == AttributeConst.EXAM_CT.getValue()}">
-                                <c:if test="${search.acceptability_of_CT_exam !=  AttributeConst.PACK_EXM_SAFE.getValue()}">
-                                    〇 <c:out value= "${search.patient_name} 様には、${examination_item}に${search.acceptability_of_CT_exam}なデバイス【${search.device_name}】 があります。" />
-                                </c:if>
-                            </c:when>
-                            <c:when test="${examination_item == AttributeConst.EXAM_TV.getValue()}">
-                                <c:if test="${search.acceptability_of_TV_exam !=  AttributeConst.PACK_EXM_SAFE.getValue()}">
-                                    〇 <c:out value= "${search.patient_name} 様には、${examination_item}に${search.acceptability_of_TV_exam}なデバイス【${search.device_name}】 があります。" />
-                                </c:if>
-                            </c:when>
-                            <c:when test="${examination_item == AttributeConst.EXAM_Manma.getValue()}">
-                                <c:if test="${search.acceptability_of_Manma_exam !=  AttributeConst.PACK_EXM_SAFE.getValue()}">
-                                    〇 <c:out value= "${search.patient_name} 様には、${examination_item}に${search.acceptability_of_Manma_exam}なデバイス【${search.device_name}】 があります。" />
-                                </c:if>
-                            </c:when>
-                            <c:when test="${examination_item == AttributeConst.EXAM_MRI.getValue()}">
-                                <c:if test="${search.acceptability_of_MR_exam !=  AttributeConst.PACK_EXM_SAFE.getValue()}">
-                                    〇 <c:out value= "${search.patient_name} 様には、${examination_item}に${search.acceptability_of_MR_exam}なデバイス【${search.device_name}】 があります。" />
-                                </c:if>
-                            </c:when>
-                        </c:choose>
-                    </li>
-                </c:forEach>
-            </ul>
-
-
-
-
-            <ul id="${AttributeConst.SEARCH_NOTSAFE_COUNT.getValue()}">
+        <ul id="${AttributeConst.SEARCH_EXAM_CONDITION.getValue()}">
+            <c:forEach var="search" items="${search_devices}">
                 <li>
                     <c:choose>
                         <c:when test="${examination_item == AttributeConst.EXAM_X_RAY.getValue()}">
-                            <c:if test="${notSafe_count.get(AttributeConst.EXAM_X_RAY.getValue()) ==  0}">
-                                〇 <c:out value= "${examination_item}を実施するうえで、注意すべきデバイスはありません。" />
+                            <c:if test="${search.acceptability_of_X_ray_exam !=  AttributeConst.PACK_EXM_SAFE.getValue()}">
+                                〇 <c:out value= "${search.patient_name} 様には、${examination_item}を${search.acceptability_of_X_ray_exam}なデバイス【${search.device_name}】 があります。" />
                             </c:if>
                         </c:when>
                         <c:when test="${examination_item == AttributeConst.EXAM_CT.getValue()}">
-                            <c:if test="${notSafe_count.get(AttributeConst.EXAM_CT.getValue()) ==  0}">
-                                〇 <c:out value= "${examination_item}を実施するうえで、注意すべきデバイスはありません。" />
+                            <c:if test="${search.acceptability_of_CT_exam !=  AttributeConst.PACK_EXM_SAFE.getValue()}">
+                                〇 <c:out value= "${search.patient_name} 様には、${examination_item}を${search.acceptability_of_CT_exam}なデバイス【${search.device_name}】 があります。" />
                             </c:if>
                         </c:when>
                         <c:when test="${examination_item == AttributeConst.EXAM_TV.getValue()}">
-                            <c:if test="${notSafe_count.get(AttributeConst.EXAM_TV.getValue()) ==  0}">
-                                〇 <c:out value= "${examination_item}を実施するうえで、注意すべきデバイスはありません。" />
+                            <c:if test="${search.acceptability_of_TV_exam !=  AttributeConst.PACK_EXM_SAFE.getValue()}">
+                                〇 <c:out value= "${search.patient_name} 様には、${examination_item}を${search.acceptability_of_TV_exam}なデバイス【${search.device_name}】 があります。" />
                             </c:if>
                         </c:when>
                         <c:when test="${examination_item == AttributeConst.EXAM_Manma.getValue()}">
-                            <c:if test="${notSafe_count.get(AttributeConst.EXAM_Manma.getValue()) ==  0}">
-                                〇 <c:out value= "${examination_item}を実施するうえで、注意すべきデバイスはありません。" />
+                            <c:if test="${search.acceptability_of_Manma_exam !=  AttributeConst.PACK_EXM_SAFE.getValue()}">
+                                〇 <c:out value= "${search.patient_name} 様には、${examination_item}を${search.acceptability_of_Manma_exam}なデバイス【${search.device_name}】 があります。" />
                             </c:if>
                         </c:when>
                         <c:when test="${examination_item == AttributeConst.EXAM_MRI.getValue()}">
-                            <c:if test="${notSafe_count.get(AttributeConst.EXAM_MRI.getValue()) ==  0}">
-                                〇 <c:out value= "${examination_item}を実施するうえで、注意すべきデバイスはありません。" />
+                            <c:if test="${search.acceptability_of_MR_exam !=  AttributeConst.PACK_EXM_SAFE.getValue()}">
+                                〇 <c:out value= "${search.patient_name} 様には、${examination_item}を${search.acceptability_of_MR_exam}なデバイス【${search.device_name}】 があります。" />
                             </c:if>
                         </c:when>
                     </c:choose>
                 </li>
-            </ul>
-            <br /><br />
+            </c:forEach>
+        </ul>
 
 
 
 
+        <ul id="${AttributeConst.SEARCH_NOTSAFE_COUNT.getValue()}">
+            <li>
+                <c:choose>
+                    <c:when test="${examination_item == AttributeConst.EXAM_X_RAY.getValue()}">
+                        <c:if test="${notSafe_count.get(AttributeConst.EXAM_X_RAY.getValue()) ==  0}">
+                            〇 <c:out value= "${examination_item}を実施するうえで、注意すべきデバイスはありません。" />
+                        </c:if>
+                    </c:when>
+                    <c:when test="${examination_item == AttributeConst.EXAM_CT.getValue()}">
+                        <c:if test="${notSafe_count.get(AttributeConst.EXAM_CT.getValue()) ==  0}">
+                            〇 <c:out value= "${examination_item}を実施するうえで、注意すべきデバイスはありません。" />
+                        </c:if>
+                    </c:when>
+                    <c:when test="${examination_item == AttributeConst.EXAM_TV.getValue()}">
+                        <c:if test="${notSafe_count.get(AttributeConst.EXAM_TV.getValue()) ==  0}">
+                            〇 <c:out value= "${examination_item}を実施するうえで、注意すべきデバイスはありません。" />
+                        </c:if>
+                    </c:when>
+                    <c:when test="${examination_item == AttributeConst.EXAM_Manma.getValue()}">
+                        <c:if test="${notSafe_count.get(AttributeConst.EXAM_Manma.getValue()) ==  0}">
+                            〇 <c:out value= "${examination_item}を実施するうえで、注意すべきデバイスはありません。" />
+                        </c:if>
+                    </c:when>
+                    <c:when test="${examination_item == AttributeConst.EXAM_MRI.getValue()}">
+                        <c:if test="${notSafe_count.get(AttributeConst.EXAM_MRI.getValue()) ==  0}">
+                            〇 <c:out value= "${examination_item}を実施するうえで、注意すべきデバイスはありません。" />
+                        </c:if>
+                    </c:when>
+                </c:choose>
+            </li>
+        </ul>
+        <br />
 
-
-
-
+        <h2>
+            <c:if test="${examination_item != AttributeConst.EXAM_ALL.getValue()}">
+                ${examination_item}をうける患者に埋め込まれているデバイス一覧
+            </c:if>
+            <c:if test="${examination_item == AttributeConst.EXAM_ALL.getValue()}">
+                ${examination_item}の検査　デバイス一覧
+            </c:if>
+        </h2>
         <table id="search_list">
             <tbody>
                 <tr>
@@ -173,8 +174,8 @@
         </table>
 
         <div id="pagination">
-            （全 ${patientDevicesCount} 件） <br />
-            <c:forEach var="i" begin="1" end="${((patientDevicesCount -1) / maxRow) + 1}" step="1">
+            （全 ${searches_count} 件） <br />
+            <c:forEach var="i" begin="1" end="${((searches_count -1) / maxRow) + 1}" step="1">
                 <c:choose>
                     <c:when test="${i == page}">
                         <c:out value="${i}" />&nbsp;

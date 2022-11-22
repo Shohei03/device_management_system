@@ -75,6 +75,7 @@ public enum AttributeConst {
     PATDEV_COUNT("patientDevicesCount"),
     PATDEV_PAT_ID("patient_id"),
     PATDEV_PAT_NAME("patint_name"),
+    PATDEV_PAT_NAME_KANA("patint_name_kana"),
     PATDEV_APP_NUM("approval_number"),
     PATDEV_DEV_NAME("device_name"),
     PATDEV_IMP_DATE("implantedAt"),

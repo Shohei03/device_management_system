@@ -16,6 +16,7 @@
                     <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}" />
                     <input type="hidden" name="${AttributeConst.PATDEV_PAT_ID.getValue()}" value="${patientDevice.patient_id}" />
                     <input type="hidden" name="${AttributeConst.PATDEV_PAT_NAME.getValue()}" value="${patientDevice.patient_name}" />
+                    <input type="hidden" name="${AttributeConst.PATDEV_PAT_NAME_KANA.getValue()}" value="${patientDevice.patient_name_kana}" />
                     <input type="hidden" name="${AttributeConst.PATDEV_APP_NUM.getValue()}" value="${patientDevice.approval_number}" />
                     <input type="hidden" name="${AttributeConst.PATDEV_DEV_NAME.getValue()}" value="${patientDevice.device_name}" />
                     <input type="hidden" name="${AttributeConst.PATDEV_IMP_DATE.getValue()}" value="${patientDevice.implantedAt}" />
@@ -33,6 +34,10 @@
 
 <label for="${AttributeConst.PATDEV_PAT_NAME.getValue()}">患者名</label><br />
 <input type="text" name="${AttributeConst.PATDEV_PAT_NAME.getValue()}" id="${AttributeConst.PATDEV_PAT_NAME.getValue()}" value="${patientDevice.patient_name}" />
+<br /><br />
+
+<label for="${AttributeConst.PATDEV_PAT_NAME_KANA.getValue()}">患者名（ひらがな)</label><br />
+<input type="text" name="${AttributeConst.PATDEV_PAT_NAME_KANA.getValue()}" id="${AttributeConst.PATDEV_PAT_NAME_KANA.getValue()}" value="${patientDevice.patient_name_kana}" />
 <br /><br />
 
 <label for="${AttributeConst.PATDEV_APP_NUM.getValue()}">デバイスの添付文書承認番号</label><br />

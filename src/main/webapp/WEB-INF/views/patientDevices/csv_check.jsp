@@ -37,6 +37,7 @@
                 <tr>
                     <th class="csvPatDev_patient_id">患者ID</th>
                     <th class="csvPatDev_patient_name">患者名</th>
+                    <th class="csvPatDev_patient_name_kana">患者名（ひらがな）</th>
                     <th class="csvPatDev_approval_number">添付文書承認番号</th>
                     <th class="csvPatDev_device_name">デバイスの販売名</th>
                     <th class="csvPatDev_implantedAt">埋込日</th>
@@ -46,6 +47,7 @@
                     <tr class="row${status.count % 2}">
                         <td class="csvPatDev_patient_id"><c:out value="${patientDevice.patient_id}" /></td>
                         <td class="csvPatDev_patient_name"><c:out value="${patientDevice.patient_name}" /></td>
+                        <td class="csvPatDev_patient_name_kana"><c:out value="${patientDevice.patient_name_kana}" /></td>
                         <td class="csvPatDev_approval_number"><c:out value="${patientDevice.approval_number}" /></td>
                         <td class="csvPatDev_device_name"><c:out value="${patientDevice.device_name}" /></td>
                         <td class="csvPatDev_implantedAt"><c:out value="${patientDevice.implantedAt}" /></td>

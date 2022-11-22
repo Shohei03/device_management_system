@@ -42,6 +42,7 @@ public class PatientDeviceConverter {
                 pd.getId(),
                 pd.getPatient().getPatient_id(),
                 pd.getPatient().getPatient_name(),
+                pd.getPatient().getPatient_name_kana(),
                 pd.getPackageInsert().getApproval_number(),
                 pd.getPackageInsert().getDevice_name(),
                 pd.getImplantedAt(),

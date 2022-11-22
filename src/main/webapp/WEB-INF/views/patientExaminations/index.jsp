@@ -2,12 +2,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="constants.ForwardConst" %>
+<%@ page import="constants.AttributeConst" %>
 
 <c:set var="actPatExam" value="${ForwardConst.ACT_PATEXAM.getValue()}" />
 <c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
 <c:set var="commShow" value="${ForwardConst.CMD_SHOW.getValue()}" />
 <c:set var="commNew" value="${ForwardConst.CMD_NEW.getValue()}" />
 <c:set var="commCSVAllImp" value="${ForwardConst.CMD_CSV_ALL_IMPORT.getValue()}" />
+<c:set var="commSearchByPatId" value="${ForwardConst.CMD_SEARCH_BY_PAT_ID.getValue()}" />
 
 <c:import url="/WEB-INF/views/layout/app.jsp">
     <c:param name="content">
@@ -17,6 +19,13 @@
             </div>
         </c:if>
         <h2>検査情報 一覧</h2>
+        <div id="search_patId">
+            <form  method="POST" action="<c:url value='?action=${actPatExam}&command=${commSearchByPatId}' />">
+                <label for="${AttributeConst.PATEXAM_PAT_ID.getValue()}">患者IDで検索</label><br />
+                <input type="text" name="${AttributeConst.PATEXAM_PAT_ID.getValue()}" id="${AttributeConst.PATEXAM_PAT_ID.getValue()}" />
+                <button type="submit">検索</button><br /><br />
+            </form>
+        </div>
 
         <form enctype="multipart/form-data" method="POST" action="<c:url value='?action=${actPatExam}&command=${commCSVAllImp}' />" >
             <p>複数データCSV読込
@@ -66,6 +75,6 @@
             </c:forEach>
         </div>
         <p><a href="<c:url value='?action=${actPatExam}&command=${commNew}' />">患者の新規検査情報を登録</a></p>
-
+        <p><a href="<c:url value='?action=${actPatExam}&command=${commIdx}' />">一覧に戻る</a></p>
     </c:param>
 </c:import>

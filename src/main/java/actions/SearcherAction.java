@@ -11,14 +11,12 @@ import javax.servlet.ServletException;
 
 import actions.views.EmployeeView;
 import actions.views.SearchPatientDeviceView;
-import actions.views.SearchView;
 import constants.AttributeConst;
 import constants.ForwardConst;
 import constants.JpaConst;
 import models.Examination;
 import models.Patient;
 import models.PatientDevice;
-import models.PatientExamination;
 import services.PatientDeviceService;
 import services.PatientExaminationService;
 
@@ -91,7 +89,6 @@ public class SearcherAction extends ActionBase {
         String examination_item = getRequestParam(AttributeConst.SEARCH_EXAM_ITEM);
 
         //検査項目が選択されていなければ、従業員の所属部署を検査項目に指定。
-
         if (examination_item == null) {
             //セッションからログイン中の従業員情報を取得
             EmployeeView loginEmployee = (EmployeeView) getSessionScope(AttributeConst.LOGIN_EMP);
@@ -113,8 +110,6 @@ public class SearcherAction extends ActionBase {
         List<SearchPatientDeviceView> spdv_list = new ArrayList<>();
         PatientExaminationService patExamService = new PatientExaminationService();
         PatientDeviceService patDev_service = new PatientDeviceService();
-        List<SearchView> sv_list = new ArrayList<>();
-        SearchView sv = null;
 
         int Manma_notSafe_count = 0;
         int X_ray_notSafe_count = 0;
@@ -127,52 +122,16 @@ public class SearcherAction extends ActionBase {
 
             Examination e = patExamService.findExamination(examination_item);
 
-            //指定された検査項目の検査情報リストを取得
-            List<PatientExamination> pe_list = patExamService.getTheExamInTheExamDate(date, e);
-
-            List<PatientDevice> pd_list = new ArrayList<>();
-
-            int id = 1;
-
-            for (PatientExamination pe : pe_list) {
-                pd_list = patDev_service.findAllPatDevbyPatient(pe.getPatient());
-                for (PatientDevice pd : pd_list) {
-                    sv = new SearchView(
-                            id,
-                            pe.getId(), // PatientExaminationのid
-                            pd.getId(), //PatientDeviceのid
-                            pd.getPatient().getPatient_id(),
-                            pd.getPatient().getPatient_name(),
-                            pd.getPatient().getPatient_name_kana(),
-                            pe.getExamination().getExamination_item(),
-                            pe.getExamination_date(),
-                            pe.getReservation_time(),
-                            pd.getPackageInsert().getApproval_number(),
-                            pd.getPackageInsert().getJmdn().getGeneral_name(),
-                            pd.getPackageInsert().getDevice_name(),
-                            pd.getImplantedAt(),
-                            pd.getPackageInsert().getAcceptability_of_Manma_exam(),
-                            pd.getPackageInsert().getAcceptability_of_X_ray_exam(),
-                            pd.getPackageInsert().getAcceptability_of_CT_exam(),
-                            pd.getPackageInsert().getAcceptability_of_TV_exam(),
-                            pd.getPackageInsert().getAcceptability_of_MR_exam());
-                    id++;
-
-                    sv_list.add(sv);
-                }
-
-            }
-
             //指定された検査項目の患者情報リスト(患者重複なし)を取得
             List<Patient> PatListByExamItem_noDupli = patExamService.getPatNoDupliByExamItemInTheExamDate(date, e);
 
-            int spdv_id = 1;
+            int id = 1;
 
             for (Patient p : PatListByExamItem_noDupli) {
                 List<PatientDevice> pds_noDupli = patDev_service.findAllPatDevbyPatient(p);
                 for (PatientDevice pd : pds_noDupli) {
                     spdv = new SearchPatientDeviceView(
-                            spdv_id,
+                            id,
                             pd.getPatient().getPatient_id(),
                             pd.getPatient().getPatient_name(),
                             pd.getPatient().getPatient_name_kana(),
@@ -209,8 +168,7 @@ public class SearcherAction extends ActionBase {
 
                     spdv_list.add(spdv);
 
-                    spdv_id++;
-
+                    id++;
                 }
             }
         } else {
@@ -220,13 +178,13 @@ public class SearcherAction extends ActionBase {
             List<Patient> PatList_noDupli = patExamService.getPatNoDupliInTheExamDate(date);
             spdv_list = new ArrayList<>();
 
-            int spdv_id = 1;
+            int id = 1;
 
             for (Patient p : PatList_noDupli) {
                 List<PatientDevice> pds_noDupli = patDev_service.findAllPatDevbyPatient(p);
                 for (PatientDevice pd : pds_noDupli) {
                     spdv = new SearchPatientDeviceView(
-                            spdv_id,
+                            id,
                             pd.getPatient().getPatient_id(),
                             pd.getPatient().getPatient_name(),
                             pd.getPatient().getPatient_name_kana(),
@@ -242,7 +200,7 @@ public class SearcherAction extends ActionBase {
 
                     spdv_list.add(spdv);
 
-                    spdv_id++;
+                    id++;
                 }
             }
         }
@@ -262,12 +220,11 @@ public class SearcherAction extends ActionBase {
             removeSessionScope(AttributeConst.FLUSH);
         }
 
-        putSessionScope(AttributeConst.SEARCHES_BY_EXAM_ITEM, sv_list); //検索用に取得した体内デバイスデータのリスト（添付文書つき）
         putSessionScope(AttributeConst.SEARCH_DEVICE, spdv_list); //検索用に取得した体内デバイスデータ（検査重複なし）
         putSessionScope(AttributeConst.SEARCH_EXAM_ITEM, examination_item); //指定している検査項目
         putSessionScope(AttributeConst.SEARCH_DATE, date); //検索日
         putRequestScope(AttributeConst.SEARCH_NOTSAFE_COUNT, notSafeCountMap); //検査不可・条件付き可能をあわせた件数
-        putRequestScope(AttributeConst.SEARCHES_COUNT, sv_list.size()); //件数
+        putRequestScope(AttributeConst.SEARCHES_COUNT, spdv_list.size()); //件数
         putRequestScope(AttributeConst.PAGE, page); //ページ数
         putRequestScope(AttributeConst.MAX_ROW, JpaConst.ROW_PER_PAGE); //1ページに表示するレコード数
 
@@ -282,9 +239,6 @@ public class SearcherAction extends ActionBase {
      */
     public void show() throws ServletException, IOException {
         List<SearchPatientDeviceView> sv_list = new ArrayList<>();
-
-        //検索日を取得
-        LocalDate date = getSessionScope(AttributeConst.SEARCH_DATE);
 
         //検査項目を取得
         String examination_item = getRequestParam(AttributeConst.SEARCH_EXAM_ITEM);
@@ -337,53 +291,6 @@ public class SearcherAction extends ActionBase {
         //検索結果画面を表示
         forward(ForwardConst.FW_SEARCH_SHOW);
 
-    }
-
-    /**
-     * 詳細画面を表示
-     * @throws ServletException
-     * @throws IOException
-     */
-    public void show2() throws ServletException, IOException {
-        List<SearchPatientDeviceView> sv_list = new ArrayList<>();
-        // sv_list = (List<SearchView>) getSessionScope(AttributeConst.SEARCHES_BY_EXAM_ITEM);
-
-        sv_list = (List<SearchPatientDeviceView>) getSessionScope(AttributeConst.SEARCH_DEVICE);
-
-        System.out.println("String_id+++++" + getRequestParam(AttributeConst.SEARCH_ID));
-
-        String id_str = getRequestParam(AttributeConst.SEARCH_ID);
-
-        Integer id = toNumber(id_str);
-
-        List<SearchPatientDeviceView> search_detail_list = new ArrayList<>();
-
-        SearchPatientDeviceView searchShow = null;
-
-        //検索日を取得
-        LocalDate date = getSessionScope(AttributeConst.SEARCH_DATE);
-
-        //検査項目を取得
-        String examination_item = getSessionScope(AttributeConst.SEARCH_EXAM_ITEM);
-
-        for (SearchPatientDeviceView sv : sv_list) {
-
-            if (sv.getId() == id) {
-                searchShow = sv;
-            }
-        }
-
-        for (SearchPatientDeviceView sv : sv_list) {
-
-            if (sv.getPatient_id() == searchShow.getPatient_id()) {
-                search_detail_list.add(sv);
-            }
-        }
-        putRequestScope(AttributeConst.SEARCH_EXAM_ITEM, examination_item); //検査項目
-        putRequestScope(AttributeConst.SEARCH_DEATIL, searchShow); //詳細データ
-        putRequestScope(AttributeConst.SEARCH_DEATILS, search_detail_list); //指定した患者のSearchViewリスト
-        //詳細画面を表示
-        forward(ForwardConst.FW_SEARCH_SHOW);
     }
 
     /**

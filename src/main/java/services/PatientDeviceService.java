@@ -85,7 +85,6 @@ public class PatientDeviceService extends ServiceBase {
      * @return 該当するデータの件数
      */
     public long count_PatDev_byPatient_id(Patient pat) {
-        System.out.println("患者インスタンス" + pat.getId());
 
         //指定した体内デバイスの件数を取得する
         long patientDeviceCount = (long) em.createNamedQuery(JpaConst.Q_PAT_DEV_COUNT_REGISTEREDBY_PAT, Long.class)
@@ -123,7 +122,7 @@ public class PatientDeviceService extends ServiceBase {
     }
 
     /**
-     * PatientDevice（体内デバイス）テーブルから、引数で指定した患者インスタンスのレコードを取得。
+     * PatientDevice（体内デバイス）テーブルから、引数で指定した患者のデバイスインスタンスのレコードを取得。
      * @param pat Patient 患者インスタンス
      * return 指定した患者インスタンス（患者ID）をもつpatientDeviceインスタンス
      */
