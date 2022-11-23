@@ -30,7 +30,10 @@ public class PackageInsertConverter {
                 pv.getAcceptability_of_CT_exam(),
                 pv.getAcceptability_of_TV_exam(),
                 pv.getAcceptability_of_MR_exam(),
-                pv.getCreatedAt());
+                pv.getCreatedAt(),
+                pv.getUpdatedAt(),
+                pv.getDeleteFlag());
+
     }
 
     /**
@@ -53,7 +56,9 @@ public class PackageInsertConverter {
                 p.getAcceptability_of_CT_exam(),
                 p.getAcceptability_of_TV_exam(),
                 p.getAcceptability_of_MR_exam(),
-                p.getCreatedAt());
+                p.getCreatedAt(),
+                p.getUpdatedAt(),
+                p.getDeleteFlag());
     }
 
     /**
@@ -88,6 +93,9 @@ public class PackageInsertConverter {
         p.setAcceptability_of_TV_exam(pv.getAcceptability_of_TV_exam());
         p.setAcceptability_of_MR_exam(pv.getAcceptability_of_MR_exam());
         p.setCreatedAt(pv.getCreatedAt());
+        p.setUpdatedAt(pv.getCreatedAt());
+        p.setDeleteFlag(pv.getDeleteFlag());
+
 
     }
 

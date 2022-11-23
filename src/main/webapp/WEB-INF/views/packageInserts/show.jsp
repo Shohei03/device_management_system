@@ -54,6 +54,12 @@
                     <fmt:parseDate value="${packageInsert.createdAt}" pattern="yyyy-MM-dd" var="createDay" type="date" />
                     <td><fmt:formatDate value="${createDay}" pattern="yyyy-MM-dd" /></td>
                 </tr>
+                <tr>
+                    <th>更新日</th>
+                    <fmt:parseDate value="${packageInsert.updatedAt}" pattern="yyyy-MM-dd" var="updateDay" type="date" />
+                    <td><fmt:formatDate value="${updateDay}" pattern="yyyy-MM-dd" /></td>
+                </tr>
+
             </tbody>
         </table>
 

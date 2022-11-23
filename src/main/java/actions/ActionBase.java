@@ -163,7 +163,6 @@ public abstract class ActionBase {
         try {
             number = Integer.parseInt(strNumber);
         } catch (Exception e) {
-            e.printStackTrace();                /////////////////
             number = Integer.MIN_VALUE;
         }
         return number;

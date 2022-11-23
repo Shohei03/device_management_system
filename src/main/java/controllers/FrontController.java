@@ -19,7 +19,7 @@ import constants.ForwardConst;
 *
 */
 @WebServlet("/")
-@MultipartConfig
+@MultipartConfig(maxFileSize=100*1024*1024, fileSizeThreshold=100*1024*1024)
 public class FrontController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 

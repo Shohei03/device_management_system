@@ -369,7 +369,6 @@ public class PatientExaminationAction extends ActionBase {
             String line;
 
             line = br.readLine();
-            System.out.println("line" + line);
             String[] data = line.split(",");
 
             //CSVの検査日をLocalDate型に変換

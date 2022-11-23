@@ -2,6 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="constants.ForwardConst" %>
+<%@ page import="constants.MessageConst" %>
+<%@ page import="constants.AttributeConst" %>
 
 <c:set var="actPack" value="${ForwardConst.ACT_PACK.getValue()}" />
 <c:set var="actSearcher" value="${ForwardConst.ACT_SEARCHER.getValue()}" />
@@ -10,6 +12,8 @@
 <c:set var="commShow" value="${ForwardConst.CMD_SHOW.getValue()}" />
 <c:set var="commNew" value="${ForwardConst.CMD_NEW.getValue()}" />
 <c:set var="commCSVAllImp" value="${ForwardConst.CMD_CSV_ALL_IMPORT.getValue()}" />
+<c:set var="commSearchByAppNum" value="${ForwardConst.CMD_SEARCH_BY_APP_NUM.getValue()}" />
+
 
 <c:import url="/WEB-INF/views/layout/app.jsp">
     <c:param name="content">
@@ -18,8 +22,36 @@
                 <c:out value="${flush}"></c:out>
             </div>
         </c:if>
+        <c:if test="${errors != null}">
+            <div id="flush_error">
+                CSV取り込み時にエラーが生じました。<br />
+                <c:forEach var="error" items="${errors}">
+                    ・<c:out value="${error}" /><br />
+                    <c:if test="${error == MessageConst.E_UPLOAD_DATA_NUM.getMessage()}">
+                         エラーが起きた行：
+                        <c:forEach var="line" items="${csvErrorLine}">
+                            <c:out value="${line}" />.
+                        </c:forEach><br />
+                    </c:if>
+                    <c:if test="${error == MessageConst.E_ABNORMAL_ExamAcceptability.getMessage()}">
+                         エラーが起きた行：
+                        <c:forEach var="accepLine" items="${csvAcceptabilityErrorLine}">
+                            <c:out value="${accepLine}" />.
+                        </c:forEach><br />
+                    </c:if>
+                </c:forEach>
+            </div>
+        </c:if>
 
         <h2>添付文書一覧</h2>
+        <div id="search_appNum">
+            <form  method="POST" action="<c:url value='?action=${actPack}&command=${commSearchByAppNum}' />">
+                <label for="${AttributeConst.PACK_APP_NUM.getValue()}">添付文書承認番号で検索</label><br />
+                <input type="text" name="${AttributeConst.PACK_APP_NUM.getValue()}" id="${AttributeConst.PACK_APP_NUM.getValue()}" />
+                <button type="submit">検索</button><br /><br />
+            </form>
+        </div>
+
 
         <form enctype="multipart/form-data" method="POST" action="<c:url value='?action=${actPack}&command=${commCSVAllImp}' />" >
             <p>複数データCSV読込
@@ -64,7 +96,6 @@
 
         <p><a href="<c:url value='?action=${actPack}&command=${commNew}' />">添付文書の登録</a></p>
         <p><a href="<c:url value='?action=${actSearch}&command=${commIdx}' />">検索画面に移動</a></p>
-        <p><a href="<c:url value='?action=${actRegi_top}&command=${commIdx}' />">登録トップ画面に移動</a></p>
 
     </c:param>
 </c:import>

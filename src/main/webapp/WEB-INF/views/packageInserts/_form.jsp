@@ -15,11 +15,6 @@
 
 <br /><br />
 
-<fmt:parseDate value="${packageInsert.createdAt}" pattern="yyyy-MM-dd" var="createdAtDay" type="date" />
-<label for="${AttributeConst.PACK_DATE.getValue()}">日付</label><br />
-<input type="date" name="${AttributeConst.PACK_DATE.getValue()}" id="${AttributeConst.PACK_DATE.getValue()}" value="<fmt:formatDate value='${createdAtDay}' pattern='yyyy-MM-dd' />" />
-<br /><br />
-
 <label for="AttributeConst.PACK_APP_NUM.getValue()">添付文書承認番号</label><br />
 <input type="text" name="${AttributeConst.PACK_APP_NUM.getValue()}" id="${AttributeConst.PACK_APP_NUM.getValue()}" value="${packageInsert.approval_number}" />
 <br /><br />
@@ -35,11 +30,10 @@
 
 <label for="AttributeConst.PACK_DEV_NAME.getValue()">デバイス名（販売名）</label><br />
 <input type="text" name="${AttributeConst.PACK_DEV_NAME.getValue()}" id="${AttributeConst.PACK_DEV_NAME.getValue()}" value="${packageInsert.device_name}" />
-<br /><br />
+<br /><br /><br />
 
 
-<div>検査の可否</div>
-<br />
+<div id ="packageInsert_acceptability_of_exam">検査の可否</div>
 
 <label for="AttributeConst.PACK_X_RAY.getValue()">X線検査</label><br />
 <select name="${AttributeConst.PACK_X_RAY.getValue()}" id="${AttributeConst.PACK_X_RAY.getValue()}">

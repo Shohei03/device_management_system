@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="constants.ForwardConst" %>
 <%@ page import="constants.AttributeConst" %>
+<%@ page import="constants.MessageConst" %>
 
 <c:set var="actPack" value="${ForwardConst.ACT_PACK.getValue()}" />
 <c:set var="commCSVImp" value="${ForwardConst.CMD_CSV_IMPORT.getValue()}" />
@@ -16,7 +17,7 @@
 
         <form enctype="multipart/form-data" method="POST" action="<c:url value='?action=${actPack}&command=${commCSVImp}' />" >
             <input name="csv" type="file" required/>
-            <input type="submit" value="csvファイル読み込み" />
+            <input type="submit" value="csvファイル読み込み" /><br />
         </form>
 
         <form method="POST" action="<c:url value='?action=${actPack}&command=${commCrt}' />">

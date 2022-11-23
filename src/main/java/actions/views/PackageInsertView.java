@@ -69,8 +69,18 @@ public class PackageInsertView {
     private String acceptability_of_MR_exam;
 
     /**
-     * 登録日時
+     * 登録日
      */
     private LocalDate createdAt;
+
+    /**
+     * 更新日
+     */
+    private LocalDate updatedAt;
+
+    /**
+     * 削除されたかどうか（現役：0、削除済み：1）
+     */
+    private Integer deleteFlag;
 
 }

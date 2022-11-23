@@ -46,6 +46,7 @@ public interface JpaConst {
     String PACK_COL_TV = "acceptability_of_TV_exam"; //TV検査の可否
     String PACK_COL_MRI = "acceptability_of_MR_exam"; //MR検査の可否
     String PACK_COL_CREATED_AT = "created_at"; //登録日時"
+    String PACK_COL_UPDATED_AT = "updated_at";  //更新日
 
     //JMDNテーブル
     String TABLE_JMDN = "jmdns"; //テーブル名
@@ -93,6 +94,10 @@ public interface JpaConst {
     String PAT_EXAM_COL_RESERVATION_TIME = "reservation_time";  //予約時間
     String PAT_EXAM_COL_PAT_ID = "patient_id";  //患者ID
     String PAT_EXAM_CREATED_AT = "created_at"; //登録日
+    String PAT_EXAM_COL_DELETE_FLAG = "delete_flag"; //削除フラグ
+
+    int PAT_EXAM_TRUE = 1; //削除フラグON(削除済み)
+    int PAT_EXAM_FALSE = 0; //削除フラグOFF(未削除)
 
 
 
@@ -135,18 +140,18 @@ public interface JpaConst {
 
     //全ての添付文書をidの降順で取得する
     String Q_PACK_GET_ALL = ENTITY_PACK + ".getAll";
-    String Q_PACK_GET_ALL_DEF = "SELECT e FROM PackageInsert AS e ORDER BY e.id DESC";
+    String Q_PACK_GET_ALL_DEF = "SELECT e FROM PackageInsert AS e WHERE e.deleteFlag = 0 ORDER BY e.id DESC";
     //全ての添付文書の件数を取得する
     String Q_PACK_COUNT = ENTITY_PACK + ".count";
-    String Q_PACK_COUNT_DEF = "SELECT COUNT(e) FROM PackageInsert AS e";
+    String Q_PACK_COUNT_DEF = "SELECT COUNT(e) FROM PackageInsert AS e WHERE e.deleteFlag = 0";
     //指定した添付文書承認番号の件数を取得する
     String Q_PACK_COUNT_REGISTEREDBY_APPROVAL_NUM = ENTITY_PACK + ".countRegisteredByApprovalNum";
     String Q_PACK_COUNT_REGISTEREDBY_APPROVAL_NUM_DEF = "SELECT COUNT(e) FROM PackageInsert AS e WHERE e.approval_number = :"
-            + JPQL_PARM_APPROVAL_NUM;
+            + JPQL_PARM_APPROVAL_NUM + " AND e.deleteFlag = 0";
     //指定した添付文書承認番号をもつレコードを取得する
     String Q_PACK_GET_MINE_REGISTEREDBY_APPROVAL_NUM = ENTITY_PACK + ".getMineRegisteredByApprovalNum";
     String Q_PACK_GET_MINE_REGISTEREDBY_APPROVAL_NUM_DEF = "SELECT e FROM PackageInsert AS e WHERE e.approval_number = :"
-            + JPQL_PARM_APPROVAL_NUM;
+            + JPQL_PARM_APPROVAL_NUM + " AND e.deleteFlag = 0";
 
 
     //指定したJMDN_codeの件数を取得する

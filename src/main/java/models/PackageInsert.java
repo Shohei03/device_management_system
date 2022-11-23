@@ -59,7 +59,6 @@ public class PackageInsert {
     @JoinColumn(name = JpaConst.PACK_COL_JMDN, nullable = false)
     private Jmdn jmdn;
 
-
     /**
      * デバイスの販売名
      */
@@ -101,5 +100,17 @@ public class PackageInsert {
      */
     @Column(name = JpaConst.PACK_COL_CREATED_AT, nullable = false)
     private LocalDate createdAt;
+
+    /**
+     * 更新日
+     */
+    @Column(name = JpaConst.PACK_COL_UPDATED_AT, nullable = false)
+    private LocalDate updatedAt;
+
+    /**
+     * 削除されたかどうか（現役：0、削除済み：1）
+     */
+    @Column(name = JpaConst.PAT_EXAM_COL_DELETE_FLAG)
+    private Integer deleteFlag;
 
 }

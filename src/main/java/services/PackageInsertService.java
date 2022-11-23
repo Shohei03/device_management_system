@@ -60,7 +60,7 @@ public class PackageInsertService extends ServiceBase {
      */
     public long countByAapproval_number(String approval_number) {
 
-        //指定した添付文書承認番号の件数を取得する
+        //指定した添付文書承認番号の件数を取得する（論理削除されていない。つまり、deleteFlagが0のレコード数を取得）
         long approvalNumCount = (long) em.createNamedQuery(JpaConst.Q_PACK_COUNT_REGISTEREDBY_APPROVAL_NUM, Long.class)
                 .setParameter(JpaConst.JPQL_PARM_APPROVAL_NUM, approval_number)
                 .getSingleResult();
@@ -125,13 +125,11 @@ public class PackageInsertService extends ServiceBase {
 
         //バリデーションエラーがなければデータを登録する
         if (errors.size() == 0) {
-            //今日の日付を登録
-            LocalDate ldt = LocalDate.now();
-            pv.setCreatedAt(ldt);
 
             //添付文書テーブルとJMDNテーブルにデータを登録する。
-            //添付文書テーブルのJMDNコードは重複するため、JMDNテーブルのJMDNコードに一意制約を設け、リレーションを組んでいる。
-            //まず、JMDNテーブルに、これから登録するJMDNコードがないか確認。重複がない場合、登録。
+            //添付文書テーブルのJMDNカラムには重複するJMDNコードがあるため、JMDNテーブルを別に作成し、リレーションを組んでいる。
+            //JMDNテーブルのJMDNコードに一意制約を設け、リレーションを組んでいる。
+            //まず、JMDNテーブルに、これから登録するJMDNコードがないか確認。重複がない場合はJMDNテーブルにも登録。
             if (!(countByJMDN_CODE(pv.getJMDN_code()) > 0)) {
                 createInternalJMDN(pv);
             }
@@ -166,9 +164,9 @@ public class PackageInsertService extends ServiceBase {
         savedPack.setDevice_name(pv.getDevice_name()); //変更後のデバイス名を設定する
         savedPack.setAcceptability_of_MR_exam(pv.getAcceptability_of_MR_exam()); //変更後のMR検査の可否を設定する
 
-        //登録日に現在の日付を設定する
+        //更新日に現在の日付を設定する
         LocalDate today = LocalDate.now();
-        savedPack.setCreatedAt(today);
+        savedPack.setUpdatedAt(today);
 
         //バリデーションを行う
         List<String> errors = PackageInsertValidator.validate(this, savedPack, validateApproval_number);
@@ -246,6 +244,27 @@ public class PackageInsertService extends ServiceBase {
         em.getTransaction().begin();
         PackageInsertConverter.copyViewToModel(p, pv);
         em.getTransaction().commit();
+    }
+
+    /**
+     * idを条件に添付文書レコードを論理削除する
+     * @param id
+     */
+    public void destroy(Integer id) {
+
+        //idを条件に登録済みの体内デバイス情報を取得する
+        PackageInsertView savedPiv = findOne(id);
+
+        //更新日時に現在時刻を設定する
+        LocalDate today = LocalDate.now();
+        savedPiv.setUpdatedAt(today);
+
+        //論理削除フラグをたてる
+        savedPiv.setDeleteFlag(JpaConst.PAT_EXAM_TRUE);
+
+        //更新処理を行う
+        updateInternal(savedPiv);
+
     }
 
 }

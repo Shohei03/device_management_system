@@ -204,7 +204,6 @@ public class SearcherAction extends ActionBase {
                 }
             }
         }
-        System.out.println("CT_notSafe_count" + CT_notSafe_count);
 
         Map<String, Integer> notSafeCountMap = new HashMap<>();
         notSafeCountMap.put(AttributeConst.EXAM_X_RAY.getValue(), X_ray_notSafe_count);

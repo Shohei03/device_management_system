@@ -38,6 +38,7 @@ public enum ForwardConst {
     CMD_CHECK("check"),
     CMD_SEARCH_BY_DEPARTMENT("searchByDepartment"),
     CMD_SEARCH_BY_PAT_ID("searchByPatId"),
+    CMD_SEARCH_BY_APP_NUM("searchByApprovalNum"),
 
     //jsp
     FW_ERR_UNKNOWN("error/unknown"),

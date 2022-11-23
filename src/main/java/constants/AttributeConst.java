@@ -53,7 +53,6 @@ public enum AttributeConst {
     PACK_JMDN("JMDN_code"),  //JMDNコード
     PACK_GENERAL_NAME("general_name"),
     PACK_DEV_NAME("device_name"),
-
     PACK_Manma("acceptability_of_Manma_exam"),
     PACK_X_RAY("acceptability_of_X_ray_exam"),
     PACK_CT("acceptability_of_CT_exam"),
@@ -67,6 +66,8 @@ public enum AttributeConst {
     PACK_CSV("csv"),
     PACK_INDEX("index_num"),
     PACK_ERR("pack_err"),  //エラーが生じたデバイス名
+    PACK_CSV_ERR_LINE("csvErrorLine"),  //CSV取り込み時にエラーがでたindex番号
+    PACK_CSV_ACCEPTABILITY_ERR_LINE("csvAcceptabilityErrorLine"),
 
     //患者の体内デバイス
     PATIENT_DEVICE("patientDevice"),
