@@ -145,11 +145,11 @@ public class PatientDeviceService extends ServiceBase {
     public long countByPatient_id(int patient_id) {
 
         //指定した患者IDの件数を取得する
-        long patient_idCount = (long) em.createNamedQuery(JpaConst.Q_PAT_COUNT_REGISTEREDBY_PAT_ID, Long.class)
+        long patient_id_count = (long) em.createNamedQuery(JpaConst.Q_PAT_COUNT_REGISTEREDBY_PAT_ID, Long.class)
                 .setParameter(JpaConst.JPQL_PARM_PAT_ID, patient_id)
                 .getSingleResult();
 
-        return patient_idCount;
+        return patient_id_count;
     }
 
     /**

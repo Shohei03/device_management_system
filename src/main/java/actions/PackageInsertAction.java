@@ -595,8 +595,8 @@ public class PackageInsertAction extends ActionBase {
         packageInserts.add(piv);
 
         //リクエストスコープに登録
-        putRequestScope(AttributeConst.PACKEGE_INSERTS, packageInserts);  //検索した添付文書
-        putRequestScope(AttributeConst.PACK_COUNT, count);  //検索した添付文書の件数
+        putRequestScope(AttributeConst.PACKEGE_INSERTS, packageInserts); //検索した添付文書
+        putRequestScope(AttributeConst.PACK_COUNT, count); //検索した添付文書の件数
         putRequestScope(AttributeConst.PAGE, page); //ページ数
         putRequestScope(AttributeConst.MAX_ROW, JpaConst.ROW_PER_PAGE); //1ページに表示するレコードの数
 
@@ -610,8 +610,5 @@ public class PackageInsertAction extends ActionBase {
         //一覧画面を表示
         forward(ForwardConst.FW_PACK_INDEX);
     }
-
-
-
 
 }
