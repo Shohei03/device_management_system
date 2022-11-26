@@ -201,9 +201,6 @@ public class EmployeeAction extends ActionBase {
                     null,
                     AttributeConst.DEL_FLAG_FALSE.getIntegerValue());
 
-            System.out.println("部署----------" + ev.getDepartment());
-            System.out.println("ID----------" + ev.getId());
-
             //アプリケーションスコープからpepper文字列を取得
             String pepper = getContextScope(PropertyConst.PEPPER);
 

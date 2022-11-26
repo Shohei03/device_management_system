@@ -26,27 +26,27 @@ public class PatientDeviceView {
     /**
      * 患者ID
      */
-    private Integer patient_id;
+    private Integer patientId;
 
     /**
      * 患者名
      */
-    private String patient_name;
+    private String patientName;
 
     /**
      * 患者名（ひらがな）
      */
-    private String patient_name_kana;
+    private String patientNameKana;
 
     /**
      * 添付文書承認番号
      */
-    private String approval_number;
+    private String approvalNumber;
 
     /**
      * デバイスの販売名
      */
-    private String device_name;
+    private String deviceName;
 
     /**
      * デバイスを埋め込んだ日

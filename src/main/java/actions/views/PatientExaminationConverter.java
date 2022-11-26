@@ -19,10 +19,10 @@ public class PatientExaminationConverter {
     public static PatientExamination toModel(PatientExaminationView pev) {
         return new PatientExamination(
                 pev.getId(),
-                PatientConverter.toModel_FROM_PAT(pev.getPatient_id()),
+                PatientConverter.toModelFromPat(pev.getPatientId()),
                 ExaminationConverter.CopyModel(pev),
-                pev.getExamination_date(),
-                pev.getReservation_time(),
+                pev.getExaminationDate(),
+                pev.getReservationTime(),
                 pev.getCreatedAt());
     }
 
@@ -38,12 +38,12 @@ public class PatientExaminationConverter {
 
         return new PatientExaminationView(
                 pe.getId(),
-                pe.getPatient().getPatient_id(),
-                pe.getPatient().getPatient_name(),
-                pe.getPatient().getPatient_name_kana(),
-                pe.getExamination().getExamination_item(),
-                pe.getExamination_date(),
-                pe.getReservation_time(),
+                pe.getPatient().getPatientId(),
+                pe.getPatient().getPatientName(),
+                pe.getPatient().getPatientNameKana(),
+                pe.getExamination().getExaminationItem(),
+                pe.getExaminationDate(),
+                pe.getReservationTime(),
                 pe.getCreatedAt());
     }
 
@@ -69,10 +69,10 @@ public class PatientExaminationConverter {
      */
     public static void copyViewToModel(PatientExamination pe, PatientExaminationView pev) {
         pe.setId(pev.getId());
-        pe.setPatient(PatientConverter.toModel_FROM_PAT(pev.getPatient_id()));
+        pe.setPatient(PatientConverter.toModelFromPat(pev.getPatientId()));
         pe.setExamination(ExaminationConverter.CopyModel(pev));
-        pe.setExamination_date(pev.getExamination_date());
-        pe.setReservation_time(pev.getReservation_time());
+        pe.setExaminationDate(pev.getExaminationDate());
+        pe.setReservationTime(pev.getReservationTime());
         pe.setCreatedAt(pev.getCreatedAt());
 
     }

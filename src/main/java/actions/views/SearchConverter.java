@@ -16,31 +16,31 @@ public class SearchConverter {
      * @param PatientDeviceのインスタンス
      * @return PatientDeviceViewのインスタンス
      */
-    public static List<SearchPatientDeviceView> toViewList(List<PatientDevice> pd_list) {
-        List<SearchPatientDeviceView> spdv_list = new ArrayList<>();
+    public static List<SearchPatientDeviceView> toViewList(List<PatientDevice> pdList) {
+        List<SearchPatientDeviceView> spdvList = new ArrayList<>();
 
-        if (pd_list == null) {
+        if (pdList == null) {
             return null;
         }
-        for (PatientDevice pd : pd_list) {
+        for (PatientDevice pd : pdList) {
             SearchPatientDeviceView spdv = new SearchPatientDeviceView(
                     pd.getId(),
-                    pd.getPatient().getPatient_id(),
-                    pd.getPatient().getPatient_name(),
-                    pd.getPatient().getPatient_name_kana(),
-                    pd.getPackageInsert().getApproval_number(),
-                    pd.getPackageInsert().getJmdn().getGeneral_name(),
-                    pd.getPackageInsert().getDevice_name(),
+                    pd.getPatient().getPatientId(),
+                    pd.getPatient().getPatientName(),
+                    pd.getPatient().getPatientNameKana(),
+                    pd.getPackageInsert().getApprovalNumber(),
+                    pd.getPackageInsert().getJmdn().getGeneralName(),
+                    pd.getPackageInsert().getDeviceName(),
                     pd.getImplantedAt(),
-                    pd.getPackageInsert().getAcceptability_of_Manma_exam(),
-                    pd.getPackageInsert().getAcceptability_of_X_ray_exam(),
-                    pd.getPackageInsert().getAcceptability_of_CT_exam(),
-                    pd.getPackageInsert().getAcceptability_of_TV_exam(),
-                    pd.getPackageInsert().getAcceptability_of_MR_exam());
+                    pd.getPackageInsert().getAcceptabilityOfManmaExam(),
+                    pd.getPackageInsert().getAcceptabilityOfXrayExam(),
+                    pd.getPackageInsert().getAcceptabilityOfCtExam(),
+                    pd.getPackageInsert().getAcceptabilityOfTvExam(),
+                    pd.getPackageInsert().getAcceptabilityOfMrExam());
 
-            spdv_list.add(spdv);
+            spdvList.add(spdv);
         }
-        return spdv_list;
+        return spdvList;
     }
 
 }

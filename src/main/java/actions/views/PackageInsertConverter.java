@@ -22,14 +22,14 @@ public class PackageInsertConverter {
 
         return new PackageInsert(
                 pv.getId(),
-                pv.getApproval_number(),
-                JMDNConverter.toModel_FROM_PACK(pv),
-                pv.getDevice_name(),
-                pv.getAcceptability_of_Manma_exam(),
-                pv.getAcceptability_of_X_ray_exam(),
-                pv.getAcceptability_of_CT_exam(),
-                pv.getAcceptability_of_TV_exam(),
-                pv.getAcceptability_of_MR_exam(),
+                pv.getApprovalNumber(),
+                JmdnConverter.toModelFromPack(pv),
+                pv.getDeviceName(),
+                pv.getAcceptabilityOfManmaExam(),
+                pv.getAcceptabilityOfXrayExam(),
+                pv.getAcceptabilityOfCtExam(),
+                pv.getAcceptabilityOfTvExam(),
+                pv.getAcceptabilityOfMrExam(),
                 pv.getCreatedAt(),
                 pv.getUpdatedAt(),
                 pv.getDeleteFlag());
@@ -47,15 +47,15 @@ public class PackageInsertConverter {
         }
         return new PackageInsertView(
                 p.getId(),
-                p.getApproval_number(),
-                p.getJmdn().getJMDN_code(),
-                p.getJmdn().getGeneral_name(),
-                p.getDevice_name(),
-                p.getAcceptability_of_Manma_exam(),
-                p.getAcceptability_of_X_ray_exam(),
-                p.getAcceptability_of_CT_exam(),
-                p.getAcceptability_of_TV_exam(),
-                p.getAcceptability_of_MR_exam(),
+                p.getApprovalNumber(),
+                p.getJmdn().getJmdnCode(),
+                p.getJmdn().getGeneralName(),
+                p.getDeviceName(),
+                p.getAcceptabilityOfManmaExam(),
+                p.getAcceptabilityOfXrayExam(),
+                p.getAcceptabilityOfCtExam(),
+                p.getAcceptabilityOfTvExam(),
+                p.getAcceptabilityOfMrExam(),
                 p.getCreatedAt(),
                 p.getUpdatedAt(),
                 p.getDeleteFlag());
@@ -84,14 +84,14 @@ public class PackageInsertConverter {
     public static void copyViewToModel(PackageInsert p, PackageInsertView pv) {
 
         p.setId(pv.getId());
-        p.setApproval_number(pv.getApproval_number());
-        p.setJmdn(JMDNConverter.toModel_FROM_PACK(pv));
-        p.setDevice_name(pv.getDevice_name());
-        p.setAcceptability_of_Manma_exam(pv.getAcceptability_of_Manma_exam());
-        p.setAcceptability_of_X_ray_exam(pv.getAcceptability_of_X_ray_exam());
-        p.setAcceptability_of_CT_exam(pv.getAcceptability_of_CT_exam());
-        p.setAcceptability_of_TV_exam(pv.getAcceptability_of_TV_exam());
-        p.setAcceptability_of_MR_exam(pv.getAcceptability_of_MR_exam());
+        p.setApprovalNumber(pv.getApprovalNumber());
+        p.setJmdn(JmdnConverter.toModelFromPack(pv));
+        p.setDeviceName(pv.getDeviceName());
+        p.setAcceptabilityOfManmaExam(pv.getAcceptabilityOfManmaExam());
+        p.setAcceptabilityOfXrayExam(pv.getAcceptabilityOfXrayExam());
+        p.setAcceptabilityOfCtExam(pv.getAcceptabilityOfCtExam());
+        p.setAcceptabilityOfTvExam(pv.getAcceptabilityOfTvExam());
+        p.setAcceptabilityOfMrExam(pv.getAcceptabilityOfMrExam());
         p.setCreatedAt(pv.getCreatedAt());
         p.setUpdatedAt(pv.getCreatedAt());
         p.setDeleteFlag(pv.getDeleteFlag());
@@ -102,10 +102,10 @@ public class PackageInsertConverter {
     /**
      * 添付文書テーブルにアクセスし、引数で与えた添付文書承認番号のレコード（インスタンス）を取得
      */
-    public static PackageInsert toModel_from_AppNum(String app_num) {
-        PackageInsertService pi_service = new PackageInsertService();
+    public static PackageInsert toModelFromAppNum(String appNum) {
+        PackageInsertService piService = new PackageInsertService();
 
-        return pi_service.findPackageInsertByAppNum(app_num);
+        return piService.findPackageInsertByAppNum(appNum);
 
     }
 

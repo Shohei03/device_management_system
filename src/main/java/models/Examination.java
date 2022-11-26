@@ -46,6 +46,6 @@ public class Examination {
      * 検査項目
      */
     @Column(name = JpaConst.EXAM_COL_ITEM, nullable = false, unique = true)
-    private String examination_item;
+    private String examinationItem;
 
 }

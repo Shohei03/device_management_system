@@ -24,21 +24,21 @@
     <body>
         <div id="wrapper">
             <div id="header">
-                <div id="header_menu">
+                <div id="headerMenu">
                     <h1><a href="<c:url value='/?action=${actSearch}&command=${commIdx}' />">デバイス管理システム</a></h1>&nbsp;&nbsp;&nbsp;
-                    <c:if test="${sessionScope.login_employee != null}">
-                        <c:if test="${sessionScope.login_employee.adminFlag == AttributeConst.ROLE_ADMIN.getIntegerValue()}">
+                    <c:if test="${sessionScope.loginEmployee != null}">
+                        <c:if test="${sessionScope.loginEmployee.adminFlag == AttributeConst.ROLE_ADMIN.getIntegerValue()}">
                             <a href="<c:url value='?action=${actEmp}&command=${commIdx}' />">従業員管理</a>&nbsp;
                         </c:if>
-                        <c:if test="${sessionScope.login_employee.adminFlag == AttributeConst.ROLE_ADMIN.getIntegerValue() or sessionScope.login_employee.adminFlag == AttributeConst.ROLE_PARTIAL_ADMIN.getIntegerValue()}">
+                        <c:if test="${sessionScope.loginEmployee.adminFlag == AttributeConst.ROLE_ADMIN.getIntegerValue() or sessionScope.loginEmployee.adminFlag == AttributeConst.ROLE_PARTIAL_ADMIN.getIntegerValue()}">
                             <a href="<c:url value='?action=${actRegi}&command=${commIdx}' />">データ登録</a>&nbsp;
                         </c:if>
                         <a href="<c:url value='?action=${actSearcher}&command=${commSearchByDep}' />">デバイス検索</a>&nbsp;
                     </c:if>
                 </div>
-                <c:if test="${sessionScope.login_employee != null}">
-                    <div id="employee_name">
-                        <c:out value="${sessionScope.login_employee.name}" />
+                <c:if test="${sessionScope.loginEmployee != null}">
+                    <div id="employeeName">
+                        <c:out value="${sessionScope.loginEmployee.name}" />
                         &nbsp;さん&nbsp;&nbsp;&nbsp;
                         <a href="<c:url value='?action=${actAuth}&command=${commOut}' />">ログアウト</a>
                     </div>

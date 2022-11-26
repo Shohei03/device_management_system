@@ -25,13 +25,13 @@ public class PatientExaminationService extends ServiceBase {
      * @return 一覧画面に表示するデータのリスト
      */
     public List<PatientExaminationView> getExamPerPage(int page) {
-        List<PatientExamination> patientExamination_list = em
+        List<PatientExamination> patientExaminationList = em
                 .createNamedQuery(JpaConst.Q_PAT_EXAM_GET_MINE, PatientExamination.class)
                 .setFirstResult(JpaConst.ROW_PER_PAGE * (page - 1))
                 .setMaxResults(JpaConst.ROW_PER_PAGE)
                 .getResultList();
 
-        return PatientExaminationConverter.toViewList(patientExamination_list);
+        return PatientExaminationConverter.toViewList(patientExaminationList);
     }
 
     /**
@@ -40,92 +40,92 @@ public class PatientExaminationService extends ServiceBase {
      */
     public long countExamination() {
 
-        long patientExamination_countAll = (long) em
+        long patientExaminationCountAll = (long) em
                 .createNamedQuery(JpaConst.Q_PAT_EXAM_COUNT_ALL, Long.class)
                 .getSingleResult();
 
-        return patientExamination_countAll;
+        return patientExaminationCountAll;
     }
 
     /**
      * 指定されたページ数の一覧画面に表示する指定日の検査情報データを取得し、PatientExaminationViewのリストで返却する
      * @param page ページ数
-     * @param exam_date 指定日
+     * @param examDate 指定日
      * @return 一覧画面に表示するデータのリスト
      */
-    public List<PatientExaminationView> getExamPerPageInTheExamDate(LocalDate exam_date, int page) {
-        List<PatientExamination> patientExamination_list = em
+    public List<PatientExaminationView> getExamPerPageInTheExamDate(LocalDate examDate, int page) {
+        List<PatientExamination> patientExaminationList = em
                 .createNamedQuery(JpaConst.Q_PAT_EXAM_GET_MINE_REGISTEREDBY_EXAM_DATE, PatientExamination.class)
-                .setParameter(JpaConst.JPQL_PARM_EXAM_DATE, exam_date)
+                .setParameter(JpaConst.JPQL_PARM_EXAM_DATE, examDate)
                 .setFirstResult(JpaConst.ROW_PER_PAGE * (page - 1))
                 .setMaxResults(JpaConst.ROW_PER_PAGE)
                 .getResultList();
 
-        return PatientExaminationConverter.toViewList(patientExamination_list);
+        return PatientExaminationConverter.toViewList(patientExaminationList);
     }
 
     /**
      * 指定した検査日の検査件数を取得し、返却する
      * @return 指定日の検査件数
      */
-    public long countExamInTheExamDate(LocalDate exam_date) {
+    public long countExamInTheExamDate(LocalDate examDate) {
 
-        long patientExamination_count = (long) em
+        long patientExaminationCount = (long) em
                 .createNamedQuery(JpaConst.Q_PAT_EXAM_COUNT_REGISTEREDBY_EXAM_DATE, Long.class)
-                .setParameter(JpaConst.JPQL_PARM_EXAM_DATE, exam_date)
+                .setParameter(JpaConst.JPQL_PARM_EXAM_DATE, examDate)
                 .getSingleResult();
 
-        return patientExamination_count;
+        return patientExaminationCount;
 
     }
 
     /**
      * 検査日と検査項目を指定して検査情報データを取得し、PatientExaminationのリストで返却する
      * @param examination_item 検査項目
-     * @param exam_date 指定日
+     * @param examDate 指定日
      * @return 一覧画面に表示するデータのリスト
      */
-    public List<PatientExamination> getTheExamInTheExamDate(LocalDate exam_date, Examination e) {
-        List<PatientExamination> patientExamination_list = em
-                .createNamedQuery(JpaConst.Q_PAT_EXAM_GET_MINE_REGISTEREDBY_EXAM_DATE_AND_ITEM, PatientExamination.class)
-                .setParameter(JpaConst.JPQL_PARM_EXAM_DATE, exam_date)
+    public List<PatientExamination> getTheExamInTheExamDate(LocalDate examDate, Examination e) {
+        List<PatientExamination> patientExaminationList = em
+                .createNamedQuery(JpaConst.Q_PAT_EXAM_GET_MINE_REGISTEREDBY_EXAM_DATE_AND_ITEM,
+                        PatientExamination.class)
+                .setParameter(JpaConst.JPQL_PARM_EXAM_DATE, examDate)
                 .setParameter(JpaConst.JPQL_PARM_EXAMINATION, e)
                 .getResultList();
 
-        return patientExamination_list;
+        return patientExaminationList;
     }
 
     /**
      * 検査日を指定して患者データを取得し、患者のリストで返却する(患者IDの重複なし)
-     * @param exam_date 指定日
+     * @param examDate 指定日
      * @return 一覧画面に表示するデータのリスト
      */
-    public List<Patient> getPatNoDupliInTheExamDate(LocalDate exam_date) {
-        List<Patient> patient_list = em
+    public List<Patient> getPatNoDupliInTheExamDate(LocalDate examDate) {
+        List<Patient> patientList = em
                 .createNamedQuery(JpaConst.Q_PAT_EXAM_GET_PAT_DISTINCT_PAT_REGISTEREDBY_EXAM_DATE, Patient.class)
-                .setParameter(JpaConst.JPQL_PARM_EXAM_DATE, exam_date)
+                .setParameter(JpaConst.JPQL_PARM_EXAM_DATE, examDate)
                 .getResultList();
 
-        return patient_list;
+        return patientList;
     }
-
 
     /**
      * 検査日と検査項目を指定して患者データを取得し、患者のリストで返却する(患者IDの重複なし)
-     * @param examination_item 検査項目
-     * @param exam_date 指定日
+     * @param examinationItem 検査項目
+     * @param examDate 指定日
      * @return 一覧画面に表示するデータのリスト
      */
-    public List<Patient> getPatNoDupliByExamItemInTheExamDate(LocalDate exam_date, Examination e) {
-        List<Patient> patient_list = em
-                .createNamedQuery(JpaConst.Q_PAT_EXAM_GET_PAT_DISTINCT_PAT_REGISTEREDBY_EXAM_DATE_AND_ITEM, Patient.class)
-                .setParameter(JpaConst.JPQL_PARM_EXAM_DATE, exam_date)
+    public List<Patient> getPatNoDupliByExamItemInTheExamDate(LocalDate examDate, Examination e) {
+        List<Patient> patientList = em
+                .createNamedQuery(JpaConst.Q_PAT_EXAM_GET_PAT_DISTINCT_PAT_REGISTEREDBY_EXAM_DATE_AND_ITEM,
+                        Patient.class)
+                .setParameter(JpaConst.JPQL_PARM_EXAM_DATE, examDate)
                 .setParameter(JpaConst.JPQL_PARM_EXAMINATION, e)
                 .getResultList();
 
-        return patient_list;
+        return patientList;
     }
-
 
     /**
      * idを条件に取得したデータをPatientExaminationViewのインスタンスで返却する
@@ -151,7 +151,7 @@ public class PatientExaminationService extends ServiceBase {
      * @param p 患者インスタンス
      * @return 取得データのインスタンス
      */
-    public List<PatientExamination> findByPat_id(Patient p) {
+    public List<PatientExamination> findByPatId(Patient p) {
         if (countPatExamByPatient(p) > 0) {
             List<PatientExamination> patExams = em
                     .createNamedQuery(JpaConst.Q_PAT_EXAM_GET_MINE_REGISTEREDBY_PAT, PatientExamination.class)
@@ -171,26 +171,26 @@ public class PatientExaminationService extends ServiceBase {
     public long countPatExamByPatient(Patient p) {
 
         //指定した患者IDの件数を取得する
-        long patExam_Count = (long) em.createNamedQuery(JpaConst.Q_PAT_EXAM_COUNT_REGISTEREDBY_PAT, Long.class)
+        long patExamCount = (long) em.createNamedQuery(JpaConst.Q_PAT_EXAM_COUNT_REGISTEREDBY_PAT, Long.class)
                 .setParameter(JpaConst.JPQL_PARM_PATIENT, p)
                 .getSingleResult();
 
-        return patExam_Count;
+        return patExamCount;
     }
 
     /**
      * Patient(患者)テーブルから、引数で指定した患者IDのレコード数を取得し、返却する
-     * @param patient_id 患者ID
+     * @param patientId 患者ID
      * @return 該当するデータの件数
      */
-    public long countByPatient_id(int patient_id) {
+    public long countByPatientId(int patientId) {
 
         //指定した患者IDの件数を取得する
-        long patient_idCount = (long) em.createNamedQuery(JpaConst.Q_PAT_COUNT_REGISTEREDBY_PAT_ID, Long.class)
-                .setParameter(JpaConst.JPQL_PARM_PAT_ID, patient_id)
+        long patientIdCount = (long) em.createNamedQuery(JpaConst.Q_PAT_COUNT_REGISTEREDBY_PAT_ID, Long.class)
+                .setParameter(JpaConst.JPQL_PARM_PAT_ID, patientId)
                 .getSingleResult();
 
-        return patient_idCount;
+        return patientIdCount;
     }
 
     /**
@@ -198,11 +198,11 @@ public class PatientExaminationService extends ServiceBase {
      * @param patient_id 患者id
      * return 指定した患者IDをもつpatientインスタンス
      */
-    public Patient findPatient(int patient_id) {
-        if (countByPatient_id(patient_id) > 0) {
+    public Patient findPatient(int patientId) {
+        if (countByPatientId(patientId) > 0) {
 
             Patient pat = (Patient) em.createNamedQuery(JpaConst.Q_PAT_GET_MINE_REGISTEREDBY_PAT_ID, Patient.class)
-                    .setParameter(JpaConst.JPQL_PARM_PAT_ID, patient_id)
+                    .setParameter(JpaConst.JPQL_PARM_PAT_ID, patientId)
                     .getSingleResult();
 
             return pat;
@@ -212,13 +212,13 @@ public class PatientExaminationService extends ServiceBase {
 
     /**
      * Examination(検査項目)テーブルから、引数で指定した検査項目のレコードを取得。
-     * @param examination_item 検査項目
+     * @param examinationItem 検査項目
      * return 指定した検査項目をもつExaminationインスタンス
      */
-    public Examination findExamination(String examination_item) {
+    public Examination findExamination(String examinationItem) {
 
         Examination e = (Examination) em.createNamedQuery(JpaConst.Q_EXAM_GET_MINE_REGISTEREDBY_PAT, Examination.class)
-                .setParameter(JpaConst.JPQL_PARM_EXAM_ITEM, examination_item)
+                .setParameter(JpaConst.JPQL_PARM_EXAM_ITEM, examinationItem)
                 .getSingleResult();
 
         return e;
@@ -244,7 +244,7 @@ public class PatientExaminationService extends ServiceBase {
 
             //患者の検査情報テーブルと患者テーブルにデータを登録する
             //まず、患者テーブルにこれから登録する患者IDが存在していないか確認。存在している場合は登録しない。
-            if (!(countByPatient_id(pev.getPatient_id()) > 0)) {
+            if (!(countByPatientId(pev.getPatientId()) > 0)) {
                 createInternalPatient(pev);
             }
             createInternalPatExam(pev);
@@ -262,12 +262,12 @@ public class PatientExaminationService extends ServiceBase {
     public List<String> update(PatientExaminationView pev, Boolean duplicateCheck) {
         PatientExaminationView savedPev = findOne(pev.getId());
 
-        savedPev.setPatient_id(pev.getPatient_id());
-        savedPev.setPatient_name(pev.getPatient_name());
-        savedPev.setPatient_name_kana(pev.getPatient_name_kana());
-        savedPev.setExamination_item(pev.getExamination_item());
-        savedPev.setExamination_date(pev.getExamination_date());
-        savedPev.setReservation_time(pev.getReservation_time());
+        savedPev.setPatientId(pev.getPatientId());
+        savedPev.setPatientName(pev.getPatientName());
+        savedPev.setPatientNameKana(pev.getPatientNameKana());
+        savedPev.setExaminationItem(pev.getExaminationItem());
+        savedPev.setExaminationDate(pev.getExaminationDate());
+        savedPev.setReservationTime(pev.getReservationTime());
         savedPev.setCreatedAt(LocalDate.now());
 
         //バリデーションを行う
@@ -288,7 +288,7 @@ public class PatientExaminationService extends ServiceBase {
     private void createInternalPatient(PatientExaminationView pev) {
 
         em.getTransaction().begin();
-        em.persist(PatientConverter.toModel_from_PatExamV(pev));
+        em.persist(PatientConverter.toModelFromPatExamV(pev));
         em.getTransaction().commit();
     }
 

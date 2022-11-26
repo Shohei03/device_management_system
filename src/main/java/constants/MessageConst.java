@@ -34,6 +34,7 @@ public enum MessageConst {
     E_NOPAT_NAME("患者名を入力してください。"),
     E_NOIMP_DATE("デバイスの埋込日を入力してください。"),
     E_NOEXAM_DATE("検査日を入力してください。"),
+    E_NORESERVATION_TIME("予約時間を入力してください。"),
     E_ABNORMAL_ExamAcceptability("検査の可否の値は可能・条件付き可能・不可能のいずれかにしてください。"),
     E_PAT_ID_NOT_EIGHT_INT("患者IDを8桁以下の正の整数値で入力してください。"),
     E_PAT_ID_EXIST("入力された患者IDは既に存在しています。"),
@@ -43,10 +44,15 @@ public enum MessageConst {
     E_ERR_DEVICE_NAME("指定した添付文書承認番号で登録されているデバイス名と入力されているデバイス名が異なります。"),
     E_ERR_IMP_DATE("正しい埋込日を入力してください"),
     E_EXAM_DATE("正しい検査日を入力してください。"),
+    E_RESERVATION_TIME("予約時間が9時から17時になるように修正してください"),
     E_DUPLI_DATA("入力したデータは既に登録されていますが、登録しますか。"),
     E_UPLOAD_NOT_CSV("CSVファイルをアップロードしてください"),
+    E_CSV_BLANK("CSVファイルのデータに入力漏れがあります。確認してください"),
     E_UPLOAD_DATA_OVER("CSVファイルのサイズを100MB以下にしてください。"),
-    E_UPLOAD_DATA_NUM("CSVファイルデータの項目数が異常です。"),
+    E_UPLOAD_DATA_NUM("CSVファイルデータの項目数が異常または、データの入力漏れがあります。"),
+    E_UPLOAD_DATE("CSVファイルの日付データはyyyy/MM/ddの形式で入力してください。"),
+    E_UPLOAD_TIME("CSVファイルの時間データはHH:mmの形式で入力してください。"),
+    E_WRONG_PAT_NAME("患者名（ひらながも）を確認してください。入力した患者IDで登録されている名前と異なります。"),
 
 
     //注意

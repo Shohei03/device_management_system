@@ -11,7 +11,7 @@ public class ExaminationConverter {
      * @return exam Examinationのインスタンス
      */
     public static Examination toModel(PatientExaminationView pev) {
-        Examination exam = new Examination(null, pev.getExamination_item());
+        Examination exam = new Examination(null, pev.getExaminationItem());
         return exam;
     }
 
@@ -25,7 +25,7 @@ public class ExaminationConverter {
 
         PatientExaminationService service = new PatientExaminationService();
 
-        return service.findExamination(pev.getExamination_item());
+        return service.findExamination(pev.getExaminationItem());
 
     }
 

@@ -15,23 +15,23 @@
             <tbody>
                 <tr>
                     <th>患者ID</th>
-                    <td><c:out value="${patientDevice.patient_id}" /></td>
+                    <td><c:out value="${patientDevice.patientId}" /></td>
                 </tr>
                 <tr>
                     <th>患者名</th>
-                    <td><c:out value="${patientDevice.patient_name}" /></td>
+                    <td><c:out value="${patientDevice.patientName}" /></td>
                 </tr>
                 <tr>
                     <th>患者名（ひらがな）</th>
-                    <td><c:out value="${patientDevice.patient_name_kana}" /></td>
+                    <td><c:out value="${patientDevice.patientNameKana}" /></td>
                 </tr>
                 <tr>
                     <th>添付文書承認番号</th>
-                    <td><c:out value="${patientDevice.approval_number}" /></td>
+                    <td><c:out value="${patientDevice.approvalNumber}" /></td>
                 </tr>
                 <tr>
                     <th>デバイスの販売名</th>
-                    <th><c:out value="${patientDevice.device_name}" /></th>
+                    <th><c:out value="${patientDevice.deviceName}" /></th>
                 </tr>
                 <tr>
                     <th>デバイスの埋込日</th>

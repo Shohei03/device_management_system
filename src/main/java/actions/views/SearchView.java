@@ -26,57 +26,57 @@ public class SearchView {
     /**
      * PatientExamination id
      */
-    private Integer patExam_id;
+    private Integer patExamId;
 
     /**
      * PatientDevice id
      */
-    private Integer patDevice_id;
+    private Integer patDeviceId;
 
     /**
      * 患者ID
      */
-    private Integer patient_id;
+    private Integer patientId;
 
     /**
      * 患者名
      */
-    private String patient_name;
+    private String patientName;
 
     /**
      * 患者名（ひらがな）
      */
-    private String patient_name_kana;
+    private String patientNameKana;
 
     /**
      * 検査項目
      */
-    private String examination_item;
+    private String examinationItem;
 
     /**
      * 検査日
      */
-    private LocalDate examination_date;
+    private LocalDate examinationDate;
 
     /**
      * 検査の予約時間
      */
-    private LocalTime reservation_time;
+    private LocalTime reservationTime;
 
     /**
      * 添付文書（機器）承認番号
      */
-    private String approval_number;
+    private String approvalNumber;
 
     /**
      * 一般的名称
      */
-    private String general_name;
+    private String generalName;
 
     /**
      * デバイスの販売名
      */
-    private String device_name;
+    private String deviceName;
 
     /**
      * デバイスの埋込日
@@ -86,26 +86,26 @@ public class SearchView {
     /**
      * 乳腺X線検査の可否
      */
-    private String acceptability_of_Manma_exam;
+    private String acceptabilityOfManmaExam;
 
     /**
      * 一般（X線）検査の可否
      */
-    private String acceptability_of_X_ray_exam;
+    private String acceptabilityOfXrayExam;
 
     /**
      * CT検査の可否
      */
-    private String acceptability_of_CT_exam;
+    private String acceptabilityOfCtExam;
 
     /**
      * TV検査の可否
      */
-    private String acceptability_of_TV_exam;
+    private String acceptabilityOfTvExam;
 
     /**
      * MRI検査の可否
      */
-    private String acceptability_of_MR_exam;
+    private String acceptabilityOfMrExam;
 
 }

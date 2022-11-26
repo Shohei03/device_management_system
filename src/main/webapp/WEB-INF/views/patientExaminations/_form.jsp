@@ -10,9 +10,10 @@
     <div id="flush_error">
         入力内容にエラーがあります。<br />
         <c:forEach var="error" items="${errors}">
-                    ・<c:out value="${error}" />
+                    ・<c:out value="${error}" /><br />
                     <c:if test="${error == MessageConst.E_DUPLI_DATA.getMessage()}">
-                        <button type="submit">重複登録</button>
+                        <button type="submit">重複登録</button><br /><br />
+                        ※他にエラーがある場合は重複登録を押しても反映されません。
                     </c:if>
         </c:forEach>
     </div>
@@ -23,15 +24,15 @@
 <select name="${AttributeConst.PATEXAM_EXAM_ITEM.getValue()}"
     id="${AttributeConst.PATEXAM_EXAM_ITEM.getValue()}">
     <option value="${AttributeConst.EXAM_X_RAY.getValue()}"
-        <c:if test="${patientExamination.examination_item == AttributeConst.EXAM_X_RAY.getValue()}">selected</c:if>>単純X線検査</option>
+        <c:if test="${patientExamination.examinationItem == AttributeConst.EXAM_X_RAY.getValue()}">selected</c:if>>単純X線検査</option>
     <option value="${AttributeConst.EXAM_CT.getValue()}"
-        <c:if test="${patientExamination.examination_item == AttributeConst.EXAM_CT.getValue()}">selected</c:if>>CT検査</option>
+        <c:if test="${patientExamination.examinationItem == AttributeConst.EXAM_CT.getValue()}">selected</c:if>>CT検査</option>
     <option value="${AttributeConst.EXAM_TV.getValue()}"
-        <c:if test="${patientExamination.examination_item == AttributeConst.EXAM_TV.getValue()}">selected</c:if>>X線TV検査</option>
+        <c:if test="${patientExamination.examinationItem == AttributeConst.EXAM_TV.getValue()}">selected</c:if>>X線TV検査</option>
     <option value="${AttributeConst.EXAM_Manma.getValue()}"
-        <c:if test="${patientExamination.examination_item == AttributeConst.EXAM_Manma.getValue()}">selected</c:if>>乳腺X線検査</option>
+        <c:if test="${patientExamination.examinationItem == AttributeConst.EXAM_Manma.getValue()}">selected</c:if>>乳腺X線検査</option>
     <option value="${AttributeConst.EXAM_MRI.getValue()}"
-        <c:if test="${patientExamination.examination_item == AttributeConst.EXAM_MRI.getValue()}">selected</c:if>>MR検査</option>
+        <c:if test="${patientExamination.examinationItem == AttributeConst.EXAM_MRI.getValue()}">selected</c:if>>MR検査</option>
 </select>
 <br />
 <br />
@@ -40,7 +41,7 @@
 <br />
 <input type="date" name="${AttributeConst.PATEXAM_EXAM_DATE.getValue()}"
     id="${AttributeConst.PATEXAM_EXAM_DATE.getValue()}"
-    value="${patientExamination.examination_date}" />
+    value="${patientExamination.examinationDate}" />
 <br />
 <br />
 
@@ -49,7 +50,7 @@
 <input type="time" list="data-list"
     name="${AttributeConst.PATEXAM_RESERVATION_TIME.getValue()}"
     id="${AttributeConst.PATEXAM_RESERVATION_TIME.getValue()}"
-    value="${patientExamination.reservation_time}" min="09:00" max="17:00"
+    value="${patientExamination.reservationTime}" min="09:00" max="17:00"
     step="3600" />
 <span></span>
 <datalist id="data-list">
@@ -70,7 +71,7 @@
 <br />
 <input type="text" name="${AttributeConst.PATEXAM_PAT_ID.getValue()}"
     id="${AttributeConst.PATEXAM_PAT_ID.getValue()}"
-    value="${patientExamination.patient_id}" />
+    value="${patientExamination.patientId}" />
 <br />
 <br />
 
@@ -78,7 +79,7 @@
 <br />
 <input type="text" name="${AttributeConst.PATEXAM_PAT_NAME.getValue()}"
     id="${AttributeConst.PATEXAM_PAT_NAME.getValue()}"
-    value="${patientExamination.patient_name}" />
+    value="${patientExamination.patientName}" />
 <br />
 <br />
 
@@ -87,7 +88,7 @@
 <input type="text"
     name="${AttributeConst.PATEXAM_PAT_NAME_KANA.getValue()}"
     id="${AttributeConst.PATEXAM_PAT_NAME_KANA.getValue()}"
-    value="${patientExamination.patient_name_kana}" />
+    value="${patientExamination.patientNameKana}" />
 <br />
 <br />
 

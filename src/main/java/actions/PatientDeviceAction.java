@@ -11,7 +11,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.Part;
 
 import actions.views.PatientDeviceConverter;
@@ -23,13 +22,13 @@ import constants.MessageConst;
 import models.Patient;
 import models.PatientDevice;
 import services.PatientDeviceService;
+import validators.CsvValidator;
 
 /**
  * 体内デバイスに関する処理を行うActionクラス
  * @author sn137
  *
  */
-@MultipartConfig
 public class PatientDeviceAction extends ActionBase {
 
     private PatientDeviceService service;
@@ -73,6 +72,27 @@ public class PatientDeviceAction extends ActionBase {
             removeSessionScope(AttributeConst.FLUSH);
         }
 
+        //セッションにエラーメッセージが設定されている場合はリクエストスコープに移し替え、セッションからは削除する
+        List<String> errors = getSessionScope(AttributeConst.ERR);
+        if (errors != null) {
+            putRequestScope(AttributeConst.ERR, errors);
+            removeSessionScope(AttributeConst.ERR);
+        }
+        //CSVファイルのエラー行数を格納した変数もセッションから削除する
+        List<Integer> errLineNumList = getSessionScope(AttributeConst.PATDEV_CSV_ERR_LINE);
+        if (errLineNumList != null) {
+            putRequestScope(AttributeConst.PATDEV_CSV_ERR_LINE, errLineNumList);
+            removeSessionScope(AttributeConst.PATDEV_CSV_ERR_LINE);
+        }
+
+        //CSVファイルのエラー行数(検査の可否)を格納した変数もセッションから削除する
+        List<Integer> errLineDateList = getSessionScope(AttributeConst.PATDEV_CSV_DATE_ERR_LINE);
+        if (errLineDateList != null) {
+
+            putRequestScope(AttributeConst.PATDEV_CSV_DATE_ERR_LINE, errLineDateList);
+            removeSessionScope(AttributeConst.PATDEV_CSV_DATE_ERR_LINE);
+        }
+
         //一覧画面を表示
         forward(ForwardConst.FW_PATDEV_INDEX);
     }
@@ -88,8 +108,7 @@ public class PatientDeviceAction extends ActionBase {
 
         //体内デバイス情報の空インスタンスを準備
         PatientDeviceView pdv = new PatientDeviceView();
-        // pdv.setCreatedAt(LocalDate.now());
-        // pdv.setUpdatedAt(LocalDate.now());
+
         putRequestScope(AttributeConst.PATIENT_DEVICE, pdv); //体内デバイスインスタンス
 
         //新規登録画面を表示
@@ -103,18 +122,18 @@ public class PatientDeviceAction extends ActionBase {
      */
     public void check() throws ServletException, IOException {
 
-        //患者名の苗字と名前の間の空白スペースが半角の場合は、全角に変換する
-        String patient_name = getRequestParam(AttributeConst.PATDEV_PAT_NAME);
-        if (patient_name != null) {
-            patient_name = patient_name.replaceAll(" ", "  ");
-        }
+        //苗字と名前の空白が半角スペースの場合、全角に変換
 
-        //患者名の苗字と名前の間の空白スペースが半角の場合は、全角に変換する
-        String patient_name_kana = getRequestParam(AttributeConst.PATDEV_PAT_NAME_KANA);
-        if (patient_name_kana != null) {
-            patient_name_kana = patient_name_kana.replaceAll(" ", "  ");
+        //患者名
+        String patientName = getRequestParam(AttributeConst.PATDEV_PAT_NAME);
+        if (patientName != null) {
+            patientName = toZenkakuSpace(patientName);
         }
-
+        //患者名（ひらがな）
+        String patientNameKana = getRequestParam(AttributeConst.PATDEV_PAT_NAME_KANA);
+        if (patientNameKana != null) {
+            patientNameKana = toZenkakuSpace(patientNameKana);
+        }
 
         //デバイス埋込日が入力されている場合のみ、LocalDateに。
         String inputDate = getRequestParam(AttributeConst.PATDEV_IMP_DATE);
@@ -129,8 +148,8 @@ public class PatientDeviceAction extends ActionBase {
         PatientDeviceView pdv = new PatientDeviceView(
                 null,
                 toNumber(getRequestParam(AttributeConst.PATDEV_PAT_ID)),
-                patient_name,
-                patient_name_kana,
+                patientName,
+                patientNameKana,
                 getRequestParam(AttributeConst.PATDEV_APP_NUM),
                 getRequestParam(AttributeConst.PATDEV_DEV_NAME),
                 implantedAt,
@@ -155,10 +174,10 @@ public class PatientDeviceAction extends ActionBase {
      */
     public void create() throws ServletException, IOException {
 
-        //入力データが体内デバイスデータに既に存在するか確認（duplicateCheck = true）
+        //入力データが体内デバイステーブルに既に存在するか確認（duplicateCheck = true）
         Boolean duplicateCheck = true;
 
-        //入力データが体内デバイスデータのレコードと重複してもいい場合（duplicateCheck = false）＝同日に同じデバイスを複数埋め込んだ場合
+        //入力データが体内デバイステーブルのレコードと重複してもいい場合（duplicateCheck = false）＝同日に同じデバイスを複数埋め込んだ場合
         if (getRequestParam(AttributeConst.PATDEV_DUPLICATE_CHECK) != null) {
             duplicateCheck = Boolean.valueOf(getRequestParam(AttributeConst.PATDEV_DUPLICATE_CHECK));
         }
@@ -272,8 +291,8 @@ public class PatientDeviceAction extends ActionBase {
 
             //入力された体内デバイスの内容を設定する
             pdv.setImplantedAt(toLocalDate(getRequestParam(AttributeConst.PATDEV_IMP_DATE)));
-            pdv.setApproval_number(getRequestParam(AttributeConst.PATDEV_APP_NUM));
-            pdv.setDevice_name(getRequestParam(AttributeConst.PATDEV_DEV_NAME));
+            pdv.setApprovalNumber(getRequestParam(AttributeConst.PATDEV_APP_NUM));
+            pdv.setDeviceName(getRequestParam(AttributeConst.PATDEV_DEV_NAME));
 
             //体内デバイスデータを更新する
             List<String> errors = service.update(pdv, duplicateCheck);
@@ -328,7 +347,21 @@ public class PatientDeviceAction extends ActionBase {
     public void csvImport() throws ServletException, IOException {
 
         Part filePart = getRequestPart(AttributeConst.PATDEV_CSV);
+        //Viewデータの変数設定
         PatientDeviceView pdv = null;
+        //デバイス埋込日の変数設定
+        LocalDate impDate = null;
+
+        //ファイル形式がCSVでない場合、またはファイルの容量が100MBを超える場合はエラーメッセージを返す
+        List<String> errors = CsvValidator.validate(filePart);
+
+        if (errors.size() > 0) {
+            putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策トークン
+            putRequestScope(AttributeConst.ERR, errors); //エラーメッセージ
+
+            //新規作成画面に戻る
+            forward(ForwardConst.FW_PATDEV_NEW);
+        }
 
         //CSV読込
         try (InputStream is = filePart.getInputStream();
@@ -336,47 +369,79 @@ public class PatientDeviceAction extends ActionBase {
                 BufferedReader br = new BufferedReader(isr);) {
 
             String line;
-
             line = br.readLine();
             String[] data = line.split(",");
 
-            //CSVの埋込日をLocalDate型に変換
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/[]M/[]d");
-            LocalDate imp_date = LocalDate.parse(data[4], dtf);
+            //CSVで取り込むデータ数（項目数）が設定値（6個）以外の場合にエラーを返す。
+            String error = CsvValidator.validateItemNum(data, 6);
+            if (error != null) {
+                errors.add(error);
+            } else {
+                //CSVの入力項目数が正しい場合
+                //埋込日データが、yyyy/(M)M/(d)dの形式であることを確認（異なる形式の場合はエラーメッセージを返却）
+                String implantedDate = data[5];
 
-            String patient_id = data[0];
-            String intStr_patient_id = patient_id.replaceAll("[^0-9]", "");
+                String errorDate = CsvValidator.checkDate(implantedDate);
+                if (errorDate != null) {
+                    errors.add(errorDate);
+                } else {
+                    //CSVの埋込日データをLocalDate型に変換
+                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/[]M/[]d");
+                    impDate = LocalDate.parse(implantedDate, dtf);
+                }
+            }
 
-            pdv = new PatientDeviceView(
-                    null,
-                    toNumber(intStr_patient_id),
-                    data[1].trim(),
-                    data[2].trim(),
-                    data[3].trim(),
-                    data[4].trim(),
-                    imp_date,
-                    LocalDate.now(),
-                    LocalDate.now(),
-                    null);
+            //エラーがなければ、PackageInsertView（添付文書View）をインスタンス化
+            if (errors.size() == 0) {
+
+                //患者IDに数字以外に記号があれば除去（BOM排除）
+                String patientId = data[0];
+                String intStrPatientId = patientId.replaceAll("[^0-9]", "");
+
+                //苗字と名前の空白が半角スペースの場合、全角に変換
+                //患者名
+                String patientName = data[1].trim();
+
+                if (patientName != null) {
+                    patientName = toZenkakuSpace(patientName);
+                }
+                //患者名（ひらがな）
+                String patientNameKana = data[2].trim();
+                if (patientNameKana != null) {
+                    patientNameKana = toZenkakuSpace(patientNameKana);
+                }
+
+                pdv = new PatientDeviceView(
+                        null,
+                        toNumber(intStrPatientId),
+                        patientName,
+                        patientNameKana,
+                        data[3].trim(),
+                        data[4].trim(),
+                        impDate,
+                        LocalDate.now(),
+                        LocalDate.now(),
+                        null);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //ファイルを読み込めなかった場合の処理
-        if (pdv == null) {
-            putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用
-            putRequestScope(AttributeConst.ERR, "csvファイルを読み込めませんでした");
 
-            //新規作成画面にcsv取り込みデータを表示
+        //エラーがあれば新規作成画面に戻る
+        if (errors.size() > 0) {
+            putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策トークン
+            putRequestScope(AttributeConst.ERR, errors); //エラーメッセージ
+
             forward(ForwardConst.FW_PATDEV_NEW);
 
+        } else if (errors.size() == 0) {
+            //エラーがなければ、CSVデータ確認画面に
+            putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用
+            putRequestScope(AttributeConst.PATIENT_DEVICE, pdv); //取得した添付文書データ
+
+            //csvデータ確認画面に
+            forward(ForwardConst.FW_PATDEV_NEW);
         }
-
-        putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用
-        putRequestScope(AttributeConst.PATIENT_DEVICE, pdv); //取得した添付文書データ
-
-        //新規作成画面にcsv取り込みデータを表示
-        forward(ForwardConst.FW_PATDEV_NEW);
-
     }
 
     /**
@@ -388,47 +453,118 @@ public class PatientDeviceAction extends ActionBase {
     public void csvAllImport() throws ServletException, IOException {
 
         Part filePart = getRequestPart(AttributeConst.PATDEV_CSV);
+
+        //ファイル形式がCSVでない場合、またはファイルの容量が100MBを超える場合はエラーメッセージを返す
+        List<String> errors = CsvValidator.validate(filePart);
+
+        if (errors.size() > 0) {
+            putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策トークン
+            putRequestScope(AttributeConst.ERR, errors); //エラーメッセージ
+
+            //一覧画面に戻る
+            forward(ForwardConst.FW_PATDEV_INDEX);
+        }
+
+        //ViewとそのListの変数を先に設定
         PatientDeviceView pdv = null;
-        List<PatientDeviceView> pdv_list = new ArrayList<>();
+        List<PatientDeviceView> pdvList = new ArrayList<>();
+
+        LocalDate impDate = null; //埋込日を格納する変数
+
+        //CSVの取り込み行数を格納する変数を設定
+        int lineNum = 1;
+        List<Integer> errLineNumList = new ArrayList<>(); //CSVデータの中で項目数が異常なデータの行数を格納
+        List<Integer> errLineDateList = new ArrayList<>(); //CSVデータの中で埋込日が異常な値をもつ行数を格納
 
         // CSV読み込み
         try (InputStream is = filePart.getInputStream();
-                InputStreamReader isr = new InputStreamReader(is, "utf-8");
+                InputStreamReader isr = new InputStreamReader(is, "utf-8"); //UTF-8
                 BufferedReader br = new BufferedReader(isr);) {
 
             String line;
             while ((line = br.readLine()) != null) {
                 String[] data = line.split(",");
 
-                //患者IDに数字以外に記号があれば除去
-                String patient_id = data[0];
-                String intStr_patient_id = patient_id.replaceAll("[^0-9]", "");
+                String errorDate = null; //埋込日入力エラーを格納する変数をnullにして準備
 
-                //CSVの埋込日をLocalDate型に変換
-                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/[]M/[]d");
-                LocalDate imp_date = LocalDate.parse(data[4], dtf);
+                //CSVで取り込むデータ数（項目数）が設定値（6個）以外の場合にエラーを返す。
+                String error = CsvValidator.validateItemNum(data, 6);
+                if (error != null && !errors.contains(error)) {
+                    errors.add(error);
+                } else if (error == null) {
+                    //CSVの入力項目数が正しい場合、埋込日が正しく入力されているか検証（正しく入力されていない場合はエラーリストに追加）
+                    String implantedDate = data[5];
+                    errorDate = CsvValidator.checkDate(implantedDate);
 
-                pdv = new PatientDeviceView(
-                        null,
-                        toNumber(intStr_patient_id),
-                        data[1].trim(),
-                        data[2].trim(),
-                        data[3].trim(),
-                        data[4].trim(),
-                        imp_date,
-                        LocalDate.now(),
-                        LocalDate.now(),
-                        AttributeConst.DEL_FLAG_FALSE.getIntegerValue());
-                pdv_list.add(pdv);
+                    if (errorDate != null) {
+                        errors.add(errorDate);
+                    } else {
+                        //入力値の形式が正しければCSVの埋込日データをLocalDate型に変換
+                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/[]M/[]d");
+                        impDate = LocalDate.parse(implantedDate, dtf);
+                    }
+                }
+
+                //エラーがなければ、PatientDeviceView（患者の体内デバイスView）をインスタンス化
+                if (errors.size() == 0) {
+                    //患者IDに数字以外に記号があれば除去（BOM排除）
+                    String patientId = data[0];
+                    String intStrPatientId = patientId.replaceAll("[^0-9]", "");
+
+                    //苗字と名前の空白が半角スペースの場合、全角に変換
+                    //患者名
+                    String patientName = data[1].trim();
+                    if (patientName != null) {
+                        patientName = toZenkakuSpace(patientName);
+                    }
+                    //患者名（ひらがな）
+                    String patientNameKana = data[2].trim();
+                    if (patientNameKana != null) {
+                        patientNameKana = toZenkakuSpace(patientNameKana);
+                    }
+
+                    pdv = new PatientDeviceView(
+                            null,
+                            toNumber(intStrPatientId),
+                            patientName,
+                            patientNameKana,
+                            data[3].trim(),
+                            data[4].trim(),
+                            impDate,
+                            LocalDate.now(),
+                            LocalDate.now(),
+                            AttributeConst.DEL_FLAG_FALSE.getIntegerValue());
+                    pdvList.add(pdv);
+                } else {
+                    //エラーがある場合、その行数をリストに追加
+                    if (error != null) {
+                        errLineNumList.add(lineNum);
+                    } else if (errorDate != null) {
+                        errLineDateList.add(lineNum);
+                    }
+                }
+                lineNum++;
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        putSessionScope(AttributeConst.PATIENT_DEVICE_LIST, pdv_list);
+        //エラーがあれば一覧画面に戻る
+        if (errors.size() > 0) {
+            putSessionScope(AttributeConst.ERR, errors); //エラーメッセージ
+            putSessionScope(AttributeConst.PATDEV_CSV_ERR_LINE, errLineNumList); // CSVの項目数異常によりエラーが起きたCSVファイルの行数
+            putSessionScope(AttributeConst.PATDEV_CSV_DATE_ERR_LINE, errLineDateList); //CSVデータの中で埋込日の値が異常値を示した行数
 
-        //csv取り込みデータ確認画面を表示
-        forward(ForwardConst.FW_PATDEV_CSV_CHECK);
+            redirect(ForwardConst.ACT_PATDEV, ForwardConst.CMD_INDEX);
+
+        } else if (errors.size() == 0) {
+
+            //エラーがなければ、CSVデータ確認画面に
+            putSessionScope(AttributeConst.PATIENT_DEVICE_LIST, pdvList);
+
+            //複数csv取り込みデータ確認画面を表示
+            forward(ForwardConst.FW_PATDEV_CSV_CHECK);
+        }
     }
 
     /**
@@ -440,17 +576,17 @@ public class PatientDeviceAction extends ActionBase {
     public void csvModify() throws ServletException, IOException {
 
         //セッションからcsvで取り込んだ体内デバイスデータリストを取得
-        List<PatientDeviceView> pdv_list = getSessionScope(AttributeConst.PATIENT_DEVICE_LIST);
+        List<PatientDeviceView> pdvList = getSessionScope(AttributeConst.PATIENT_DEVICE_LIST);
 
         //csvの取り込みをやめたいレコードのindex番号を取得
-        int index_num = toNumber(getRequestParam(AttributeConst.PATDEV_INDEX));
+        int indexNum = toNumber(getRequestParam(AttributeConst.PATDEV_INDEX));
 
         //データがある場合、セッションからcsvで取り込んだ体内デバイスリストを削除し、残ったデータリストをセッションに登録。
-        if (!(pdv_list == null)) {
+        if (!(pdvList == null)) {
             //index番号を指定して、csvの取り込みをやめたいレコードを削除
-            pdv_list.remove(index_num);
+            pdvList.remove(indexNum);
             removeSessionScope(AttributeConst.PATIENT_DEVICE_LIST);
-            putSessionScope(AttributeConst.PATIENT_DEVICE_LIST, pdv_list);
+            putSessionScope(AttributeConst.PATIENT_DEVICE_LIST, pdvList);
         }
 
         //csv取り込みデータ確認画面を表示
@@ -473,38 +609,40 @@ public class PatientDeviceAction extends ActionBase {
         }
 
         //セッションからcsvで取り込んだ体内デバイスデータリストを取得
-        ArrayList<PatientDeviceView> pdv_list = new ArrayList<>();
-        pdv_list = getSessionScope(AttributeConst.PATIENT_DEVICE_LIST);
+        ArrayList<PatientDeviceView> pdvList = new ArrayList<>();
+        pdvList = getSessionScope(AttributeConst.PATIENT_DEVICE_LIST);
 
         //リストに体内デバイスデータがない場合、CSV取り込みデータ確認画面に戻る。
-        if (pdv_list == null || pdv_list.isEmpty()) {
+        if (pdvList == null || pdvList.isEmpty()) {
             putRequestScope(AttributeConst.ERR, MessageConst.E_NODATA.getMessage());
             //csv取り込みデータ確認画面に戻る
             forward(ForwardConst.FW_PATDEV_CSV_CHECK);
+            return;
         } else {
 
-            ArrayList<PatientDeviceView> pdv_list_copy = new ArrayList<PatientDeviceView>(pdv_list);
+            ArrayList<PatientDeviceView> pdvListCopy = new ArrayList<PatientDeviceView>(pdvList);
 
             //リスト内の体内デバイスデータの項目値をバリデーションし、エラーがあれば、データ確認画面に戻る
-            Iterator<PatientDeviceView> patDev_it = pdv_list_copy.iterator();
-            while (patDev_it.hasNext()) {
-                PatientDeviceView pdv = (PatientDeviceView) patDev_it.next();
+            Iterator<PatientDeviceView> patDevIt = pdvListCopy.iterator();
+            while (patDevIt.hasNext()) {
+                PatientDeviceView pdv = (PatientDeviceView) patDevIt.next();
 
                 //添付文書情報を登録
                 List<String> errors = service.create(pdv, duplicateCheck);
 
                 if (errors.size() > 0) {
                     //登録中にエラーがあった場合
-                    putRequestScope(AttributeConst.PATDEV_ERR_PAT_NAME, pdv.getPatient_name()); //エラーが生じた患者名
+                    putRequestScope(AttributeConst.PATDEV_ERR_PAT_NAME, pdv.getPatientName()); //エラーが生じた患者名
                     putRequestScope(AttributeConst.ERR, errors); //エラーリスト
 
                     //csv取り込みデータ確認画面に戻る
                     forward(ForwardConst.FW_PATDEV_CSV_CHECK);
+                    return;
                 } else {
 
-                    pdv_list.remove(0);
+                    pdvList.remove(0);
                     removeSessionScope(AttributeConst.PATIENT_DEVICE_LIST);
-                    putSessionScope(AttributeConst.PATIENT_DEVICE_LIST, pdv_list);
+                    putSessionScope(AttributeConst.PATIENT_DEVICE_LIST, pdvList);
 
                     //重複チェックが解除されている(duplicateCheck = false)場合、次から重複チェックをする
                     duplicateCheck = true;
@@ -531,10 +669,10 @@ public class PatientDeviceAction extends ActionBase {
         int page = getPage();
 
         //検索フォームに入力された患者IDを取得
-        int patient_id = toNumber(getRequestParam(AttributeConst.PATDEV_PAT_ID));
+        int patientId = toNumber(getRequestParam(AttributeConst.PATDEV_PAT_ID));
 
         //患者IDを指定して、患者テーブルからその患者インスタンスを取得
-        Patient p = service.findPatient(patient_id);
+        Patient p = service.findPatient(patientId);
 
         //指定した患者がもつ体内デバイスのリストを取得
         List<PatientDevice> patientDevices = service.findAllPatDevbyPatient(p);
@@ -542,7 +680,7 @@ public class PatientDeviceAction extends ActionBase {
         List<PatientDeviceView> patientDevicesViews = PatientDeviceConverter.toViewList(patientDevices);
 
         //患者がもつデバイスデータの数を取得
-        long patientsDevicesCount = service.count_PatDev_byPatient_id(p);
+        long patientsDevicesCount = service.countPatDevByPatientId(p);
 
         putRequestScope(AttributeConst.PATIENT_DEVICES, patientDevicesViews); //取得した体内デバイスデータ
         putRequestScope(AttributeConst.PATDEV_COUNT, patientsDevicesCount); //体内デバイスデータの件数

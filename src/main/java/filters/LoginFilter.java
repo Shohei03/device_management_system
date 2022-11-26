@@ -99,6 +99,33 @@ public class LoginFilter implements Filter {
                     }
 
                 }
+                if (ev != null) {
+                    //ログイン済
+                    //管理者権限が一般の場合、登録・編集画面に入ろうとしたら、検索画面に移動。
+                    if (ev.getAdminFlag() == 0) {
+                        if (action.equals(ForwardConst.ACT_PACK.getValue())
+                                || action.equals(ForwardConst.ACT_PATDEV.getValue())
+                                || action.equals(ForwardConst.ACT_PATEXAM.getValue())
+                                || action.equals(ForwardConst.ACT_REGI_TOP.getValue())
+                                || action.equals(ForwardConst.ACT_EMP.getValue())) {
+                            //検索画面にリダイレクト
+                            ((HttpServletResponse) response).sendRedirect(
+                                    contextPath
+                                            + "?action=" + ForwardConst.ACT_SEARCHER.getValue()
+                                            + "&command=" + ForwardConst.CMD_SEARCH_BY_DEPARTMENT.getValue());
+                            return;
+                        }
+                    } else if (ev.getAdminFlag() == 1) {
+                        if (action.equals(ForwardConst.ACT_EMP.getValue())) {
+                            //検索画面にリダイレクト
+                            ((HttpServletResponse) response).sendRedirect(
+                                    contextPath
+                                            + "?action=" + ForwardConst.ACT_SEARCHER.getValue()
+                                            + "&command=" + ForwardConst.CMD_SEARCH_BY_DEPARTMENT.getValue());
+                            return;
+                        }
+                    }
+                }
             }
 
             //次のフィルタまたはサーブレットを呼び出し

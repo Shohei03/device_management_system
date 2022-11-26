@@ -56,10 +56,10 @@ public class PackageInsertAction extends ActionBase {
         List<PackageInsertView> packageInserts = service.getAllPerPage(page);
 
         //全添付文書データの件数を取得
-        long packageInserts_count = service.countAll();
+        long packageInsertsCount = service.countAll();
 
         putRequestScope(AttributeConst.PACKEGE_INSERTS, packageInserts); //取得した添付文書データ
-        putRequestScope(AttributeConst.PACK_COUNT, packageInserts_count); //全ての添付文書データの件数
+        putRequestScope(AttributeConst.PACK_COUNT, packageInsertsCount); //全ての添付文書データの件数
         putRequestScope(AttributeConst.PAGE, page); //ページ数
         putRequestScope(AttributeConst.MAX_ROW, JpaConst.ROW_PER_PAGE); //1ページに表示するレコードの数
 
@@ -77,17 +77,17 @@ public class PackageInsertAction extends ActionBase {
             removeSessionScope(AttributeConst.ERR);
         }
         //CSVファイルのエラー行数を格納した変数もセッションから削除する
-        List<Integer> err_line_num_list = getSessionScope(AttributeConst.PACK_CSV_ERR_LINE);
-        if (err_line_num_list != null) {
-            putRequestScope(AttributeConst.PACK_CSV_ERR_LINE, err_line_num_list);
+        List<Integer> errLineNumList = getSessionScope(AttributeConst.PACK_CSV_ERR_LINE);
+        if (errLineNumList != null) {
+            putRequestScope(AttributeConst.PACK_CSV_ERR_LINE, errLineNumList);
             removeSessionScope(AttributeConst.PACK_CSV_ERR_LINE);
         }
 
         //CSVファイルのエラー行数(検査の可否)を格納した変数もセッションから削除する
-        List<Integer> err_line_acceptability_list = getSessionScope(AttributeConst.PACK_CSV_ACCEPTABILITY_ERR_LINE);
-        if (err_line_acceptability_list != null) {
+        List<Integer> errLineAcceptabilityList = getSessionScope(AttributeConst.PACK_CSV_ACCEPTABILITY_ERR_LINE);
+        if (errLineAcceptabilityList != null) {
 
-            putRequestScope(AttributeConst.PACK_CSV_ACCEPTABILITY_ERR_LINE, err_line_acceptability_list);
+            putRequestScope(AttributeConst.PACK_CSV_ACCEPTABILITY_ERR_LINE, errLineAcceptabilityList);
             removeSessionScope(AttributeConst.PACK_CSV_ACCEPTABILITY_ERR_LINE);
         }
 
@@ -219,15 +219,15 @@ public class PackageInsertAction extends ActionBase {
 
             //入力された添付文書内容を設定する
             pv.setCreatedAt(toLocalDate(getRequestParam(AttributeConst.PACK_DATE)));
-            pv.setApproval_number(getRequestParam(AttributeConst.PACK_APP_NUM));
-            pv.setJMDN_code(getRequestParam(AttributeConst.PACK_JMDN));
-            pv.setGeneral_name(getRequestParam(AttributeConst.PACK_GENERAL_NAME));
-            pv.setDevice_name(getRequestParam(AttributeConst.PACK_DEV_NAME));
-            pv.setAcceptability_of_Manma_exam(getRequestParam(AttributeConst.PACK_Manma));
-            pv.setAcceptability_of_X_ray_exam(getRequestParam(AttributeConst.PACK_X_RAY));
-            pv.setAcceptability_of_CT_exam(getRequestParam(AttributeConst.PACK_CT));
-            pv.setAcceptability_of_TV_exam(getRequestParam(AttributeConst.PACK_TV));
-            pv.setAcceptability_of_MR_exam(getRequestParam(AttributeConst.PACK_MRI));
+            pv.setApprovalNumber(getRequestParam(AttributeConst.PACK_APP_NUM));
+            pv.setJmdnCode(getRequestParam(AttributeConst.PACK_JMDN));
+            pv.setGeneralName(getRequestParam(AttributeConst.PACK_GENERAL_NAME));
+            pv.setDeviceName(getRequestParam(AttributeConst.PACK_DEV_NAME));
+            pv.setAcceptabilityOfManmaExam(getRequestParam(AttributeConst.PACK_Manma));
+            pv.setAcceptabilityOfXrayExam(getRequestParam(AttributeConst.PACK_X_RAY));
+            pv.setAcceptabilityOfCtExam(getRequestParam(AttributeConst.PACK_CT));
+            pv.setAcceptabilityOfTvExam(getRequestParam(AttributeConst.PACK_TV));
+            pv.setAcceptabilityOfMrExam(getRequestParam(AttributeConst.PACK_MRI));
 
             //添付文書データを更新する
             List<String> errors = service.update(pv);
@@ -292,7 +292,7 @@ public class PackageInsertAction extends ActionBase {
             String[] data = line.split(",");
 
             //CSVで取り込むデータ数（項目数）が設定値（9個）以外の場合にエラーを返す。
-            String error = CsvValidator.validate_PACK(data);
+            String error = CsvValidator.validateItemNum(data, 9);
             if (error != null) {
                 errors.add(error);
             } else {
@@ -303,11 +303,11 @@ public class PackageInsertAction extends ActionBase {
                 tvAcceptability = data[7].trim();
                 mrAcceptability = data[8].trim();
 
-                String error_examAccept = PackageInsertValidator.validateAllExamAcceptability(manmaAcceptability,
+                String errorExamAccept = PackageInsertValidator.validateAllExamAcceptability(manmaAcceptability,
                         xRayAcceptability, ctAcceptability, tvAcceptability, mrAcceptability);
 
-                if (error_examAccept != null) {
-                    errors.add(error_examAccept);
+                if (errorExamAccept != null) {
+                    errors.add(errorExamAccept);
                 }
             }
 
@@ -377,18 +377,18 @@ public class PackageInsertAction extends ActionBase {
 
         //各検査の可否を示す入力変数を先に設定
         String manmaAcceptability = null; //乳腺検査の可否
-        String xRayAcceptability = null; //X線検査の可否
+        String xrayAcceptability = null; //X線検査の可否
         String ctAcceptability = null; //CT検査の可否
         String tvAcceptability = null; //X線TV検査の可否
         String mrAcceptability = null; //MR検査の可否
 
         PackageInsertView pv = null;
-        List<PackageInsertView> pv_list = new ArrayList<>();
+        List<PackageInsertView> pvList = new ArrayList<>();
 
         //CSVの取り込み行数を格納する変数を設定
-        int line_num = 1;
-        List<Integer> err_line_num_list = new ArrayList<>(); //CSVデータの中で項目数が異常なデータの行数を格納
-        List<Integer> err_line_acceptability_list = new ArrayList<>(); //CSVデータの中で検査の可否の値が異常な値をもつ行数を格納
+        int lineNum = 1;
+        List<Integer> errLineNumList = new ArrayList<>(); //CSVデータの中で項目数が異常なデータの行数を格納
+        List<Integer> errLineAcceptabilityList = new ArrayList<>(); //CSVデータの中で検査の可否の値が異常な値をもつ行数を格納
 
         // csv読み込み
         try (InputStream is = filePart.getInputStream();
@@ -403,25 +403,25 @@ public class PackageInsertAction extends ActionBase {
             while ((line = br.readLine()) != null) {
                 String[] data = line.split(",");
 
-                String error_examAccept = null; //検査の可否入力エラーを格納する変数をnullにして準備
+                String errorExamAccept = null; //検査の可否入力エラーを格納する変数をnullにして準備
 
                 //CSVで取り込むデータ数（項目数）が設定値（9個）以外の場合にエラーを返す。
-                String error = CsvValidator.validateMultiplePACK(data, line_num);
+                String error = CsvValidator.validateItemNum(data, 9);
                 if (error != null && !errors.contains(error)) {
                     errors.add(error);
                 } else if (error == null) {
                     //CSVの入力項目数が正しい場合、各検査の可否が正しく入力されているか検証（正しく入力されていない場合はエラーリストに追加）
                     manmaAcceptability = data[4].trim();
-                    xRayAcceptability = data[5].trim();
+                    xrayAcceptability = data[5].trim();
                     ctAcceptability = data[6].trim();
                     tvAcceptability = data[7].trim();
                     mrAcceptability = data[8].trim();
 
-                    error_examAccept = PackageInsertValidator.validateAllExamAcceptability(manmaAcceptability,
-                            xRayAcceptability, ctAcceptability, tvAcceptability, mrAcceptability);
+                    errorExamAccept = PackageInsertValidator.validateAllExamAcceptability(manmaAcceptability,
+                            xrayAcceptability, ctAcceptability, tvAcceptability, mrAcceptability);
 
-                    if (error_examAccept != null && !errors.contains(error_examAccept)) {
-                        errors.add(error_examAccept);
+                    if (errorExamAccept != null && !errors.contains(errorExamAccept)) {
+                        errors.add(errorExamAccept);
                     }
                 }
 
@@ -435,23 +435,23 @@ public class PackageInsertAction extends ActionBase {
                             data[2].trim(),
                             data[3].trim(),
                             manmaAcceptability,
-                            xRayAcceptability,
+                            xrayAcceptability,
                             ctAcceptability,
                             tvAcceptability,
                             mrAcceptability,
                             createdDay,
                             updatedDay,
                             AttributeConst.DEL_FLAG_FALSE.getIntegerValue());
-                    pv_list.add(pv);
+                    pvList.add(pv);
                 } else {
                     //エラーがある場合、その行数をリストに追加
                     if (error != null) {
-                        err_line_num_list.add(line_num);
-                    } else if (error_examAccept != null) {
-                        err_line_acceptability_list.add(line_num);
+                        errLineNumList.add(lineNum);
+                    } else if (errorExamAccept != null) {
+                        errLineAcceptabilityList.add(lineNum);
                     }
                 }
-                line_num++;
+                lineNum++;
             }
         } catch (
 
@@ -462,15 +462,15 @@ public class PackageInsertAction extends ActionBase {
         //エラーがあれば一覧画面に戻る
         if (errors.size() > 0) {
             putSessionScope(AttributeConst.ERR, errors); //エラーメッセージ
-            putSessionScope(AttributeConst.PACK_CSV_ERR_LINE, err_line_num_list); // CSVの項目数異常によりエラーが起きたCSVファイルの行数
-            putSessionScope(AttributeConst.PACK_CSV_ACCEPTABILITY_ERR_LINE, err_line_acceptability_list); //CSVデータの中で検査の可否の値が異常値を示した行数
+            putSessionScope(AttributeConst.PACK_CSV_ERR_LINE, errLineNumList); // CSVの項目数異常によりエラーが起きたCSVファイルの行数
+            putSessionScope(AttributeConst.PACK_CSV_ACCEPTABILITY_ERR_LINE, errLineAcceptabilityList); //CSVデータの中で検査の可否の値が異常値を示した行数
 
             redirect(ForwardConst.ACT_PACK, ForwardConst.CMD_INDEX);
 
         } else if (errors.size() == 0) {
 
             //エラーがなければ、CSVデータ確認画面に
-            putSessionScope(AttributeConst.PACKAGE_INSERT_LIST, pv_list);
+            putSessionScope(AttributeConst.PACKAGE_INSERT_LIST, pvList);
 
             //複数csv取り込みデータ確認画面を表示
             forward(ForwardConst.FW_PACK_CSV_CHECK);
@@ -486,17 +486,17 @@ public class PackageInsertAction extends ActionBase {
     public void csvModify() throws ServletException, IOException {
 
         //セッションからcsvで取り込んだ添付文書データリストを取得
-        List<PackageInsertView> pv_list = getSessionScope(AttributeConst.PACKAGE_INSERT_LIST);
+        List<PackageInsertView> pvList = getSessionScope(AttributeConst.PACKAGE_INSERT_LIST);
 
         //csvの取り込みをやめたいレコードのindex番号を取得
-        int index_num = toNumber(getRequestParam(AttributeConst.PACK_INDEX));
+        int indexNum = toNumber(getRequestParam(AttributeConst.PACK_INDEX));
 
         //データがある場合、セッションからcsvで取り込んだ添付文書リストを削除し、残ったデータリストをセッションに登録。
-        if (!(pv_list == null)) {
+        if (!(pvList == null)) {
             //index番号を指定して、csvの取り込みをやめたいレコードを削除
-            pv_list.remove(index_num);
+            pvList.remove(indexNum);
             removeSessionScope(AttributeConst.PACKAGE_INSERT_LIST);
-            putSessionScope(AttributeConst.PACKAGE_INSERT_LIST, pv_list);
+            putSessionScope(AttributeConst.PACKAGE_INSERT_LIST, pvList);
         }
 
         //csv取り込みデータ確認画面を表示
@@ -512,24 +512,24 @@ public class PackageInsertAction extends ActionBase {
     public void csvAllCreate() throws ServletException, IOException {
 
         //セッションからcsvで取り込んだ添付文書データリストを取得
-        List<PackageInsertView> pv_list = getSessionScope(AttributeConst.PACKAGE_INSERT_LIST);
+        List<PackageInsertView> pvList = getSessionScope(AttributeConst.PACKAGE_INSERT_LIST);
 
         //リストに添付文書データがない場合、CSV取り込みデータ確認画面に戻る。
-        if (pv_list == null) {
+        if (pvList == null) {
             putSessionScope(AttributeConst.ERR, MessageConst.E_NODATA.getMessage());
             //csv取り込みデータ確認画面に戻る
             forward(ForwardConst.FW_PACK_CSV_CHECK);
         }
 
         //リスト内の添付文書データの項目値をバリデーションし、エラーがあれば、データ確認画面に戻る
-        for (PackageInsertView pv : pv_list) {
+        for (PackageInsertView pv : pvList) {
 
             //添付文書情報を登録
             List<String> errors = service.create(pv);
 
             if (errors.size() > 0) {
                 //登録中にエラーがあった場合
-                putRequestScope(AttributeConst.PACK_ERR, pv.getDevice_name()); //エラーが生じた添付文章のデバイス名
+                putRequestScope(AttributeConst.PACK_ERR, pv.getDeviceName()); //エラーが生じた添付文章のデバイス名
                 putRequestScope(AttributeConst.ERR, errors); //エラーリスト
 
                 //csv取り込みデータ確認画面に戻る
@@ -580,13 +580,13 @@ public class PackageInsertAction extends ActionBase {
         int page = getPage();
 
         //検索フォームに入力された添付文書承認番号を取得
-        String approval_num = getRequestParam(AttributeConst.PACK_APP_NUM);
+        String approvalNum = getRequestParam(AttributeConst.PACK_APP_NUM);
 
         //指定した添付文書承認番号の件数を取得
-        long count = service.countByAapproval_number(approval_num);
+        long count = service.countByAapprovalNumber(approvalNum);
 
         //添付文書承認番号を指定して、添付文書テーブルからそのインスタンスを取得
-        PackageInsert pi = service.findPackageInsertByAppNum(approval_num);
+        PackageInsert pi = service.findPackageInsertByAppNum(approvalNum);
 
         //View（表示用）に変換
         PackageInsertView piv = PackageInsertConverter.toView(pi);

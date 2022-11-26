@@ -73,13 +73,13 @@ public class PatientExamination {
      * 検査日
      */
     @Column(name = JpaConst.PAT_EXAM_COL_EXAM_DATE, nullable = false)
-    private LocalDate examination_date;
+    private LocalDate examinationDate;
 
     /**
      * 予約時間
      */
     @Column(name = JpaConst.PAT_EXAM_COL_RESERVATION_TIME)
-    private LocalTime reservation_time;
+    private LocalTime reservationTime;
 
     /**
      * 登録日

@@ -26,32 +26,32 @@ public class SearchPatientDeviceView {
     /**
      * 患者ID
      */
-    private Integer patient_id;
+    private Integer patientId;
 
     /**
      * 患者名
      */
-    private String patient_name;
+    private String patientName;
 
     /**
      * 患者名（ひらがな）
      */
-    private String patient_name_kana;
+    private String patientNameKana;
 
     /**
      * 添付文書（機器）承認番号
      */
-    private String approval_number;
+    private String approvalNumber;
 
     /**
      * 一般的名称
      */
-    private String general_name;
+    private String generalName;
 
     /**
      * デバイスの販売名
      */
-    private String device_name;
+    private String deviceName;
 
     /**
      * 埋込日
@@ -61,27 +61,27 @@ public class SearchPatientDeviceView {
     /**
      * 乳腺X線検査の可否
      */
-    private String acceptability_of_Manma_exam;
+    private String acceptabilityOfManmaExam;
 
     /**
      * 一般（X線）検査の可否
      */
-    private String acceptability_of_X_ray_exam;
+    private String acceptabilityOfXrayExam;
 
     /**
      * CT検査の可否
      */
-    private String acceptability_of_CT_exam;
+    private String acceptabilityOfCtExam;
 
     /**
      * TV検査の可否
      */
-    private String acceptability_of_TV_exam;
+    private String acceptabilityOfTvExam;
 
     /**
      * MRI検査の可否
      */
-    private String acceptability_of_MR_exam;
+    private String acceptabilityOfMrExam;
 
 
 }

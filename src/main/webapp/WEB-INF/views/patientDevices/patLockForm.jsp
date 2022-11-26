@@ -12,10 +12,10 @@
                 <form method="POST" action="<c:url value='?action=${actPatDev}&command=${commCre}' />" >
                     <input type="hidden" name="${AttributeConst.PATDEV_DUPLICATE_CHECK.getValue()}" value="false" />
                     <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}" />
-                    <input type="hidden" name="${AttributeConst.PATDEV_PAT_ID.getValue()}" value="${patientDevice.patient_id}" />
-                    <input type="hidden" name="${AttributeConst.PATDEV_PAT_NAME.getValue()}" value="${patientDevice.patient_name}" />
-                    <input type="hidden" name="${AttributeConst.PATDEV_APP_NUM.getValue()}" value="${patientDevice.approval_number}" />
-                    <input type="hidden" name="${AttributeConst.PATDEV_DEV_NAME.getValue()}" value="${patientDevice.device_name}" />
+                    <input type="hidden" name="${AttributeConst.PATDEV_PAT_ID.getValue()}" value="${patientDevice.patientId}" />
+                    <input type="hidden" name="${AttributeConst.PATDEV_PAT_NAME.getValue()}" value="${patientDevice.patientName}" />
+                    <input type="hidden" name="${AttributeConst.PATDEV_APP_NUM.getValue()}" value="${patientDevice.approvalNumber}" />
+                    <input type="hidden" name="${AttributeConst.PATDEV_DEV_NAME.getValue()}" value="${patientDevice.deviceName}" />
                     <input type="hidden" name="${AttributeConst.PATDEV_IMP_DATE.getValue()}" value="${patientDevice.implantedAt}" />
                     <input type="hidden" name="${AttributeConst.PATDEV_ID.getValue()}" value="${patientDevice.id}" />
                     <button type="submit">重複登録</button>
@@ -26,19 +26,19 @@
 </c:if>
 
 <label for="${AttributeConst.PATDEV_PAT_ID.getValue()}">患者ID</label><br />
-<input type="text" name="${AttributeConst.PATDEV_PAT_ID.getValue()}" id="${AttributeConst.PATDEV_PAT_ID.getValue()}" value="${patientDevice.patient_id}" readonly/>
+<input type="text" name="${AttributeConst.PATDEV_PAT_ID.getValue()}" id="${AttributeConst.PATDEV_PAT_ID.getValue()}" value="${patientDevice.patientId}" readonly/>
 <br /><br />
 
 <label for="${AttributeConst.PATDEV_PAT_NAME.getValue()}">患者名</label><br />
-<input type="text" name="${AttributeConst.PATDEV_PAT_NAME.getValue()}" id="${AttributeConst.PATDEV_PAT_NAME.getValue()}" value="${patientDevice.patient_name}" readonly/>
+<input type="text" name="${AttributeConst.PATDEV_PAT_NAME.getValue()}" id="${AttributeConst.PATDEV_PAT_NAME.getValue()}" value="${patientDevice.patientName}" readonly/>
 <br /><br />
 
 <label for="${AttributeConst.PATDEV_APP_NUM.getValue()}">デバイスの添付文書承認番号</label><br />
-<input type="text" name="${AttributeConst.PATDEV_APP_NUM.getValue()}" id="${AttributeConst.PATDEV_APP_NUM.getValue()}" value="${patientDevice.approval_number}" />
+<input type="text" name="${AttributeConst.PATDEV_APP_NUM.getValue()}" id="${AttributeConst.PATDEV_APP_NUM.getValue()}" value="${patientDevice.approvalNumber}" />
 <br /><br />
 
 <label for="${AttributeConst.PATDEV_DEV_NAME.getValue()}">デバイスの販売名</label><br />
-<input type="text" name="${AttributeConst.PATDEV_DEV_NAME.getValue()}" id="${AttributeConst.PATDEV_DEV_NAME.getValue()}" value="${patientDevice.device_name}" />
+<input type="text" name="${AttributeConst.PATDEV_DEV_NAME.getValue()}" id="${AttributeConst.PATDEV_DEV_NAME.getValue()}" value="${patientDevice.deviceName}" />
 <br /><br />
 
 <label for="${AttributeConst.PATDEV_IMP_DATE.getValue()}">デバイスの埋込日</label><br />

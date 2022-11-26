@@ -18,7 +18,7 @@
                 登録内容にエラーがあります。<br />
             <c:forEach var="error" items="${errors}">
                 ・<c:out value="${error}" /><br />
-                <c:out value="${err_patient_name}" />
+                <c:out value="${errPatientName}" /><br />
                 <c:if test="${error == MessageConst.E_DUPLI_DATA.getMessage()}">
                     <c:set var="duplica" value="${MessageConst.E_DUPLI_DATA.getMessage()}" />
                 </c:if>
@@ -26,35 +26,36 @@
             <c:if test="${duplica == MessageConst.E_DUPLI_DATA.getMessage()}">
                 <form method="POST" action="<c:url value='?action=${actPatExam}&command=${commCSVAllcreate}' />" >
                     <input type="hidden" name="${AttributeConst.PATEXAM_DUPLICATE_CHECK.getValue()}" value="false" />
-                    <button type="submit">重複登録</button>
+                    <button type="submit">重複登録</button><br /><br />
+                    ※他にエラーがある場合は重複登録を押しても反映されません。
                 </form>
             </c:if>
             </div>
         </c:if>
 
         <h2>取り込みデータ一覧</h2>
-        <table id="patExam_csv_list">
+        <table id="patExam_csvList">
             <tbody>
                 <tr>
-                    <th class="patientExam_exam_item">検査項目</th>
-                    <th class="patientExam_examination_date">検査日</th>
-                    <th class="patientExam_reservation_time">予約時間</th>
-                    <th class="patientExam_patient_id">患者ID</th>
-                    <th class="patientExam_ptient_name">患者名</th>
-                    <th class="patientDeviec_action">取り込まない</th>
+                    <th class="${AttributeConst.PATEXAM_EXAM_ITEM.getValue()}">検査項目</th>
+                    <th class="${AttributeConst.PATEXAM_EXAM_DATE.getValue()}">検査日</th>
+                    <th class="${AttributeConst.PATEXAM_RESERVATION_TIME.getValue()}">予約時間</th>
+                    <th class="${AttributeConst.PATEXAM_PAT_ID.getValue()}">患者ID</th>
+                    <th class="${AttributeConst.PATEXAM_PAT_NAME.getValue()}">患者名</th>
+                    <th class="patientDeviecAction">取り込まない</th>
                 </tr>
 
                 <c:forEach var="patientExamination" items="${sessionScope.patientExaminations}" varStatus="status">
                     <tr class="row${status.count % 2}">
-                        <fmt:parseDate value="${patientExamination.reservation_time}" pattern='HH:mm' var='reservationTime' type='time' />
-                        <fmt:parseDate value="${patientExamination.examination_date}" pattern='yyyy-MM-dd' var='examDay' type='date' />
+                        <fmt:parseDate value="${patientExamination.reservationTime}" pattern='HH:mm' var='reservationTime' type='time' />
+                        <fmt:parseDate value="${patientExamination.examinationDate}" pattern='yyyy-MM-dd' var='examDay' type='date' />
 
-                        <td class="patientExam_exam_item"><c:out value="${patientExamination.examination_item}" /></td>
-                        <td class="patientExam_examination_date"><fmt:formatDate value="${examDay}" pattern="yyyy-MM-dd" /></td>
-                        <td class="patientExam_reservation_time"><fmt:formatDate value='${reservationTime}' pattern='HH:mm' /></td>
-                        <td class="patientExam_patient_id"><c:out value="${patientExamination.patient_id}" /></td>
-                        <td class="patientExam_patient_name"><c:out value="${patientExamination.patient_name}" /></td>
-                        <td class="patDev_delete"><a href="<c:url value='?action=${actPatExam}&command=${commCSVMODI}&index_num=${status.index}' />">取消</a></td>
+                        <td class="${AttributeConst.PATEXAM_EXAM_ITEM.getValue()}"><c:out value="${patientExamination.examinationItem}" /></td>
+                        <td class="${AttributeConst.PATEXAM_EXAM_DATE.getValue()}"><fmt:formatDate value="${examDay}" pattern="yyyy-MM-dd" /></td>
+                        <td class="${AttributeConst.PATEXAM_RESERVATION_TIME.getValue()}"><fmt:formatDate value='${reservationTime}' pattern='HH:mm' /></td>
+                        <td class="${AttributeConst.PATEXAM_PAT_ID.getValue()}"><c:out value="${patientExamination.patientId}" /></td>
+                        <td class="${AttributeConst.PATEXAM_PAT_NAME.getValue()}"><c:out value="${patientExamination.patientName}" /></td>
+                        <td class="patientDeviecAction"><a href="<c:url value='?action=${actPatExam}&command=${commCSVMODI}&index_num=${status.index}' />">取消</a></td>
                     </tr>
                 </c:forEach>
             </tbody>

@@ -1,7 +1,6 @@
 package services;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import actions.views.PatientConverter;
@@ -26,12 +25,12 @@ public class PatientDeviceService extends ServiceBase {
      * @param page ページ数
      */
     public List<SearchPatientDeviceView> getDevAndPackPerPage(int page) {
-        List<PatientDevice> pd_list = em.createNamedQuery(JpaConst.Q_PAT_DEV_GET_ALL, PatientDevice.class)
+        List<PatientDevice> pdList = em.createNamedQuery(JpaConst.Q_PAT_DEV_GET_ALL, PatientDevice.class)
                 .setFirstResult(JpaConst.ROW_PER_PAGE * (page - 1))
                 .setMaxResults(JpaConst.ROW_PER_PAGE)
                 .getResultList();
 
-        return SearchConverter.toViewList(pd_list);
+        return SearchConverter.toViewList(pdList);
 
     }
 
@@ -41,12 +40,12 @@ public class PatientDeviceService extends ServiceBase {
      * @return 一覧画面に表示するデータのリスト
      */
     public List<PatientDeviceView> getAllPerPage(int page) {
-        List<PatientDevice> patientDevice_list = em.createNamedQuery(JpaConst.Q_PAT_DEV_GET_ALL, PatientDevice.class)
+        List<PatientDevice> patientDeviceList = em.createNamedQuery(JpaConst.Q_PAT_DEV_GET_ALL, PatientDevice.class)
                 .setFirstResult(JpaConst.ROW_PER_PAGE * (page - 1))
                 .setMaxResults(JpaConst.ROW_PER_PAGE)
                 .getResultList();
 
-        return PatientDeviceConverter.toViewList(patientDevice_list);
+        return PatientDeviceConverter.toViewList(patientDeviceList);
     }
 
     /**
@@ -54,9 +53,9 @@ public class PatientDeviceService extends ServiceBase {
      * @return 体内デバイスデータの件数
      */
     public long countAll() {
-        long patient_device_count = (long) em.createNamedQuery(JpaConst.Q_PAT_DEV_COUNT, Long.class).getSingleResult();
+        long patientDeviceCount = (long) em.createNamedQuery(JpaConst.Q_PAT_DEV_COUNT, Long.class).getSingleResult();
 
-        return patient_device_count;
+        return patientDeviceCount;
     }
 
     /**
@@ -84,7 +83,7 @@ public class PatientDeviceService extends ServiceBase {
      * @param pat Patient 患者インスタンス
      * @return 該当するデータの件数
      */
-    public long count_PatDev_byPatient_id(Patient pat) {
+    public long countPatDevByPatientId(Patient pat) {
 
         //指定した体内デバイスの件数を取得する
         long patientDeviceCount = (long) em.createNamedQuery(JpaConst.Q_PAT_DEV_COUNT_REGISTEREDBY_PAT, Long.class)
@@ -95,73 +94,46 @@ public class PatientDeviceService extends ServiceBase {
     }
 
     /**
-     * PatientDevice（体内デバイス）テーブルから、引数で指定した患者インスタンスのレコードを1件だけ取得。
-     * @param pat Patient 患者インスタンス
-     * return 指定した患者インスタンス（患者ID）をもつpatientDeviceインスタンス
-     */
-    public PatientDevice findPatDev(Patient pat) {
-        PatientDevice patDev = null;
-
-        if (count_PatDev_byPatient_id(pat) > 0) {
-            if (count_PatDev_byPatient_id(pat) == 1) {
-                patDev = (PatientDevice) em
-                        .createNamedQuery(JpaConst.Q_PAT_DEV_GET_MINE_REGISTEREDBY_PAT, PatientDevice.class)
-                        .setParameter(JpaConst.JPQL_PARM_PATIENT, pat)
-                        .getSingleResult();
-                //体内デバイステーブルに重複レコードありの場合（同じ患者が体内金属を埋め込んでいる）
-            } else if (count_PatDev_byPatient_id(pat) > 1) {
-                List<PatientDevice> patDev_list = new ArrayList<>();
-                patDev_list = em.createNamedQuery(JpaConst.Q_PAT_DEV_GET_MINE_REGISTEREDBY_PAT, PatientDevice.class)
-                        .setParameter(JpaConst.JPQL_PARM_PATIENT, pat)
-                        .getResultList();
-                patDev = patDev_list.get(0);
-            }
-            return patDev;
-        }
-        return patDev;
-    }
-
-    /**
      * PatientDevice（体内デバイス）テーブルから、引数で指定した患者のデバイスインスタンスのレコードを取得。
      * @param pat Patient 患者インスタンス
      * return 指定した患者インスタンス（患者ID）をもつpatientDeviceインスタンス
      */
     public List<PatientDevice> findAllPatDevbyPatient(Patient pat) {
 
-        List<PatientDevice> patDev_list = null;
+        List<PatientDevice> patDevList = null;
 
-        patDev_list = em.createNamedQuery(JpaConst.Q_PAT_DEV_GET_MINE_REGISTEREDBY_PAT, PatientDevice.class)
+        patDevList = em.createNamedQuery(JpaConst.Q_PAT_DEV_GET_MINE_REGISTEREDBY_PAT, PatientDevice.class)
                 .setParameter(JpaConst.JPQL_PARM_PATIENT, pat)
                 .getResultList();
 
-        return patDev_list;
+        return patDevList;
     }
 
     /**
      * Patient(患者)テーブルから、引数で指定した患者IDのレコード数を取得し、返却する
-     * @param patient_id 患者ID
+     * @param patientId 患者ID
      * @return 該当するデータの件数
      */
-    public long countByPatient_id(int patient_id) {
+    public long countByPatientId(int patientId) {
 
         //指定した患者IDの件数を取得する
-        long patient_id_count = (long) em.createNamedQuery(JpaConst.Q_PAT_COUNT_REGISTEREDBY_PAT_ID, Long.class)
-                .setParameter(JpaConst.JPQL_PARM_PAT_ID, patient_id)
+        long patientIdCount = (long) em.createNamedQuery(JpaConst.Q_PAT_COUNT_REGISTEREDBY_PAT_ID, Long.class)
+                .setParameter(JpaConst.JPQL_PARM_PAT_ID, patientId)
                 .getSingleResult();
 
-        return patient_id_count;
+        return patientIdCount;
     }
 
     /**
      * Patient(患者)テーブルから、引数で指定した患者IDのレコードを取得。
-     * @param patient_id 患者id
+     * @param patientId 患者id
      * return 指定した患者IDをもつpatientインスタンス
      */
-    public Patient findPatient(int patient_id) {
-        if (countByPatient_id(patient_id) > 0) {
+    public Patient findPatient(int patientId) {
+        if (countByPatientId(patientId) > 0) {
 
             Patient pat = (Patient) em.createNamedQuery(JpaConst.Q_PAT_GET_MINE_REGISTEREDBY_PAT_ID, Patient.class)
-                    .setParameter(JpaConst.JPQL_PARM_PAT_ID, patient_id)
+                    .setParameter(JpaConst.JPQL_PARM_PAT_ID, patientId)
                     .getSingleResult();
 
             return pat;
@@ -176,10 +148,10 @@ public class PatientDeviceService extends ServiceBase {
      */
     public List<String> create(PatientDeviceView pdv, Boolean duplicateCheck) {
 
-        PackageInsertService pack_service = new PackageInsertService();
+        PackageInsertService packService = new PackageInsertService();
 
         //各項目の値を検証
-        List<String> errors = PatientDeviceValidator.validate(pack_service, this, pdv, false, duplicateCheck);
+        List<String> errors = PatientDeviceValidator.validate(packService, this, pdv, false, duplicateCheck);
 
         //バリデーションエラーがなければデータを登録する
         if (errors.size() == 0) {
@@ -191,7 +163,7 @@ public class PatientDeviceService extends ServiceBase {
             //患者デバイステーブルと患者テーブルにデータを登録する。
             //体内デバイステーブルの患者情報（患者IDと患者名）は重複するため、患者テーブルの患者IDコードに一意制約を設け、リレーションを組んでいる。
             //まず、患者テーブルに、これから登録する患者IDが存在していないか確認。存在している場合は登録しない。
-            if (!(countByPatient_id(pdv.getPatient_id()) > 0)) {
+            if (!(countByPatientId(pdv.getPatientId()) > 0)) {
                 createInternalPatient(pdv);
             }
             createInternalPatDevice(pdv);
@@ -209,18 +181,18 @@ public class PatientDeviceService extends ServiceBase {
     public List<String> update(PatientDeviceView pdv, Boolean duplicateCheck) {
         PatientDeviceView savedPdv = findOne(pdv.getId());
 
-        savedPdv.setApproval_number(pdv.getApproval_number());
-        savedPdv.setDevice_name(pdv.getDevice_name());
+        savedPdv.setApprovalNumber(pdv.getApprovalNumber());
+        savedPdv.setDeviceName(pdv.getDeviceName());
         savedPdv.setImplantedAt(pdv.getImplantedAt());
 
         //更新日に現在の日付を設定する
         LocalDate today = LocalDate.now();
         savedPdv.setUpdatedAt(today);
 
-        PackageInsertService pack_service = new PackageInsertService();
+        PackageInsertService packService = new PackageInsertService();
 
         //バリデーションを行う
-        List<String> errors = PatientDeviceValidator.validate(pack_service, this, savedPdv, false, duplicateCheck);
+        List<String> errors = PatientDeviceValidator.validate(packService, this, savedPdv, false, duplicateCheck);
 
         //エラーがなければ更新
         if (errors.size() == 0) {

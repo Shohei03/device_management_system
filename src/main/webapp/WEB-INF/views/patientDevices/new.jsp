@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="constants.ForwardConst" %>
+<%@ page import="constants.MessageConst"%>
+<%@ page import="constants.AttributeConst"%>
 
 <c:set var="actPatDev" value="${ForwardConst.ACT_PATDEV.getValue()}" />
 <c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
@@ -20,10 +22,28 @@
         </form>
         <br /><br />
 
-        <form method="POST" action="<c:url value='?action=${actPatDev}&command=${commCheck}' />">
-            <c:import url="_form.jsp" />
-            <button type="submit">確認</button>
-        </form>
+        <c:forEach var="error" items="${errors}">
+            <c:if test="${error == MessageConst.E_DUPLI_DATA.getMessage()}">
+                <c:set var="duplica" value="${MessageConst.E_DUPLI_DATA.getMessage()}" />
+            </c:if>
+        </c:forEach>
+
+        <c:choose>
+            <c:when test="${duplica == MessageConst.E_DUPLI_DATA.getMessage()}">
+                <form method="POST" action="<c:url value='?action=${actPatDev}&command=${commCrt}' />">
+                    <c:import url="_form.jsp" />
+                    <input type="hidden" name="${AttributeConst.PATDEV_DUPLICATE_CHECK.getValue()}" value="false" />
+                    <button type="submit">登録</button>
+                </form>
+            </c:when>
+            <c:otherwise>
+                <form method="POST" action="<c:url value='?action=${actPatDev}&command=${commCheck}' />">
+                    <c:import url="_form.jsp" />
+
+                    <button type="submit">確認</button>
+                </form>
+            </c:otherwise>
+        </c:choose>
 
         <p><a href="<c:url value='?action=${actPatDev}&command=${commIdx}' />">体内デバイス一覧に戻る</a></p>
     </c:param>

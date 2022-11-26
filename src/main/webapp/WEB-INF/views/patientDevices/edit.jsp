@@ -13,7 +13,7 @@
 
         <h2>体内デバイス 編集ページ</h2>
         <form method="POST" action="<c:url value='?action=${actPatDev}&command=${commUpd}' />">
-            <c:import url="pat_lock_form.jsp" />
+            <c:import url="patLockForm.jsp" />
         </form>
 
         <p>

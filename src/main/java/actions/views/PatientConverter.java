@@ -17,7 +17,7 @@ public class PatientConverter {
      */
     public static Patient toModel(PatientDeviceView pdv) {
 
-        Patient pat = new Patient(null, pdv.getPatient_id(), pdv.getPatient_name(), null);
+        Patient pat = new Patient(null, pdv.getPatientId(), pdv.getPatientName(), null);
         return pat;
     }
 
@@ -26,26 +26,21 @@ public class PatientConverter {
      * @param pdv PatientDeviceViewのインスタンス
      * @return pt Patientのインスタンス
      */
-    public static Patient toModel_FROM_PAT(int patient_id) {
+    public static Patient toModelFromPat(int patientId) {
         PatientDeviceService service = new PatientDeviceService();
 
-        return service.findPatient(patient_id);
+        return service.findPatient(patientId);
     }
-
-
 
     /**
      * PatientExaminationViewのインスタンスからPatientのDTOモデルのインスタンスを作成する
      * @pev PatientExaminationViewのインスタンス
      * @return pat Patientのインスタンス
      */
-    public static  Patient toModel_from_PatExamV(PatientExaminationView pev) {
+    public static Patient toModelFromPatExamV(PatientExaminationView pev) {
 
-        Patient pat = new Patient(null, pev.getPatient_id(), pev.getPatient_name(), pev.getPatient_name_kana());
+        Patient pat = new Patient(null, pev.getPatientId(), pev.getPatientName(), pev.getPatientNameKana());
         return pat;
     }
-
-
-
 
 }

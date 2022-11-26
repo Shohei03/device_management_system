@@ -8,7 +8,7 @@ import services.PackageInsertService;
 * 添付文書データのJMDN DTOモデル⇔PackageInsertViewモデルの変換を行うクラス
 *
 */
-public class JMDNConverter {
+public class JmdnConverter {
     /**
      * ViewモデルのインスタンスからJMDNのDTOモデルのインスタンスを作成する
      * @param pv PackageInsertViewのインスタンス
@@ -16,7 +16,7 @@ public class JMDNConverter {
      */
     public static Jmdn toModel(PackageInsertView pv) {
 
-        Jmdn j = new Jmdn(null, pv.getJMDN_code(), pv.getGeneral_name());
+        Jmdn j = new Jmdn(null, pv.getJmdnCode(), pv.getGeneralName());
 
         return j;
 
@@ -28,11 +28,11 @@ public class JMDNConverter {
      * @return
      */
 
-    public static Jmdn toModel_FROM_PACK(PackageInsertView pv) {
+    public static Jmdn toModelFromPack(PackageInsertView pv) {
 
         PackageInsertService service = new PackageInsertService();
 
-        return service.findJMDN(pv.getJMDN_code());
+        return service.findJmdn(pv.getJmdnCode());
 
     }
 
@@ -41,8 +41,8 @@ public class JMDNConverter {
      * @param j DTOモデル(コピー先)
      * @param pv Viewモデル(コピー元)
      */
-    public static void copyViewToModel_general_name(Jmdn j, PackageInsertView pv) {
-        j.setGeneral_name(pv.getGeneral_name());
+    public static void copyViewToModelGeneralName(Jmdn j, PackageInsertView pv) {
+        j.setGeneralName(pv.getGeneralName());
     }
 
 }

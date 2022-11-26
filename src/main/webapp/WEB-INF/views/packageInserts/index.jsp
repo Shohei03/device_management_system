@@ -7,7 +7,7 @@
 
 <c:set var="actPack" value="${ForwardConst.ACT_PACK.getValue()}" />
 <c:set var="actSearcher" value="${ForwardConst.ACT_SEARCHER.getValue()}" />
-<c:set var="actRegi_top" value="${ForwardConst.ACT_REGI_TOP.getValue()}" />
+<c:set var="actRegiTop" value="${ForwardConst.ACT_REGI_TOP.getValue()}" />
 <c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
 <c:set var="commShow" value="${ForwardConst.CMD_SHOW.getValue()}" />
 <c:set var="commNew" value="${ForwardConst.CMD_NEW.getValue()}" />
@@ -44,7 +44,7 @@
         </c:if>
 
         <h2>添付文書一覧</h2>
-        <div id="search_appNum">
+        <div id="searchAppNum">
             <form  method="POST" action="<c:url value='?action=${actPack}&command=${commSearchByAppNum}' />">
                 <label for="${AttributeConst.PACK_APP_NUM.getValue()}">添付文書承認番号で検索</label><br />
                 <input type="text" name="${AttributeConst.PACK_APP_NUM.getValue()}" id="${AttributeConst.PACK_APP_NUM.getValue()}" />
@@ -52,6 +52,7 @@
             </form>
         </div>
 
+        <p><a href="<c:url value='?action=${actPack}&command=${commNew}' />">新規添付文書の登録</a></p>
 
         <form enctype="multipart/form-data" method="POST" action="<c:url value='?action=${actPack}&command=${commCSVAllImp}' />" >
             <p>複数データCSV読込
@@ -62,19 +63,19 @@
 
 
 
-        <table id="package_insert_list">
+        <table id="packageInsertList">
             <tbody>
                 <tr>
-                    <th class="packgeInsert_general_name">一般的名称</th>
-                    <th class="packgeInsert_device_name">デバイス名</th>
-                    <th class="packgeInsert_action">詳細</th>
+                    <th class="${AttributeConst.PACK_GENERAL_NAME.getValue()}">一般的名称</th>
+                    <th class="${AttributeConst.PACK_DEV_NAME.getValue()}">デバイス名</th>
+                    <th class="packgeInsertAction">詳細</th>
                 </tr>
                 <c:forEach var="packageInsert" items="${packageInserts}" varStatus="status">
 
                     <tr class="row${status.count % 2}">
-                        <td class="packgeInsert_general_name"><c:out value="${packageInsert.general_name}" /></td>
-                        <td class="packgeInsert_device_name"><c:out value="${packageInsert.device_name}" /></td>
-                        <td class="packgeInsert_action"><a href="<c:url value='?action=${actPack}&command=${commShow}&id=${packageInsert.id}' />">詳細を見る</a></td>
+                        <td class="${AttributeConst.PACK_GENERAL_NAME.getValue()}"><c:out value="${packageInsert.generalName}" /></td>
+                        <td class="${AttributeConst.PACK_DEV_NAME.getValue()}"><c:out value="${packageInsert.deviceName}" /></td>
+                        <td class="packgeInsertAction"><a href="<c:url value='?action=${actPack}&command=${commShow}&id=${packageInsert.id}' />">詳細を見る</a></td>
                     </tr>
                 </c:forEach>
             </tbody>
@@ -82,7 +83,7 @@
 
         <div id="pagination">
             （全 ${packageInsertsCount} 件）<br />
-            <c:forEach var="i" begin="1" end="${((packageInserts_count - 1) / maxRow) + 1}" step="1">
+            <c:forEach var="i" begin="1" end="${((packageInsertsCount - 1) / maxRow) + 1}" step="1">
                 <c:choose>
                     <c:when test="${i == page}">
                         <c:out value="${i}" />&nbsp;
@@ -94,7 +95,6 @@
             </c:forEach>
         </div>
 
-        <p><a href="<c:url value='?action=${actPack}&command=${commNew}' />">添付文書の登録</a></p>
         <p><a href="<c:url value='?action=${actSearch}&command=${commIdx}' />">検索画面に移動</a></p>
 
     </c:param>

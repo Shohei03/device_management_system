@@ -30,8 +30,8 @@
             <c:when test="${duplica == MessageConst.E_DUPLI_DATA.getMessage()}">
                 <form method="POST" action="<c:url value='?action=${actPatExam}&command=${commCrt}' />">
                     <c:import url="_form.jsp" />
-                    <input type="text" name="${AttributeConst.PATEXAM_DUPLICATE_CHECK.getValue()}" value="false" />
-                    <button type="submit">重複登録</button>
+                    <input type="hidden" name="${AttributeConst.PATEXAM_DUPLICATE_CHECK.getValue()}" value="false" />
+                    <button type="submit">登録</button>
                 </form>
             </c:when>
             <c:otherwise>

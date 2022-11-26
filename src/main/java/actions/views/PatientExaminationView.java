@@ -26,32 +26,32 @@ public class PatientExaminationView {
     /**
      * 患者ID
      */
-    private Integer patient_id;
+    private Integer patientId;
 
     /**
      * 患者名
      */
-    private String patient_name;
+    private String patientName;
 
     /**
      * 患者名（ひらがな）
      */
-    private String patient_name_kana;
+    private String patientNameKana;
 
     /**
      * 検査項目
      */
-    private String examination_item;
+    private String examinationItem;
 
     /**
      * 検査日
      */
-    private LocalDate examination_date;
+    private LocalDate examinationDate;
 
     /**
      * 検査の予約時間
      */
-    private LocalTime reservation_time;
+    private LocalTime reservationTime;
 
     /**
      * 登録日

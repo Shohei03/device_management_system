@@ -47,18 +47,18 @@ public class Patient {
      * 患者ID
      */
     @Column(name = JpaConst.PAT_COL_PAT_ID, unique = true, nullable = false)
-    private Integer patient_id;
+    private Integer patientId;
 
     /**
      * 患者名
      */
     @Column(name = JpaConst.PAT_COL_PAT_NAME, nullable = false)
-    private String patient_name;
+    private String patientName;
 
     /**
      * 患者名（ひらがな）
      */
     @Column(name = JpaConst.PAT_COL_PAT_NAME_KANA, nullable = true)
-    private String patient_name_kana;
+    private String patientNameKana;
 
 }

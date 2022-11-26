@@ -92,12 +92,12 @@ button {
     background-color: #f8d7da;
 }
 
-table#employee_list th {
+table#employeeList th {
     width: 30%;
     padding: 10px 2%;
 }
 
-table#employee_list td {
+table#employeeList td {
     width: 29%;
     padding: 10px 2%;
 }
@@ -114,14 +114,14 @@ select {
     height: 30px;
 }
 
-#header_menu {
+#headerMenu {
     width: 57%;
     padding-top: 17px;
     padding-left: 3%;
     display: inline-block;
 }
 
-#employee_name {
+#employeeName {
     color: #cccccc;
     width: 36%;
     padding-right: 3%;
@@ -137,7 +137,7 @@ h1 a {
     color: #eeeeee;
 }
 
-.regi_top_item {
+.regiTopItem {
     padding: 0.5em 1em;
     width: 150px;
     margin: 2em 0;
@@ -149,86 +149,86 @@ h1 a {
 }
 
 
-.regi_top_item a {
+.regiTopItem a {
     margin: 0;
     padding: 0;
 }
 
-table#package_insert_list th {
+table#packageInsertList th {
     font-weight: bold;
     padding: 10px 2%
 }
 
-table#package_insert_list .packgeInsert_general_name {
+table#packageInsertList .packgeInsertGeneralName {
     width: 20%;
     padding: 10px 2%;
 }
 
-table#package_insert_list .packgeInsert_device_name {
+table#packageInsertList .packgeInsertDeviceName {
     width: 20%;
 }
 
-table#package_insert_list .packgeInsert_actione {
+table#packageInsertList .packgeInsertActione {
     width: 13%;
 }
 
-table#csv_list {
+table#csvList {
     word-wrap: break-word;
     table-layout: fixed;
     font-size: 12px;
 }
 
-.csvPack_approval_number{
+.csvPackApprovalNumber{
     width:170px;
 }
 
-.csvPack_JMDN_code{
+.csvPackJmdnCode{
     width:120px;
 }
 
-table#patientDevice_list th {
+table#patientDeviceList th {
     font-weight: bold;
     padding: 10px 2%;
 }
 
-table#patientDevice_list .patientDevice_patient_id {
+table#patientDeviceList .patientDevicePatientId {
     width: 15%;
 }
 
-table#patientDevice_list .patientDevie_patient_name {
+table#patientDeviceList .patientDeviePatientName {
     width: 15%;
 }
 
-table#patientDevice_list .patientDevice_generalName {
+table#patientDeviceList .patientDeviceGeneralName {
     width: 20%;
 }
 
-table#patientDevice_list .patientDeviec_deviceName {
+table#patientDeviceList .patientDeviecDeviceName {
     width: 20%;
 }
 
-table#patientDevice_list .patientDevice_implantedAt {
+table#patientDeviceList .patientDeviceImplantedAt {
     width: 15%;
 }
 
-table#patientDevice_list .patientDeviec_action {
+table#patientDeviceList .patientDeviecAction {
     width: 10%;
 }
 
-input[name="general_name"] {
+input[name="generalName"] {
     width: 40%
 }
 
-input[name="device_name"] {
+input[name="deviceName"] {
     width: 40%
 }
 
-table#patientExam_list th {
+table#patientExamList th {
     font-weight: bold;
     padding: 10px 2%;
 }
 
-ul#examination_condition {
+ul#examinationCondition {
     background-color:#FFEFEF;
     color:#C25338;
     margin:0 0 1em 0; padding:10px;
@@ -242,7 +242,7 @@ ul#examination_condition {
     list-style-type: none!important;
 }
 
-ul#notSafe_count {
+ul#notSafeCount {
     background-color:#d0effa;
     color:#0973fe;
     margin:0 0 1em 0; padding:10px;
@@ -258,7 +258,7 @@ ul#notSafe_count {
 
 
 
-#search_item_patId {
+#searchItemPatId {
     width: 100%;
     line-height: 20px;
     text-align: center;
@@ -267,13 +267,13 @@ ul#notSafe_count {
     justify-content: space-between;
     background-color: #1399b347;
 }
-#search_item {
+#searchItem {
     margin: 8px;
     padding: 8px;
     line-height: 20px;
     text-align: center;
 }
-#search_patId {
+#searchPatId {
     margin: 4px;
     padding: 20px 10px 5px 30px;
     width: 300px ;
@@ -283,7 +283,7 @@ ul#notSafe_count {
     border-radius: 10px;
 }
 
-#search_appNum {
+#searchAppNum {
     margin: 4px;
     padding: 20px 10px 5px 30px;
     width: 300px ;
@@ -294,67 +294,67 @@ ul#notSafe_count {
 }
 
 
-table#search_list_by_patient .search_general_name {
+table#searchListByPatient .generalName {
     width: 15%;
 
 }
 
-table#search_list_by_patient .search_device_nam {
+table#searchListByPatient .deviceName {
     width: 20%;
 }
 
-table#search_list_by_patient .search_implantedAt {
+table#searchListByPatient .implantedAt {
     width: 15%;
 }
 
-table#search_list_by_patient .search_acceptability_of_exam {
+table#searchListByPatient .searchDeviceAcceptabilityOfExam {
     width: 50%;
 }
 
 
 
-table#search_list_by_patient th {
+table#searchListByPatient th {
     font-weight: bold;
     padding: 10px 2%;
     text-align: center;
 }
 
 
-table#search_list_all_exam .search_device_general_name {
+table#searchListAllExam .generalName {
     width: 15%;
 
 }
 
-table#search_list_all_exam .search_device_approval_num {
+table#searchListAllExam .approvalNum {
     width: 16%;
     overflow-wrap: break-word;
 }
 
-table#search_list_all_exam .search_device_device_name {
+table#searchListAllExam .deviceName {
     width: 17%;
 }
 
-table#search_list_all_exam .search_device_implantedAt {
+table#searchListAllExam .implantedAt {
     width: 13%;
 }
 
-table#search_list_all_exam .search_device_acceptability_of_exam {
+table#searchListAllExam .searchDeviceAcceptabilityOfExam {
     width: 40%;
 }
 
-table#search_list_all_exam th {
+table#searchListAllExam th {
     font-weight: bold;
     padding: 10px 2%;
     text-align: center;
 }
 
-.search_patient {
+.searchPatient {
     display: flex;
     margin-bottom: 10px;
 
 }
 
-.search_patient_id {
+.searchPatientId {
     width: 180px;
     height: 35px;
     line-height:40px;
@@ -362,11 +362,11 @@ table#search_list_all_exam th {
 
 }
 
-.search_patient_name {
+.searchPatientName {
     width: 200px;
     height: 35px;
 }
 
-#packageInsert_acceptability_of_exam {
+#packageInsertAcceptabilityOfExam {
     font-size: 20px;
 }

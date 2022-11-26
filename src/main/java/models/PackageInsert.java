@@ -50,7 +50,7 @@ public class PackageInsert {
      * 承認番号
      */
     @Column(name = JpaConst.PACK_COL_APP_NUM, nullable = false, unique = true)
-    private String approval_number;
+    private String approvalNumber;
 
     /**
      * JMDNインスタンス
@@ -63,37 +63,37 @@ public class PackageInsert {
      * デバイスの販売名
      */
     @Column(name = JpaConst.PACK_COL_DEV_NAME, nullable = false, unique = true)
-    private String device_name;
+    private String deviceName;
 
     /**
      * 乳腺X線検査の可否
      */
     @Column(name = JpaConst.PACK_COL_Manma)
-    private String acceptability_of_Manma_exam;
+    private String acceptabilityOfManmaExam;
 
     /**
      * 一般（X線）検査の可否
      */
     @Column(name = JpaConst.PACK_COL_X_RAY)
-    private String acceptability_of_X_ray_exam;
+    private String acceptabilityOfXrayExam;
 
     /**
      * CT検査の可否
      */
     @Column(name = JpaConst.PACK_COL_CT)
-    private String acceptability_of_CT_exam;
+    private String acceptabilityOfCtExam;
 
     /**
      * TV検査の可否
      */
     @Column(name = JpaConst.PACK_COL_TV)
-    private String acceptability_of_TV_exam;
+    private String acceptabilityOfTvExam;
 
     /**
      * MR検査の可否
      */
     @Column(name = JpaConst.PACK_COL_MRI)
-    private String acceptability_of_MR_exam;
+    private String acceptabilityOfMrExam;
 
     /**
      * 登録日

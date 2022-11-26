@@ -14,40 +14,40 @@
         <table>
             <tbody>
                 <tr>
-                    <th>医療機器承認番号</th>
-                    <td><c:out value="${packageInsert.approval_number}" /></td>
+                    <th>承認番号</th>
+                    <td><c:out value="${packageInsert.approvalNumber}" /></td>
                 </tr>
                 <tr>
                     <th>JMDNコード</th>
-                    <td><c:out value="${packageInsert.JMDN_code}" /></td>
+                    <td><c:out value="${packageInsert.jmdnCode}" /></td>
                 </tr>
                 <tr>
                     <th>一般的名称</th>
-                    <td><c:out value="${packageInsert.general_name}" /></td>
+                    <td><c:out value="${packageInsert.generalName}" /></td>
                 </tr>
                 <tr>
                     <th>デバイス名（販売名）</th>
-                    <td><c:out value="${packageInsert.device_name}" /></td>
+                    <td><c:out value="${packageInsert.deviceName}" /></td>
                 </tr>
                 <tr>
                     <th>X線検査の可否</th>
-                    <td><c:out value="${packageInsert.acceptability_of_X_ray_exam}" /></td>
+                    <td><c:out value="${packageInsert.acceptabilityOfXrayExam}" /></td>
                 </tr>
                 <tr>
                     <th>CT検査の可否</th>
-                    <td><c:out value="${packageInsert.acceptability_of_CT_exam}" /></td>
+                    <td><c:out value="${packageInsert.acceptabilityOfCtExam}" /></td>
                 </tr>
                 <tr>
                     <th>TV検査の可否</th>
-                    <td><c:out value="${packageInsert.acceptability_of_TV_exam}" /></td>
+                    <td><c:out value="${packageInsert.acceptabilityOfTvExam}" /></td>
                 </tr>
                 <tr>
                     <th>乳腺X線検査の可否</th>
-                    <td><c:out value="${packageInsert.acceptability_of_Manma_exam}" /></td>
+                    <td><c:out value="${packageInsert.acceptabilityOfManmaExam}" /></td>
                 </tr>
                 <tr>
                     <th>MRI検査の可否</th>
-                    <td><c:out value="${packageInsert.acceptability_of_MR_exam}" /></td>
+                    <td><c:out value="${packageInsert.acceptabilityOfMrExam}" /></td>
                 </tr>
                 <tr>
                     <th>登録日</th>

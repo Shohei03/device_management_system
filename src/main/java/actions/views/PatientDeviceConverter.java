@@ -20,8 +20,8 @@ public class PatientDeviceConverter {
 
         return new PatientDevice(
                 pdv.getId(),
-                PackageInsertConverter.toModel_from_AppNum(pdv.getApproval_number()), // 添付文書番号をもとにPackageInsertテーブルにアクセスしてインスタンスを取得
-                PatientConverter.toModel_FROM_PAT(pdv.getPatient_id()), //指定したPatientDeviceViewインスタンスとリレーション関係にあるPatientインスタンスを取得
+                PackageInsertConverter.toModelFromAppNum(pdv.getApprovalNumber()), // 添付文書番号をもとにPackageInsertテーブルにアクセスしてインスタンスを取得
+                PatientConverter.toModelFromPat(pdv.getPatientId()), //指定したPatientDeviceViewインスタンスとリレーション関係にあるPatientインスタンスを取得
                 pdv.getImplantedAt(),
                 pdv.getCreatedAt(),
                 pdv.getUpdatedAt(),
@@ -40,11 +40,11 @@ public class PatientDeviceConverter {
         }
         return new PatientDeviceView(
                 pd.getId(),
-                pd.getPatient().getPatient_id(),
-                pd.getPatient().getPatient_name(),
-                pd.getPatient().getPatient_name_kana(),
-                pd.getPackageInsert().getApproval_number(),
-                pd.getPackageInsert().getDevice_name(),
+                pd.getPatient().getPatientId(),
+                pd.getPatient().getPatientName(),
+                pd.getPatient().getPatientNameKana(),
+                pd.getPackageInsert().getApprovalNumber(),
+                pd.getPackageInsert().getDeviceName(),
                 pd.getImplantedAt(),
                 pd.getCreatedAt(),
                 pd.getUpdatedAt(),
@@ -58,13 +58,13 @@ public class PatientDeviceConverter {
      */
     public static List<PatientDeviceView> toViewList(List<PatientDevice> list) {
 
-        List<PatientDeviceView> pdv_list = new ArrayList<>();
+        List<PatientDeviceView> pdvList = new ArrayList<>();
 
         for (PatientDevice pd : list) {
-            pdv_list.add(toView(pd));
+            pdvList.add(toView(pd));
         }
 
-        return pdv_list;
+        return pdvList;
     }
 
     /**
@@ -75,8 +75,8 @@ public class PatientDeviceConverter {
     public static void copyViewToModel(PatientDevice pd, PatientDeviceView pdv) {
 
         pd.setId(pdv.getId());
-        pd.setPackageInsert(PackageInsertConverter.toModel_from_AppNum(pdv.getApproval_number()));
-        pd.setPatient(PatientConverter.toModel_FROM_PAT(pdv.getPatient_id()));
+        pd.setPackageInsert(PackageInsertConverter.toModelFromAppNum(pdv.getApprovalNumber()));
+        pd.setPatient(PatientConverter.toModelFromPat(pdv.getPatientId()));
         pd.setImplantedAt(pdv.getImplantedAt());
         pd.setCreatedAt(pdv.getCreatedAt());
         pd.setUpdatedAt(pdv.getUpdatedAt());

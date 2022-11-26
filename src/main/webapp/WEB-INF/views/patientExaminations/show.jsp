@@ -16,29 +16,29 @@
             <tbody>
                 <tr>
                     <th>検査項目</th>
-                    <td><c:out value="${patientExamination.examination_item}" /></td>
+                    <td><c:out value="${patientExamination.examinationItem}" /></td>
                 </tr>
                 <tr>
                     <th>検査日</th>
-                    <fmt:parseDate value="${patientExamination.examination_date}" pattern="yyyy-MM-dd" var="examDay" type="date" />
+                    <fmt:parseDate value="${patientExamination.examinationDate}" pattern="yyyy-MM-dd" var="examDay" type="date" />
                     <td><fmt:formatDate value="${examDay}" pattern="yyyy-MM-dd" /></td>
                 </tr>
                 <tr>
                     <th>予約時間</th>
-                    <fmt:parseDate value="${patientExamination.reservation_time}" pattern="HH:mm" var="reserveTime" type="time" />
+                    <fmt:parseDate value="${patientExamination.reservationTime}" pattern="HH:mm" var="reserveTime" type="time" />
                     <td><fmt:formatDate value="${reserveTime}" pattern="HH:mm" /></td>
                 </tr>
                 <tr>
                     <th>患者ID</th>
-                    <td><c:out value="${patientExamination.patient_id}" /></td>
+                    <td><c:out value="${patientExamination.patientId}" /></td>
                 </tr>
                 <tr>
                     <th>患者名</th>
-                    <td><c:out value="${patientExamination.patient_name}" /></td>
+                    <td><c:out value="${patientExamination.patientName}" /></td>
                 </tr>
                 <tr>
                     <th>患者名（ひらがな）</th>
-                    <th><c:out value="${patientExamination.patient_name_kana}" /></th>
+                    <th><c:out value="${patientExamination.patientNameKana}" /></th>
                 </tr>
                 <tr>
                     <th>登録日</th>
