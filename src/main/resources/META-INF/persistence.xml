@@ -11,13 +11,14 @@
 		<class>models.Examination</class>
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
-			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/device_management_system?useSSL=false&amp;allowPublicKeyRetrieval=true"/>
-			<property name="javax.persistence.jdbc.user" value="devuser"/>
-			<property name="javax.persistence.jdbc.password" value="devpass"/>
-			<property name="javax.persistence.schema-generation.database.action" value="create"/>
+			<property name="javax.persistence.jdbc.user" value="b3a57fd34dd2be"/>
+			<property name="javax.persistence.schema-generation.database.action" value="none"/>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect"/>
 			<property name="hibernate.show_sql" value="true"/>
 			<property name="hibernate.format_sql" value="true"/>
+			<property name="javax.persistence.schema-generation.scripts.action" value="none"/>
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://us-cdbr-east-06.cleardb.net/heroku_66960978e3444d8?reconnect=true&amp;useSSL=false&amp;allowPublicKeyRetrieval=true&amp;useUnicode=true&amp;characterEncoding=utf8&amp;characterSetResults=utf8"/>
+			<property name="javax.persistence.jdbc.password" value="7082774c"/>
 		</properties>
 	</persistence-unit>
 </persistence>

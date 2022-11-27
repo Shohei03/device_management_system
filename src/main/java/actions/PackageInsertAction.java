@@ -289,6 +289,9 @@ public class PackageInsertAction extends ActionBase {
             String line;
 
             line = br.readLine();
+
+            //BOMつきCSVファイルの先頭文字を削除
+            line = delMark(line);
             String[] data = line.split(",");
 
             //CSVで取り込むデータ数（項目数）が設定値（9個）以外の場合にエラーを返す。
@@ -401,6 +404,10 @@ public class PackageInsertAction extends ActionBase {
 
             String line;
             while ((line = br.readLine()) != null) {
+
+                //BOMつきCSVファイルの先頭文字を削除
+                line = delMark(line);
+
                 String[] data = line.split(",");
 
                 String errorExamAccept = null; //検査の可否入力エラーを格納する変数をnullにして準備

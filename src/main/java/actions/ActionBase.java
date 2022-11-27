@@ -13,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import javax.xml.bind.DatatypeConverter;
 
 import constants.AttributeConst;
 import constants.ForwardConst;
@@ -201,6 +202,27 @@ public abstract class ActionBase {
         }
         matcher.appendTail(sb);
         return sb.toString();
+    }
+
+    /**
+     * BOMつきCSVファイル取り込み（先頭文字を削除）
+     * @param 文字列
+     * @return 先頭文字削除後の文字列
+     */
+    protected String delMark(String row) {
+        if (row != null && !row.isEmpty()) {
+            //先頭文字を取得
+            String bom = row.substring(0, 1);
+            //先頭文字をバイト文字に変換する(Apache Commons CodecのHexクラスを利用)
+            String bomByte = new String(DatatypeConverter.printHexBinary(bom.getBytes()));
+
+            if ("efbbbf".equals(bomByte) || "EFBBBF".equals(bomByte)) {
+                //BOMを排除
+                row = row.substring(1);
+                return row;
+            }
+        }
+        return row;
     }
 
     /**

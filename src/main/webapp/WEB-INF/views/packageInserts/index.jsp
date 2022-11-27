@@ -94,8 +94,5 @@
                 </c:choose>
             </c:forEach>
         </div>
-
-        <p><a href="<c:url value='?action=${actSearch}&command=${commIdx}' />">検索画面に移動</a></p>
-
     </c:param>
 </c:import>

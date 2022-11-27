@@ -68,7 +68,7 @@
                     <th class="${AttributeConst.PATDEV_PAT_NAME.getValue()}">患者名</th>
                     <th class="${AttributeConst.PATDEV_DEV_NAME.getValue()}">デバイスの販売名</th>
                     <th class="${AttributeConst.PATDEV_IMP_DATE.getValue()}">埋込日</th>
-                    <th class="patientDeviecAction">操作</th>
+                    <th class="patientDeviceAction">操作</th>
                 </tr>
                 <c:forEach var="patientDevice" items="${patientDevices}" varStatus="status">
                     <fmt:parseDate value="${patientDevice.implantedAt}" pattern="yyyy-MM-dd" var="implantedDay" type="date" />

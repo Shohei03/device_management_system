@@ -405,6 +405,9 @@ public class PatientExaminationAction extends ActionBase {
 
             String line;
             line = br.readLine();
+
+            //BOMつきCSVファイルの先頭文字を削除
+            line = delMark(line);
             String[] data = line.split(",");
 
             //CSVで取り込むデータ数（項目数）が設定値（6個）以外の場合にエラーを返す。
@@ -514,6 +517,9 @@ public class PatientExaminationAction extends ActionBase {
 
             String line;
             while ((line = br.readLine()) != null) {
+                //BOMつきCSVファイルの先頭文字を削除
+                line = delMark(line);
+
                 String[] data = line.split(",");
 
                 String errorDate = null; //検査日入力エラーを格納する変数をnullにして準備

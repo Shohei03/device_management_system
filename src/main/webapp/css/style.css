@@ -191,27 +191,27 @@ table#patientDeviceList th {
     padding: 10px 2%;
 }
 
-table#patientDeviceList .patientDevicePatientId {
+table#patientDeviceList .patientId {
+    width: 10%;
+}
+
+table#patientDeviceList .patientName {
     width: 15%;
 }
 
-table#patientDeviceList .patientDeviePatientName {
-    width: 15%;
-}
-
-table#patientDeviceList .patientDeviceGeneralName {
+table#patientDeviceList .generalName {
     width: 20%;
 }
 
-table#patientDeviceList .patientDeviecDeviceName {
-    width: 20%;
+table#patientDeviceList .deviceName {
+    width: 25%;
 }
 
-table#patientDeviceList .patientDeviceImplantedAt {
+table#patientDeviceList .implantedAt {
     width: 15%;
 }
 
-table#patientDeviceList .patientDeviecAction {
+table#patientDeviceList .patientDeviceAction {
     width: 10%;
 }
 
