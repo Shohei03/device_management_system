@@ -55,7 +55,7 @@
                         <td class="${AttributeConst.PATEXAM_RESERVATION_TIME.getValue()}"><fmt:formatDate value='${reservationTime}' pattern='HH:mm' /></td>
                         <td class="${AttributeConst.PATEXAM_PAT_ID.getValue()}"><c:out value="${patientExamination.patientId}" /></td>
                         <td class="${AttributeConst.PATEXAM_PAT_NAME.getValue()}"><c:out value="${patientExamination.patientName}" /></td>
-                        <td class="patientDeviecAction"><a href="<c:url value='?action=${actPatExam}&command=${commCSVMODI}&index_num=${status.index}' />">取消</a></td>
+                        <td class="patientDeviecAction"><a href="<c:url value='?action=${actPatExam}&command=${commCSVMODI}&indexNum=${status.index}' />">取消</a></td>
                     </tr>
                 </c:forEach>
             </tbody>

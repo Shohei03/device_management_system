@@ -216,6 +216,7 @@ public class SearcherAction extends ActionBase {
         //設定した検査項目を取得
         String examinationItem = getRequestParam(AttributeConst.SEARCH_EXAM_ITEM);
 
+
         //検索した患者の体内デバイス一覧をセッションから取得
         svList = (List<SearchPatientDeviceView>) getSessionScope(AttributeConst.SEARCH_DEVICE);
 
@@ -257,12 +258,10 @@ public class SearcherAction extends ActionBase {
         }
         removeSessionScope(AttributeConst.SEARCH_EXAM_ITEM);
 
-        removeSessionScope(AttributeConst.SEARCH_DEVICE);
-
         putRequestScope(AttributeConst.SEARCH_PAT, p);
         putRequestScope(AttributeConst.SEARCH_ID, id);
         putSessionScope(AttributeConst.SEARCH_EXAM_ITEM, examinationItem);
-        putSessionScope(AttributeConst.SEARCH_DEVICE, spdvList); //患者IDをもとに取得した体内デバイスデータ（検査重複なし）
+        putRequestScope(AttributeConst.SEARCH_DEVICE, spdvList); //患者IDをもとに取得した体内デバイスデータ（検査重複なし）
 
         //検索結果画面を表示
         forward(ForwardConst.FW_SEARCH_SHOW);

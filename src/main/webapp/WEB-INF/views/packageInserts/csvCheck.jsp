@@ -50,7 +50,7 @@
                         <td class="${AttributeConst.PACK_TV.getValue()}m"><c:out value="${packageInsert.acceptabilityOfTvExam}" /></td>
                         <td class="${AttributeConst.PACK_Manma.getValue()}"><c:out value="${packageInsert.acceptabilityOfManmaExam}" /></td>
                         <td class="${AttributeConst.PACK_MRI.getValue()}"><c:out value="${packageInsert.acceptabilityOfMrExam}" /></td>
-                        <td class="packgeInsert_delete"><a href="<c:url value='?action=${actPack}&command=${commCSVMODI}&index_num=${status.index}' />">取消</a></td>
+                        <td class="packgeInsert_delete"><a href="<c:url value='?action=${actPack}&command=${commCSVMODI}&indexNum=${status.index}' />">取消</a></td>
                     </tr>
                 </c:forEach>
             </tbody>

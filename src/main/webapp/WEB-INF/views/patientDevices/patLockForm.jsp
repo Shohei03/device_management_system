@@ -25,6 +25,7 @@
     </div>
 </c:if>
 
+<p>（患者IDと名前は編集できません！！）</p>
 <label for="${AttributeConst.PATDEV_PAT_ID.getValue()}">患者ID</label><br />
 <input type="text" name="${AttributeConst.PATDEV_PAT_ID.getValue()}" id="${AttributeConst.PATDEV_PAT_ID.getValue()}" value="${patientDevice.patientId}" readonly/>
 <br /><br />

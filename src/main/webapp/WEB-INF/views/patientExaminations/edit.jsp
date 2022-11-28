@@ -21,7 +21,7 @@
         <h2>検査情報 編集ページ</h2>
 
         <form method="POST" action="<c:url value='?action=${actPatExam}&command=${commUpd}' />">
-            <c:import url="_form.jsp" />
+            <c:import url="patLockForm.jsp" />
 
             <c:if test="${duplicate == MessageConst.E_DUPLI_DATA.getMessage()}">
                 <input type="hidden" name="${AttributeConst.PATEXAM_DUPLICATE_CHECK.getValue()}" value="false" />

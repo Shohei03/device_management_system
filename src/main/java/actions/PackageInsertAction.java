@@ -53,6 +53,7 @@ public class PackageInsertAction extends ActionBase {
 
         //指定されたページ数の一覧画面に表示する添付文書データを取得
         int page = getPage();
+
         List<PackageInsertView> packageInserts = service.getAllPerPage(page);
 
         //全添付文書データの件数を取得

@@ -18,11 +18,12 @@
         <h2>データ登録ページ</h2>
 
         <div class="regiTopItem">
-            <a href="<c:url value='?action=${actPatDev}&command=${commIdx}' />">患者のデバイス情報</a>
-        </div>
-        <div class="regiTopItem">
             <a href="<c:url value='?action=${actPack}&command=${commIdx}' />">添付文書情報</a>
         </div>
+        <div class="regiTopItem">
+            <a href="<c:url value='?action=${actPatDev}&command=${commIdx}' />">患者のデバイス情報</a>
+        </div>
+
         <div class="regiTopItem">
             <a href="<c:url value='?action=${actPatExam}&command=${commIdx}' />">検査情報</a>
         </div>

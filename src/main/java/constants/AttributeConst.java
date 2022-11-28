@@ -93,7 +93,7 @@ public enum AttributeConst {
     PATIENT_EXAMINATION("patientExamination"),
     PATIENT_EXAMINATIONS("patientExaminations"),
     PATEXAM_ID("id"),
-    PATEXAM_COUNT_BY_DAY("patintExaminationsCount_byDay"),
+    PATEXAM_COUNT_BY_DAY("patientExaminationsCountByDay"),
     PATEXAM_PAT_ID("patientId"),
     PATEXAM_PAT_NAME("patientName"),
     PATEXAM_PAT_NAME_KANA("patientNameKana"),

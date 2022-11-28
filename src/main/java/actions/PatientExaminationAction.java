@@ -66,6 +66,7 @@ public class PatientExaminationAction extends ActionBase {
         //検査情報データの件数を取得
         long patientExamCount = patExamservice.countExamination();
 
+
         putRequestScope(AttributeConst.PATIENT_EXAMINATIONS, patientExaminations); //取得した検査情報データ
         putRequestScope(AttributeConst.PATEXAM_COUNT_BY_DAY, patientExamCount); // 検査件数
         putRequestScope(AttributeConst.PAGE, page); //ページ数

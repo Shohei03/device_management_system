@@ -10,7 +10,7 @@
 
 <c:import url="/WEB-INF/views/layout/app.jsp">
     <c:param name="content">
-        <h2>id : ${employee.id}の従業員情報 編集ページ</h2>
+        <h2>社員番号 : ${employee.code}の従業員情報 編集ページ</h2>
         <p>（パスワードは変更する場合のみ入力してください）</p>
         <form method="POST" action="<c:url value='?action=${action}&command=${commUpd}' />">
             <c:import url="_form.jsp" />

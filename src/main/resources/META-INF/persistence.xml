@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
-	<persistence-unit name="device_management_system" transaction-type="RESOURCE_LOCAL">
-		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-		<class>models.PackageInsert</class>
-		<class>models.Employee</class>
-		<class>models.Jmdn</class>
-		<class>models.Patient</class>
-		<class>models.PatientDevice</class>
-		<class>models.PatientExamination</class>
-		<class>models.Examination</class>
-		<properties>
-			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
-			<property name="javax.persistence.jdbc.user" value="b3a57fd34dd2be"/>
-			<property name="javax.persistence.schema-generation.database.action" value="none"/>
-			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect"/>
-			<property name="hibernate.show_sql" value="true"/>
-			<property name="hibernate.format_sql" value="true"/>
-			<property name="javax.persistence.schema-generation.scripts.action" value="none"/>
-			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://us-cdbr-east-06.cleardb.net/heroku_66960978e3444d8?reconnect=true&amp;useSSL=false&amp;allowPublicKeyRetrieval=true&amp;useUnicode=true&amp;characterEncoding=utf8&amp;characterSetResults=utf8"/>
-			<property name="javax.persistence.jdbc.password" value="7082774c"/>
-		</properties>
-	</persistence-unit>
+    <persistence-unit name="device_management_system" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <class>models.PackageInsert</class>
+        <class>models.Employee</class>
+        <class>models.Jmdn</class>
+        <class>models.Patient</class>
+        <class>models.PatientDevice</class>
+        <class>models.PatientExamination</class>
+        <class>models.Examination</class>
+        <properties>
+            <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+            <property name="javax.persistence.jdbc.user" value="be412d91e43f33"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="javax.persistence.schema-generation.database.action" value="none"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://us-cdbr-east-06.cleardb.net/heroku_ef960bb15410b07?reconnect=true&amp;useSSL=false&amp;allowPublicKeyRetrieval=true&amp;useUnicode=true&amp;characterEncoding=utf8&amp;characterSetResults=utf8"/>
+            <property name="javax.persistence.jdbc.password" value="444f8b91"/>
+            <property name="javax.persistence.schema-generation.scripts.action" value="none"/>
+        </properties>
+    </persistence-unit>
 </persistence>

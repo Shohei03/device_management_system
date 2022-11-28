@@ -49,7 +49,7 @@ public class PackageInsert {
     /**
      * 承認番号
      */
-    @Column(name = JpaConst.PACK_COL_APP_NUM, nullable = false, unique = true)
+    @Column(name = JpaConst.PACK_COL_APP_NUM, nullable = false)
     private String approvalNumber;
 
     /**
@@ -62,7 +62,7 @@ public class PackageInsert {
     /**
      * デバイスの販売名
      */
-    @Column(name = JpaConst.PACK_COL_DEV_NAME, nullable = false, unique = true)
+    @Column(name = JpaConst.PACK_COL_DEV_NAME, nullable = false)
     private String deviceName;
 
     /**

@@ -106,7 +106,6 @@ public class PackageInsertValidator {
 
         //入力値に英数字以外の文字があればエラーメッセージ
         if (!checkAlphanumeric(approvalNumber)) {
-            System.out.println("!checkAlphanumeric(approvalNumber)" + !checkAlphanumeric(approvalNumber));
 
             return MessageConst.E_APP_NUM_ERR.getMessage();
         }
