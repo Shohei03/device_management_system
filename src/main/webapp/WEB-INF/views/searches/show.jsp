@@ -111,8 +111,8 @@
                                     <c:when test="${examinationItem == AttributeConst.EXAM_X_RAY.getValue()}">${searchDevice.acceptabilityOfXrayExam}</c:when>
                                     <c:when test="${examinationItem == AttributeConst. EXAM_CT.getValue()}">${searchDevice.acceptabilityOfCtExam}</c:when>
                                     <c:when test="${examinationItem == AttributeConst. EXAM_TV.getValue()}">${searchDevice.acceptabilityOfTvExam}</c:when>
-                                    <c:when test="${examinationItem == AttributeConst. EXAM_Manma.getValue()}">${searchDevice.acceptabilityOfMrExam}</c:when>
-                                    <c:when test="${examinationItem == AttributeConst. EXAM_MRI.getValue()}">${searchDevice.acceptabilityOfManmaExam}</c:when>
+                                    <c:when test="${examinationItem == AttributeConst. EXAM_Manma.getValue()}">${searchDevice.acceptabilityOfManmaExam}</c:when>
+                                    <c:when test="${examinationItem == AttributeConst. EXAM_MRI.getValue()}">${searchDevice.acceptabilityOfMrExam}</c:when>
                                 </c:choose>
                             </td>
                         </tr>
